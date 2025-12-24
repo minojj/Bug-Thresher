@@ -1,7 +1,7 @@
 # API 기능 테스트 케이스
 import requests
 
-def test_vm_list(auth_token):
+def test_BS_001(auth_token):
     headers = {
         "Authorization": f"Bearer {auth_token}"
     }
