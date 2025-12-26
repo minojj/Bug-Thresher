@@ -55,3 +55,19 @@ def api_headers(auth_token):
         "Content-Type": "application/json",
         # "Accept": "application/json"
     }
+
+# API Base URL Fixtures
+@pytest.fixture(scope="session")
+def base_url_block_storage():
+    """블록 스토리지 API Base URL"""
+    return os.getenv("BASE_URL_BLOCK_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage")
+
+@pytest.fixture(scope="session")
+def base_url_network():
+    """네트워크 API Base URL"""
+    return os.getenv("BASE_URL_NETWORK", "https://portal.gov.elice.cloud/api/user/resource/network")
+
+@pytest.fixture(scope="session")
+def base_url_object_storage():
+    """오브젝트 스토리지 API Base URL"""
+    return os.getenv("BASE_URL_OBJECT_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/object_storage")
