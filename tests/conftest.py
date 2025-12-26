@@ -8,6 +8,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
+load_dotenv()
 
 def generate_fresh_token():
     """새로운 토큰을 자동으로 생성"""
@@ -21,11 +23,13 @@ def generate_fresh_token():
         driver.get("https://qatrack.elice.io/eci")
         wait = WebDriverWait(driver, 10)
         
+        # .env의 LOGIN_ID 사용
         email_field = wait.until(EC.presence_of_element_located((By.NAME, "loginId")))
-        email_field.send_keys("qa2team02@elicer.com")
-        
+        email_field.send_keys(os.getenv("LOGIN_ID"))
+
+        # .env의 PASSWORD 사용
         password_field = wait.until(EC.presence_of_element_located((By.NAME, "password")))
-        password_field.send_keys("qa2team02!!")
+        password_field.send_keys(os.getenv("PASSWORD"))
         
         login_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
         login_button.click()
