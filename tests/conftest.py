@@ -33,8 +33,7 @@ def generate_fresh_token():
         
         login_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
         login_button.click()
-        
-        time.sleep(5)
+        wait.until(EC.url_contains("/eci/home"))
         
         token = driver.execute_script("return window.localStorage.getItem('accessToken');")
         
