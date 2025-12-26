@@ -11,7 +11,7 @@ class TestBlockStorageCRUD:
     def test_BS001_list_exists_look_up(self, api_headers):
         """BS-001: 데이터가 있는 경우 목록 조회"""
         headers = api_headers
-        url = "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage?skip=0&count=20"
+        url = f"{BASE_URL}?skip=0&count=20"
         
         response = requests.get(url, headers=headers)
         res_data = response.json()
@@ -26,7 +26,7 @@ class TestBlockStorageCRUD:
     def test_BS002_list_emptylook_up(self, api_headers):
         """BS-002: 데이터가 없는 경우 조회"""
         headers = api_headers
-        url = "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage?skip=0&count=20"
+        url = f"{BASE_URL}?skip=0&count=20"
         
         response = requests.get(url, headers=headers)
         res_data = response.json()
@@ -36,7 +36,7 @@ class TestBlockStorageCRUD:
 
     def test_BS003_create_success(self, api_headers):
         """BS-003: 블록 스토리지 생성 성공 및 검증"""
-        url = "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage"
+        url = BASE_URL
         headers = api_headers
         payload = {
                         "name": "team2",
@@ -77,7 +77,7 @@ class TestBlockStorageCRUD:
 
     def test_BS004_create_fail_missing_parameters(self, api_headers):
         """BS-004: 필수 파라미터 일부 누락 시 422 에러 검증"""
-        url = "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage"
+        url = BASE_URL
         headers = api_headers
         
         # 이미지의 예시와 유사하게 size_gib 등을 null로 보내거나 일부 누락한 페이로드
@@ -112,7 +112,7 @@ class TestBlockStorageCRUD:
 
     def test_BS005_create_fail_invalid_data_type(self, api_headers):
         """BS-005: 필수 파라미터에 잘못된 데이터 타입 입력 시 에러 검증"""
-        url = "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage"
+        url = BASE_URL
         headers = api_headers.copy()
         headers["Content-Type"] = "application/json"
 
@@ -154,7 +154,7 @@ class TestBlockStorageCRUD:
         
         # 1. 존재하지 않는 임의의 ID 설정 (이미지 예시 참고)
         invalid_id = "d3012bbe-11f3-44e6-9cd6-f485753914e"
-        url = f"https://portal.gov.elice.cloud/api/user/resource/storage/block_storage/{invalid_id}"
+        url = f"{BASE_URL}/{invalid_id}"
         
         headers = api_headers.copy()
         headers["Content-Type"] = "application/json"
@@ -177,7 +177,7 @@ class TestBlockStorageCRUD:
         assert TestBlockStorageCRUD.created_block_storage_id is not None, "test_BS003이 먼저 실행되어야 합니다."
         resource_id = TestBlockStorageCRUD.created_block_storage_id
         
-        url = f"https://portal.gov.elice.cloud/api/user/resource/storage/block_storage/{resource_id}"
+        url = f"{BASE_URL}/{resource_id}"
         headers = api_headers
         
         # 수정할 데이터 (이미지 기반)
@@ -199,7 +199,7 @@ class TestBlockStorageCRUD:
     def test_BS009_update_fail_invalid_tag_format(self, api_headers):
         """BS-009: 올바르지 않은 태그 형식(JSON 문법 오류)으로 수정 시 422 에러 검증"""
         resource_id = "d3012bbe-11f3-44e6-9cd6-f485753914ee"
-        url = f"https://portal.gov.elice.cloud/api/user/resource/storage/block_storage/{resource_id}"
+        url = f"{BASE_URL}/{resource_id}"
         headers = api_headers.copy()
         headers["Content-Type"] = "application/json"
 
