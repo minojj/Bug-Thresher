@@ -1,6 +1,7 @@
 import requests
 import pytest
 
+BASE_URL = "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage"
 # 블록 스토리지 ID를 저장하기 위한 전역 변수
 _created_block_storage_id = None
 
@@ -199,3 +200,72 @@ def test_BS008_update_resource_name(auth_token):
     # 실제로 이름이 변경되었는지 상세 조회를 통해 재확인
     get_response = requests.get(url, headers=headers)
     assert get_response.json()["name"] == "test-team22"
+
+def test_BS009_update_fail_invalid_tag_format(auth_token):
+    """BS-009: 올바르지 않은 태그 형식(JSON 문법 오류)으로 수정 시 422 에러 검증"""
+    resource_id = "d3012bbe-11f3-44e6-9cd6-f485753914ee"
+    url = f"https://portal.gov.elice.cloud/api/user/resource/storage/block_storage/{resource_id}"
+    headers = {"Authorization": f"Bearer {auth_token}", "Content-Type": "application/json"}
+
+    # 이미지 예시: "tags": {}ss, 처럼 문법이 깨진 상태 유도
+    invalid_raw_body = """
+    {
+        "id": "d3012bbe-11f3-44e6-9cd6-f485753914ee",
+        "tags": {}ss
+    }
+    """
+
+    # JSON 문법 오류를 보내기 위해 data= 파라미터 사용
+    response = requests.patch(url, headers=headers, data=invalid_raw_body)
+    res_data = response.json()
+
+    # 1. 상태 코드 검증
+    assert response.status_code == 422
+    
+    # 2. 에러 상세 정보 검증 (이미지 매칭)
+    error_detail = res_data["detail"]["errors"][0]
+    assert error_detail["type"] == "json_invalid"
+    assert "JSON decode error" in error_detail["msg"]
+    assert "Expecting ',' delimiter" in error_detail["ctx"]["error"]
+
+def test_BS010_delete_resource_success(auth_token):
+    """BS-010: 블록 스토리지 삭제 요청 성공 검증"""
+    global _created_block_storage_id
+    
+    # test_BS003에서 생성하고 test_BS008에서 수정한 블록 스토리지 ID 사용
+    assert _created_block_storage_id is not None, "test_BS003이 먼저 실행되어야 합니다."
+    resource_id = _created_block_storage_id
+    
+    url = f"{BASE_URL}/{resource_id}"
+    headers = {"Authorization": f"Bearer {auth_token}"}
+
+    # DELETE 요청 전송
+    response = requests.delete(url, headers=headers)
+    res_data = response.json()
+
+    # 응답 검증
+    assert response.status_code == 200
+    assert res_data["id"] == resource_id
+    assert res_data["status"] == "deleting"
+
+def test_BS011_delete_fail_already_deleted(auth_token):
+    """BS-011: 이미 삭제된 ID 삭제 시도 시 409 Conflict 검증"""
+    global _created_block_storage_id
+    
+    # test_BS010에서 삭제한 블록 스토리지를 다시 삭제 시도
+    assert _created_block_storage_id is not None, "test_BS010이 먼저 실행되어야 합니다."
+    resource_id = _created_block_storage_id
+    
+    url = f"{BASE_URL}/{resource_id}"
+    headers = {"Authorization": f"Bearer {auth_token}"}
+
+    response = requests.delete(url, headers=headers)
+    res_data = response.json()
+
+    # 409 Conflict 및 상세 에러 메시지 검증
+    assert response.status_code == 409
+    assert res_data["code"] == "unexpected_status"
+    assert "should be queued, assigned, or prepared" in res_data["message"]
+    # 삭제 중이거나 이미 삭제된 상태 모두 허용
+    status = res_data["detail"]["resource_block_storage"]["status"]
+    assert status in ["deleting", "deleted"], f"예상치 못한 상태: {status}"
