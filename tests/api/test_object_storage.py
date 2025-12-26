@@ -7,7 +7,23 @@ base_url = "https://portal.gov.elice.cloud/api/user/resource/storage/object_stor
 
 
 class TestBucketCRUD:
-    created_id = None
+
+    @pytest.fixture
+    def setup_bucket(self, api_headers):
+        random_name = f"team2-{uuid.uuid4().hex[:6]}"
+        payload = {
+            "name": random_name,
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "size_gib": 10,
+            "tags": {}
+        }
+        response = requests.post(base_url, headers=api_headers, json=payload)
+        assert response.status_code == 200, f"⛔ [FAIL] Setup 실패, {response.status_code}: {response.text}"
+        response_json = response.json()
+        yield {"id": response_json["id"], "name": random_name}
+
+        requests.delete(f"{base_url}/{response_json['id']}", headers=api_headers)
+
 
     def test_OS001_post_new_bucket(self, api_headers):
         payload = {
@@ -25,8 +41,7 @@ class TestBucketCRUD:
         assert "id" in response_json 
         assert response_json["id"] is not None
 
-        # 생성된 버킷 ID 저장
-        TestBucketCRUD.created_id = response_json["id"]
+        requests.delete(f"{base_url}/{response_json['id']}", headers=api_headers)
 
 
     def test_OS004_get_all_list(self, api_headers):
@@ -41,10 +56,11 @@ class TestBucketCRUD:
         assert response_list[0]["id"] is not None
 
 
-    def test_OS006_get_new_bucket(self, api_headers):
-        bucket_id = TestBucketCRUD.created_id
-        url = f"{base_url}/{bucket_id}"
+    def test_OS006_get_new_bucket(self, api_headers, setup_bucket):
+        bucket_id = setup_bucket["id"]
+        bucket_name = setup_bucket["name"]
 
+        url = f"{base_url}/{bucket_id}"
         response = requests.get(url, headers=api_headers)
         assert response.status_code == 200, f"⛔ [FAIL] 버킷 단건 조회 실패 - 상태 코드: {response.status_code}"
         # 응답 바디 검증
@@ -55,13 +71,13 @@ class TestBucketCRUD:
         assert "zone_id" in response_json
         assert "size_gib" in response_json
         assert response_json["id"] == bucket_id
-        assert response_json["name"] == "team2"
+        assert response_json["name"] == bucket_name
         assert response_json["zone_id"] is not None
         assert response_json["size_gib"] == 10
 
 
-    def test_OS007_patch_bucket_name(self, api_headers):
-        bucket_id = TestBucketCRUD.created_id
+    def test_OS007_patch_bucket_name(self, api_headers, setup_bucket):
+        bucket_id = setup_bucket["id"]
         url = f"{base_url}/{bucket_id}"
         payload = {"name": "team2-01"}
 
@@ -75,8 +91,8 @@ class TestBucketCRUD:
         assert response_json["id"] is not None
 
 
-    def test_OS009_delete_bucket(self, api_headers):
-        bucket_id = TestBucketCRUD.created_id
+    def test_OS009_delete_bucket(self, api_headers, setup_bucket):
+        bucket_id = setup_bucket["id"]
         url = f"{base_url}/{bucket_id}"
 
         response = requests.delete(url, headers=api_headers)
@@ -102,6 +118,7 @@ class TestBucketEdgeCases:
             "tags": {}
         }
         response = requests.post(base_url, headers=api_headers, json=payload)
+        assert response.status_code == 200, f"⛔ [FAIL] Setup 실패, {response.status_code}: {response.text}"
         self.edge_id = response.json()["id"]
         self.edge_name = random_name
         yield
@@ -186,4 +203,71 @@ class TestBucketEdgeCases:
 
 
 
-class 
+class TestUserCRUD:
+
+    @pytest.fixture
+    def setup_user(self, api_headers):
+        random_name = f"team2-{uuid.uuid4().hex[:6]}"
+        payload = {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": random_name,
+            "tags": {}
+            }
+
+        response = requests.post(f"{base_url}/user", headers=api_headers, json=payload)
+        assert response.status_code == 200, f"⛔ [FAIL] Setup 실패, {response.status_code}: {response.text}"
+        response_json = response.json()
+        yield {"id": response_json["id"], "name": random_name}
+
+        requests.delete(f"{base_url}/{response_json['id']}", headers=api_headers)
+
+
+    def test_OS019_post_new_user(self, api_headers):
+        payload = {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": "team2",
+            "tags": {}
+            }
+        url = f"{base_url}/user"
+        response = requests.post(url, headers=api_headers, json=payload)
+        # 상태 코드 검증
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 생성 실패 - 상태 코드: {response.status_code}"
+        response_json = response.json()
+        # 응답 바디 검증
+        assert isinstance(response_json, dict)
+        assert "id" in response_json 
+        assert response_json["id"] is not None
+
+        requests.delete(f"{base_url}/user/{response_json['id']}", headers=api_headers)
+
+
+    def test_OS021_get_all_list(self, api_headers):
+        url = f"{base_url}/user?count=50"
+        response = requests.get(url, headers=api_headers)
+        # 상태 코드 검증
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 목록 조회 실패 - 상태 코드: {response.status_code}"
+        # 응답 바디 검증
+        response_list = response.json()
+        assert isinstance(response_list, list)
+        assert len(response_list) > 0
+        assert response_list[0]["id"] is not None
+
+
+    def test_OS022_get_new_user(self, api_headers, setup_user):
+        user_id = setup_user["id"]
+        user_name = setup_user["name"]
+
+        url = f"{base_url}/user/{user_id}"
+        response = requests.get(url, headers=api_headers)
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 단건 조회 실패 - 상태 코드: {response.status_code}, 내용: {response.text}"
+        # 응답 바디 검증
+        response_json = response.json()
+        assert isinstance(response_json, dict)
+        assert "id" in response_json
+        assert "name" in response_json
+        assert "zone_id" in response_json
+        assert "status" in response_json
+        assert response_json["id"] == user_id
+        assert response_json["name"] == user_name
+        assert response_json["zone_id"] is not None
+        assert response_json["status"] == "activated", f"⛔ [FAIL] 예상과 다른 상태: {response.text}"
