@@ -38,14 +38,8 @@ def generate_fresh_token():
         
         token = driver.execute_script("return window.localStorage.getItem('accessToken');")
         
-        if token:
-            # 프로젝트 루트에 token.txt 저장
-            token_path = Path(__file__).parent.parent / "token.txt"
-            with open(token_path, "w") as f:
-                f.write(token)
-            return token
-        else:
-            raise Exception("토큰을 찾을 수 없습니다.")
+        return token
+        
     finally:
         driver.quit()
 
