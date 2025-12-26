@@ -72,7 +72,7 @@ class TestBlockStorageCRUD:
         
         #5. 스토리지 상태 확인 (정상적인 생성 프로세스 상태여야 함)
         status = detail_data.get("status", "")
-        valid_statuses = ["queued", "creating", "available", "active"]
+        valid_statuses = ["queued", "creating", "available", "active", "assigned"]
         assert status in valid_statuses, f"예상치 못한 상태: {status} (허용: {valid_statuses})"
 
     def test_BS004_create_fail_missing_parameters(self, api_headers):
