@@ -1,10 +1,51 @@
 # 토큰 로드(Fixture) 및 공통 설정 정의
 import pytest
+import os
+import time
+from pathlib import Path
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
+load_dotenv()
+
+def generate_fresh_token():
+    """새로운 토큰을 자동으로 생성"""
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    
+    driver = webdriver.Chrome(options=options)
+    try:
+        driver.get("https://qatrack.elice.io/eci")
+        wait = WebDriverWait(driver, 10)
+        
+        # .env의 LOGIN_ID 사용
+        email_field = wait.until(EC.presence_of_element_located((By.NAME, "loginId")))
+        email_field.send_keys(os.getenv("LOGIN_ID"))
+
+        # .env의 PASSWORD 사용
+        password_field = wait.until(EC.presence_of_element_located((By.NAME, "password")))
+        password_field.send_keys(os.getenv("PASSWORD"))
+        
+        login_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
+        login_button.click()
+        wait.until(EC.url_contains("/eci/home"))
+        
+        token = driver.execute_script("return window.localStorage.getItem('accessToken');")
+        
+        return token
+        
+    finally:
+        driver.quit()
 
 @pytest.fixture(scope="session")
 def auth_token():
-    with open("token.txt") as f:
-        return f.read().strip()
+    """토큰을 자동으로 생성하고 반환"""
+    return generate_fresh_token()
 
 @pytest.fixture(scope="session")
 def api_headers(auth_token):
@@ -14,3 +55,19 @@ def api_headers(auth_token):
         "Content-Type": "application/json",
         # "Accept": "application/json"
     }
+
+# API Base URL Fixtures
+@pytest.fixture(scope="session")
+def base_url_block_storage():
+    """블록 스토리지 API Base URL"""
+    return os.getenv("BASE_URL_BLOCK_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage")
+
+@pytest.fixture(scope="session")
+def base_url_network():
+    """네트워크 API Base URL"""
+    return os.getenv("BASE_URL_NETWORK", "https://portal.gov.elice.cloud/api/user/resource/network")
+
+@pytest.fixture(scope="session")
+def base_url_object_storage():
+    """오브젝트 스토리지 API Base URL"""
+    return os.getenv("BASE_URL_OBJECT_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/object_storage")
