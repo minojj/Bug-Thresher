@@ -1,84 +1,8 @@
-# tests/api/test_compute.py
-import os
-import uuid
 import requests
 import pytest
+import uuid
+import time
 
-
-BASE_URL = "https://portal.gov.elice.cloud"
-
-# ✅ 네가 실제로 확인한 zone_id 그대로 (예시로 네 값 넣어둠)
-ZONE_ID = "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0"
-
-# ✅ 아래 2개는 너 환경에서 "실제 존재하는 값"으로 바꿔야 PASS가 확실해짐
-# - instance_type_id: (너가 성공시킨 C-16/M-2/M-8/M-16 중 실제 ID)
-# - image_id: (OS 이미지 카탈로그에서 실제 존재하는 ID)
-INSTANCE_TYPE_ID = "PUT_REAL_INSTANCE_TYPE_ID_HERE"
-IMAGE_ID = "PUT_REAL_OS_IMAGE_ID_HERE"
-
-# (선택) attached_subnet_id가 VM 생성에 필요하다면 여기에 실제 값 넣어
-# 필요 없으면 None으로 두면 payload에서 자동 제거됨.
-ATTACHED_SUBNET_ID = None  # 예: "a78afe80-88c6-44bc-8438-adba40aa0372"
-
-
-def _read_token_from_tests_token_txt() -> str:
-    """
-    tests/token.txt 에 Bearer 없이 accessToken 한 줄이 들어있다는 전제.
-    """
-    token_path = os.path.join("tests", "token.txt")
-    if not os.path.exists(token_path):
-        raise RuntimeError(
-            "tests/token.txt 가 없습니다. tests/token.txt에 Bearer 없이 accessToken 한 줄로 넣어주세요."
-        )
-
-    token = open(token_path, "r", encoding="utf-8").read().strip()
-    if not token:
-        raise RuntimeError("tests/token.txt 가 비어있습니다. accessToken 값을 한 줄로 넣어주세요.")
-    if token.lower().startswith("bearer "):
-        raise RuntimeError("tests/token.txt에는 'Bearer ' 없이 토큰 문자열만 넣어야 합니다.")
-    return token
-
-
-def _headers() -> dict:
-    token = _read_token_from_tests_token_txt()
-    return {
-        "Accept": "application/json",
-        "Authorization": f"Bearer {token}",
-        "Content-Type": "application/json",
-        "Origin": "https://qatrack.elice.io",
-        "Referer": "https://qatrack.elice.io/",
-    }
-
-
-def _create_vm_payload(vm_name: str) -> dict:
-    body = {
-        "name": vm_name,
-        "zone_id": ZONE_ID,
-        "instance_type_id": INSTANCE_TYPE_ID,
-        "image_id": IMAGE_ID,
-    }
-
-    # attached_subnet_id가 필요한 환경이면 포함
-    if ATTACHED_SUBNET_ID:
-        body["attached_subnet_id"] = ATTACHED_SUBNET_ID
-
-    return body
-
-
-def _delete_vm(vm_id: str) -> None:
-    # ✅ 너가 저장해둔 compute VM 삭제 endpoint 기준
-    url = f"{BASE_URL}/api/user/resource/compute/virtual_machine/{vm_id}"
-    r = requests.delete(url, headers=_headers(), timeout=30)
-
-    # 삭제는 200/204 둘 다 가능성 있어서 넉넉히 처리
-    if r.status_code not in (200, 204):
-        # 삭제 실패해도 테스트를 "무조건 fail"로 만들진 않게끔 경고로 남김
-        print(f"[WARN] VM delete failed: status={r.status_code}, body={r.text}")
-        
-        
-        
-        
-        
 class TestComputeCRUD:
     created_vm_id = None
     deleted_vm_verified = False
@@ -134,37 +58,7 @@ class TestComputeCRUD:
         assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
 
     # VM-003 OS 이미지 지정 생성 (Blocked)
-    def test_VM003_create_vm_with_image(self):
-        """
-        OS 이미지(image_id)를 지정하여 VM 생성이 성공(200 or 201)하는지 확인.
-        성공 시 생성된 VM은 삭제(cleanup).
-        """
-        # 방어: 하드코딩 값 비어있으면 즉시 에러로 알려주기
-        if "PUT_REAL_" in INSTANCE_TYPE_ID or not INSTANCE_TYPE_ID:
-            raise RuntimeError("INSTANCE_TYPE_ID를 실제 값으로 바꿔야 합니다.")
-        if "PUT_REAL_" in IMAGE_ID or not IMAGE_ID:
-            raise RuntimeError("IMAGE_ID를 실제 값으로 바꿔야 합니다.")
 
-        vm_name = f"vm-{uuid.uuid4().hex[:8]}-TEAM2-os-image"
-        url = f"{BASE_URL}/api/user/resource/compute/virtual_machine"
-        payload = _create_vm_payload(vm_name)
-
-        r = requests.post(url, headers=_headers(), json=payload, timeout=30)
-        print("[DEBUG] status:", r.status_code)
-        print("[DEBUG] body:", r.text)
-
-        assert r.status_code in (200, 201), f"Unexpected status: {r.status_code}, body={r.text}"
-
-        data = r.json()
-        assert "id" in data and data["id"], f"Response missing id: {data}"
-        vm_id = data["id"]
-
-        # cleanup
-        _delete_vm(vm_id)
-        
-        
-        
-        
     # VM-004 초기화 스크립트 포함 VM 생성
     def test_VM004_create_vm_with_init_script(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
