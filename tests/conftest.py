@@ -58,6 +58,11 @@ def api_headers(auth_token):
 
 # API Base URL Fixtures
 @pytest.fixture(scope="session")
+def base_url_compute():
+    """Compute API Base URL"""
+    return os.getenv("BASE_URL_COMPUTE", "https://portal.gov.elice.cloud/api/user/resource/compute")
+
+@pytest.fixture(scope="session")
 def base_url_block_storage():
     """블록 스토리지 API Base URL"""
     return os.getenv("BASE_URL_BLOCK_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage")
