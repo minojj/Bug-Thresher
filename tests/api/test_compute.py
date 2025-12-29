@@ -8,14 +8,13 @@ class TestComputeCRUD:
     created_vm_id = None
 
     # VM-001 VM 생성
-# VM-001 VM 생성
     def test_VM001_create_vm(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
         body = {
             "name": f"vm-auto-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
-            "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
+            "instance_type_id": "830e2041-d477-4058-a65c-386a93ead237",  # M-2
             "username": "test",
             "password": "1qaz2wsx@@",
             "on_init_script": "",
@@ -24,12 +23,10 @@ class TestComputeCRUD:
         }
 
         r = requests.post(url, headers=api_headers, json=body)
-        assert r.status_code in (200, 201)
+        assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
 
         res = r.json()
         TestComputeCRUD.created_vm_id = res["id"]
-
-
 
     # VM-002 동일 파라미터로 VM 재생성
     def test_VM002_recreate_vm(self, api_headers, base_url_compute):
