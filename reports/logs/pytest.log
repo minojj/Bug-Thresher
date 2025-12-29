@@ -1,0 +1,199 @@
+2025-12-29 20:29:39 [   DEBUG] Selenium Manager binary found at: C:\Users\JMH\Documents\GitHub\Bug-Thresher\venv\Lib\site-packages\selenium\webdriver\common\windows\selenium-manager.exe
+2025-12-29 20:29:39 [   DEBUG] Executing process: C:\Users\JMH\Documents\GitHub\Bug-Thresher\venv\Lib\site-packages\selenium\webdriver\common\windows\selenium-manager.exe --browser chrome --debug --language-binding python --output json
+2025-12-29 20:29:39 [   DEBUG] chromedriver not found in PATH
+2025-12-29 20:29:39 [   DEBUG] chrome detected at C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-29 20:29:39 [   DEBUG] Running command: wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value
+2025-12-29 20:29:39 [   DEBUG] Output: "\r\r\n\r\r\nVersion=143.0.7499.170\r\r\n\r\r\n\r\r\n\r"
+2025-12-29 20:29:39 [   DEBUG] Detected browser: chrome 143.0.7499.170
+2025-12-29 20:29:39 [   DEBUG] Required driver: chromedriver 143.0.7499.169
+2025-12-29 20:29:39 [   DEBUG] chromedriver 143.0.7499.169 already in the cache
+2025-12-29 20:29:39 [   DEBUG] Driver path: C:\Users\JMH\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe
+2025-12-29 20:29:39 [   DEBUG] Browser path: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-29 20:29:39 [   DEBUG] Started executable: `C:\Users\JMH\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe` in a child process with pid: 9160 using 0 to output -3
+2025-12-29 20:29:40 [   DEBUG] POST http://localhost:50846/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'chrome', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'browserVersion': None, 'goog:chromeOptions': {'extensions': [], 'binary': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'args': ['--headless', '--no-sandbox', '--disable-dev-shm-usage']}}}}
+2025-12-29 20:29:40 [   DEBUG] Starting new HTTP connection (1): localhost:50846
+2025-12-29 20:29:41 [   DEBUG] http://localhost:50846 "POST /session HTTP/1.1" 200 0
+2025-12-29 20:29:41 [   DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"143.0.7499.170","chrome":{"chromedriverVersion":"143.0.7499.169 (164b20aab62509dad21fd46383951aeec084ad1e-refs/branch-heads/7499@{#3399})","userDataDir":"C:\\Users\\JMH\\AppData\\Local\\Temp\\scoped_dir9160_1458654788"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:50849"},"goog:processID":6608,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"0bab6927045a539c2264362ac6b222a9"}} | headers=HTTPHeaderDict({'Content-Length': '903', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:41 [   DEBUG] Finished Request
+2025-12-29 20:29:41 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/url {'url': 'https://qatrack.elice.io/eci'}
+2025-12-29 20:29:41 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/url HTTP/1.1" 200 0
+2025-12-29 20:29:41 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:41 [   DEBUG] Finished Request
+2025-12-29 20:29:41 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element {'using': 'css selector', 'value': '[name="loginId"]'}
+2025-12-29 20:29:42 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element HTTP/1.1" 404 0
+2025-12-29 20:29:42 [   DEBUG] Remote response: status=404 | data={"value":{"error":"no such element","message":"no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"[name=\"loginId\"]\"}\n  (Session info: chrome=143.0.7499.170)","stacktrace":"Symbols not available. Dumping unresolved backtrace:\n\t0x7ff6ec6d88e5\n\t0x7ff6ec6d8940\n\t0x7ff6ec4b165d\n\t0x7ff6ec509a33\n\t0x7ff6ec509d3c\n\t0x7ff6ec55df67\n\t0x7ff6ec55ac97\n\t0x7ff6ec4fac29\n\t0x7ff6ec4fba93\n\t0x7ff6ec9f0640\n\t0x7ff6ec9eaf80\n\t0x7ff6eca096e6\n\t0x7ff6ec6f5de4\n\t0x7ff6ec6fed8c\n\t0x7ff6ec6e2004\n\t0x7ff6ec6e21b5\n\t0x7ff6ec6c7ee2\n\t0x7fffa48d7374\n\t0x7fffa5cdcc91\n"}} | headers=HTTPHeaderDict({'Content-Length': '611', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:42 [   DEBUG] Finished Request
+2025-12-29 20:29:43 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element {'using': 'css selector', 'value': '[name="loginId"]'}
+2025-12-29 20:29:44 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element HTTP/1.1" 200 0
+2025-12-29 20:29:44 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.17"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:44 [   DEBUG] Finished Request
+2025-12-29 20:29:44 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.17/value {'text': 'qa2team02@elicer.com', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '@', 'e', 'l', 'i', 'c', 'e', 'r', '.', 'c', 'o', 'm']}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.17/value HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element {'using': 'css selector', 'value': '[name="password"]'}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.18"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.18/value {'text': 'qa2team02!!', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '!', '!']}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.18/value HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element {'using': 'css selector', 'value': "button[type='submit']"}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.22"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/execute/sync {'script': '/* isDisplayed */return (function(){return (function(){var g=this||self;\nfunction aa(a){var b=typeof...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.22'}]}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/execute/sync HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] GET http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.22/enabled {}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "GET /session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.22/enabled HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.22/click {}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/element/f.BB7B82773A2CA9FB723A2A00FA7A433F.d.57E3A363EF387679BAFEE8118E6A4EDD.e.22/click HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] GET http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/url {}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "GET /session/0bab6927045a539c2264362ac6b222a9/url HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3DotUlpUvSDBCSx8bnWUblDbS3R8DuqXAhDPr2vnWy4tvB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Il9xdUJOdGxwY0RPLS14LTNhNHNhdkEifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=otUlpUvSDBCSx8bnWUblDbS3R8DuqXAhDPr2vnWy4tvB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Il9xdUJOdGxwY0RPLS14LTNhNHNhdkEifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:45 [   DEBUG] GET http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/url {}
+2025-12-29 20:29:45 [   DEBUG] http://localhost:50846 "GET /session/0bab6927045a539c2264362ac6b222a9/url HTTP/1.1" 200 0
+2025-12-29 20:29:45 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3DotUlpUvSDBCSx8bnWUblDbS3R8DuqXAhDPr2vnWy4tvB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Il9xdUJOdGxwY0RPLS14LTNhNHNhdkEifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=otUlpUvSDBCSx8bnWUblDbS3R8DuqXAhDPr2vnWy4tvB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Il9xdUJOdGxwY0RPLS14LTNhNHNhdkEifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:45 [   DEBUG] Finished Request
+2025-12-29 20:29:46 [   DEBUG] GET http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/url {}
+2025-12-29 20:29:46 [   DEBUG] http://localhost:50846 "GET /session/0bab6927045a539c2264362ac6b222a9/url HTTP/1.1" 200 0
+2025-12-29 20:29:46 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/auth/elice/callback?code=CknImYxAtgFL&state=otUlpUvSDBCSx8bnWUblDbS3R8DuqXAhDPr2vnWy4tvB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Il9xdUJOdGxwY0RPLS14LTNhNHNhdkEifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '222', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:46 [   DEBUG] Finished Request
+2025-12-29 20:29:46 [   DEBUG] GET http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/url {}
+2025-12-29 20:29:46 [   DEBUG] http://localhost:50846 "GET /session/0bab6927045a539c2264362ac6b222a9/url HTTP/1.1" 200 0
+2025-12-29 20:29:46 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci"} | headers=HTTPHeaderDict({'Content-Length': '40', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:46 [   DEBUG] Finished Request
+2025-12-29 20:29:47 [   DEBUG] GET http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/url {}
+2025-12-29 20:29:47 [   DEBUG] http://localhost:50846 "GET /session/0bab6927045a539c2264362ac6b222a9/url HTTP/1.1" 200 0
+2025-12-29 20:29:47 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/home"} | headers=HTTPHeaderDict({'Content-Length': '45', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:47 [   DEBUG] Finished Request
+2025-12-29 20:29:47 [   DEBUG] POST http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9/execute/sync {'script': "return window.localStorage.getItem('accessToken');", 'args': []}
+2025-12-29 20:29:47 [   DEBUG] http://localhost:50846 "POST /session/0bab6927045a539c2264362ac6b222a9/execute/sync HTTP/1.1" 200 0
+2025-12-29 20:29:47 [   DEBUG] Remote response: status=200 | data={"value":"urmQ3sA85MmHrhefUekAAX0n36jWctI3qRVPrtKoQDi8"} | headers=HTTPHeaderDict({'Content-Length': '56', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:47 [   DEBUG] Finished Request
+2025-12-29 20:29:47 [   DEBUG] DELETE http://localhost:50846/session/0bab6927045a539c2264362ac6b222a9 {}
+2025-12-29 20:29:47 [   DEBUG] http://localhost:50846 "DELETE /session/0bab6927045a539c2264362ac6b222a9 HTTP/1.1" 200 0
+2025-12-29 20:29:47 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-29 20:29:47 [   DEBUG] Finished Request
+2025-12-29 20:29:53 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage?skip=0&count=20 HTTP/1.1" 200 2614
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage?skip=0&count=20 HTTP/1.1" 200 2614
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage HTTP/1.1" 200 45
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/688e1479-8432-4369-96b5-6c0aa65d736e HTTP/1.1" 200 435
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/688e1479-8432-4369-96b5-6c0aa65d736e HTTP/1.1" 200 65
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage HTTP/1.1" 422 215
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage HTTP/1.1" 422 230
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:54 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/d3012bbe-11f3-44e6-9cd6-f485753914e HTTP/1.1" 404 22
+2025-12-29 20:29:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage HTTP/1.1" 200 45
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/storage/block_storage/d3750a24-a658-4297-a8fd-430e667a65e8 HTTP/1.1" 200 45
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/d3750a24-a658-4297-a8fd-430e667a65e8 HTTP/1.1" 200 459
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/d3750a24-a658-4297-a8fd-430e667a65e8 HTTP/1.1" 200 65
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/storage/block_storage/d3012bbe-11f3-44e6-9cd6-f485753914ee HTTP/1.1" 422 237
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage HTTP/1.1" 200 45
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/dbb5599c-c8fb-4346-a6cc-ddd317b051f5 HTTP/1.1" 200 65
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:55 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/dbb5599c-c8fb-4346-a6cc-ddd317b051f5 HTTP/1.1" 409 180
+2025-12-29 20:29:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage HTTP/1.1" 200 45
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/2d0f6ff3-57ce-4c83-8a7a-b1722176c695 HTTP/1.1" 200 65
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/2d0f6ff3-57ce-4c83-8a7a-b1722176c695 HTTP/1.1" 409 180
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/2d0f6ff3-57ce-4c83-8a7a-b1722176c695 HTTP/1.1" 409 180
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot?skip=0&count=20 HTTP/1.1" 200 2709
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot?skip=0&count=20 HTTP/1.1" 200 2709
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot HTTP/1.1" 200 45
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:56 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot/382b166f-fc7d-4fd6-a0a2-2698b5eb19f3 HTTP/1.1" 200 422
+2025-12-29 20:29:56 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/382b166f-fc7d-4fd6-a0a2-2698b5eb19f3 HTTP/1.1" 200 65
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot HTTP/1.1" 422 244
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot HTTP/1.1" 422 466
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot/d3012bbe-11f3-44e6-9cd6-f485753914e HTTP/1.1" 404 22
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot HTTP/1.1" 200 45
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/storage/block_storage/snapshot/7c7e0d12-0c9e-449b-95c7-8d6bfc952b32 HTTP/1.1" 200 45
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot/7c7e0d12-0c9e-449b-95c7-8d6bfc952b32 HTTP/1.1" 200 443
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/7c7e0d12-0c9e-449b-95c7-8d6bfc952b32 HTTP/1.1" 200 65
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:57 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/storage/block_storage/snapshot/d3012bbe-11f3-44e6-9cd6-f485753914ee HTTP/1.1" 422 237
+2025-12-29 20:29:57 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot HTTP/1.1" 200 45
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/074c823c-1a84-44d6-a4a7-5d145ce690c7 HTTP/1.1" 200 65
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/074c823c-1a84-44d6-a4a7-5d145ce690c7 HTTP/1.1" 409 184
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot HTTP/1.1" 200 45
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/565e0cf2-5249-49dd-bf4b-9de5e1de0f47 HTTP/1.1" 200 65
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/565e0cf2-5249-49dd-bf4b-9de5e1de0f47 HTTP/1.1" 409 184
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot/565e0cf2-5249-49dd-bf4b-9de5e1de0f47 HTTP/1.1" 409 184
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:58 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot_scheduler?skip=0&count=20 HTTP/1.1" 200 1361
+2025-12-29 20:29:58 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot_scheduler?skip=0&count=20 HTTP/1.1" 200 1361
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot_scheduler HTTP/1.1" 200 45
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot_scheduler/6ee3b675-3412-4ad3-9450-687d2060e294 HTTP/1.1" 200 441
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot_scheduler/6ee3b675-3412-4ad3-9450-687d2060e294 HTTP/1.1" 200 64
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot_scheduler HTTP/1.1" 422 224
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot_scheduler HTTP/1.1" 422 238
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot_scheduler/2bbe3e69-7a41-4b2c-936c-057d79303a6 HTTP/1.1" 404 22
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot_scheduler HTTP/1.1" 200 45
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/storage/block_storage/snapshot_scheduler/dcad3247-b622-484b-ab26-8e8688886137 HTTP/1.1" 200 45
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:29:59 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/block_storage/snapshot_scheduler/dcad3247-b622-484b-ab26-8e8688886137 HTTP/1.1" 200 446
+2025-12-29 20:29:59 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:30:00 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot_scheduler/dcad3247-b622-484b-ab26-8e8688886137 HTTP/1.1" 200 64
+2025-12-29 20:30:00 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:30:00 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/storage/block_storage/snapshot_scheduler/2bbe3e69-7a41-4b2c-936c-057d79303a68 HTTP/1.1" 422 237
+2025-12-29 20:30:00 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:30:00 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/block_storage/snapshot_scheduler HTTP/1.1" 200 45
+2025-12-29 20:30:00 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:30:00 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot_scheduler/ede1557f-f81c-4d64-ad83-9edc40421806 HTTP/1.1" 200 64
+2025-12-29 20:30:00 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:30:00 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot_scheduler/ede1557f-f81c-4d64-ad83-9edc40421806 HTTP/1.1" 200 64
+2025-12-29 20:30:00 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-29 20:30:00 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot_scheduler/9f05d141-a3e0-42a9-9532-6837c2b19168 HTTP/1.1" 409 85
