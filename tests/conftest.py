@@ -9,7 +9,9 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from src.utils.api_util import wait_for_status  # 수정된 유틸 함수 임포트
 from dotenv import load_dotenv
+
 load_dotenv()
 
 def generate_fresh_token():
@@ -59,6 +61,16 @@ def api_headers(auth_token):
 
 # API Base URL Fixtures
 @pytest.fixture(scope="session")
+def base_url_infra():
+    """인프라 API Base URL"""
+    return os.getenv("BASE_URL_INFRA", "https://portal.gov.elice.cloud/api/user")
+
+@pytest.fixture(scope="session")
+def base_url_compute():
+    """컴퓨트 API Base URL"""
+    return os.getenv("BASE_URL_COMPUTE", "https://portal.gov.elice.cloud/api/user/resource/compute")
+
+@pytest.fixture(scope="session")
 def base_url_block_storage():
     """블록 스토리지 API Base URL"""
     return os.getenv("BASE_URL_BLOCK_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/block_storage")
@@ -72,7 +84,6 @@ def base_url_network():
 def base_url_object_storage():
     """오브젝트 스토리지 API Base URL"""
     return os.getenv("BASE_URL_OBJECT_STORAGE", "https://portal.gov.elice.cloud/api/user/resource/storage/object_storage")
-
 
 # Setup/Teardown 공통 Fixture
 @pytest.fixture
@@ -113,8 +124,15 @@ def delete_resource(url, headers,resource_id):
     response = requests.delete(f"{url}/{resource_id}", headers=headers)
     assert response.status_code == 200, f"⛔ [FAIL] 삭제 실패, {response.status_code}: {response.text}"
 
+# --- Helpers Fixture (유틸 함수 연결) ---
+@pytest.fixture
+def api_helpers():
+    class Helpers:
+        # api_util.py에 정의된 지수 백오프 기반 함수를 그대로 사용
+        wait_for_status = staticmethod(wait_for_status)
+    return Helpers()
 
-# Object Storage 전용 payload
+# --- 기타 공통 Fixtures (Object Storage 등) ---
 @pytest.fixture
 def existing_bucket(resource_factory, base_url_object_storage):
     payload = {
