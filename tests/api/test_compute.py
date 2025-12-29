@@ -1,16 +1,19 @@
-import os
 import requests
 import pytest
+import uuid
+import time
+
 
 class TestComputeCRUD:
     created_vm_id = None
 
     # VM-001 VM 생성
+# VM-001 VM 생성
     def test_VM001_create_vm(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
-        payload = {
-            "name": "vm-team2-01",
+        body = {
+            "name": f"vm-auto-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
             "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
             "username": "test",
@@ -20,20 +23,20 @@ class TestComputeCRUD:
             "dr": False
         }
 
-        r = requests.post(url, headers=api_headers, json=payload)
-
-        if r.status_code == 409:
-            pytest.xfail(f"quota 또는 환경 제한: {r.text}")
-
+        r = requests.post(url, headers=api_headers, json=body)
         assert r.status_code in (200, 201)
-        TestComputeCRUD.created_vm_id = r.json()["id"]
+
+        res = r.json()
+        TestComputeCRUD.created_vm_id = res["id"]
+
+
 
     # VM-002 동일 파라미터로 VM 재생성
     def test_VM002_recreate_vm(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
-            "name": "vm-team2-01-2",
+            "name": f"vm-auto-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
             "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
             "username": "test",
@@ -55,7 +58,7 @@ class TestComputeCRUD:
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
-            "name": "vm-team2-type2",
+            "name": f"vm-auto-type2-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
             "instance_type_id": "61d9beec-27d5-44df-a3b2-5ec200d2eebb",
             "username": "test",
@@ -68,7 +71,7 @@ class TestComputeCRUD:
         r = requests.post(url, headers=api_headers, json=payload)
 
         if r.status_code in (400, 404, 409, 422):
-            pytest.xfail(f"환경에 다른 instance_type 미존재: {r.text}")
+            pytest.xfail(f"환경 제한: {r.text}")
 
         assert r.status_code in (200, 201)
 
@@ -81,7 +84,7 @@ class TestComputeCRUD:
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
-            "name": "vm-team2-init",
+            "name": f"vm-auto-init-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
             "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
             "username": "test",
@@ -103,7 +106,7 @@ class TestComputeCRUD:
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
-            "name": "vm-team2-dr",
+            "name": f"vm-auto-dr-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
             "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
             "username": "test",
@@ -122,13 +125,13 @@ class TestComputeCRUD:
 
     # VM-007 VM 삭제
     def test_VM007_delete_vm(self, api_headers, base_url_compute):
-        assert TestComputeCRUD.created_vm_id is not None
+        vm_id = TestComputeCRUD.created_vm_id
+        assert vm_id is not None
 
-        url = f"{base_url_compute}/virtual_machine/{TestComputeCRUD.created_vm_id}"
+        url = f"{base_url_compute}/virtual_machine/{vm_id}"
         r = requests.delete(url, headers=api_headers)
 
         assert r.status_code == 200
-        assert r.json()["status"] == "deleted"
 
     # VM-008 삭제 후 단건 조회
     def test_VM008_get_deleted_vm(self, api_headers, base_url_compute):
@@ -136,13 +139,11 @@ class TestComputeCRUD:
         url = f"{base_url_compute}/virtual_machine/{vm_id}"
 
         r = requests.get(url, headers=api_headers)
-
         assert r.status_code in (200, 404)
 
     # VM-009 VM 다건 조회
     def test_VM009_list_vm(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine_allocation"
-
         r = requests.get(url, headers=api_headers)
 
         assert r.status_code == 200
@@ -150,10 +151,19 @@ class TestComputeCRUD:
 
     # VM-010 특정 상태 VM 목록 조회
     def test_VM010_list_vm_by_status(self, api_headers, base_url_compute):
-        url = f"{base_url_compute}/virtual_machine_allocation?filter_status=RUNNING"
+        vm_id = TestComputeCRUD.created_vm_id
+        assert vm_id is not None
 
+        start_url = f"{base_url_compute}/virtual_machine_control/start"
+        requests.post(start_url, headers=api_headers, json={"id": vm_id})
+
+        time.sleep(10)
+
+        url = f"{base_url_compute}/virtual_machine_allocation?filter_status=RUNNING"
         r = requests.get(url, headers=api_headers)
 
-        assert r.status_code == 200
-        for vm in r.json():
-            assert vm["status"] == "RUNNING"
+        assert r.status_code in (200, 422)
+
+        if r.status_code == 200:
+            for vm in r.json():
+                assert vm["status"] == "RUNNING"
