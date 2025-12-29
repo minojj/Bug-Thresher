@@ -1,10 +1,9 @@
+from email import errors
 import requests
 import pytest
 
-
 class TestBlockStorageCRUD:
     """블록 스토리지 API 테스트 클래스"""
-    created_block_storage_id = None
 
     def test_BS001_list_exists_look_up(self, api_headers, base_url_block_storage):
         """BS-001: 데이터가 있는 경우 목록 조회"""
@@ -32,12 +31,13 @@ class TestBlockStorageCRUD:
         assert response.status_code == 200
         # assert res_data == [], f"데이터가 비어있어야 하지만 {len(res_data)}개의 데이터가 반환되었습니다."
 
-    def test_BS003_create_success(self, api_headers, base_url_block_storage):
+    def test_BS003_create_success(self, resource_factory, api_headers, base_url_block_storage):
         """BS-003: 블록 스토리지 생성 성공 및 검증"""
+        import uuid
         url = base_url_block_storage
         headers = api_headers
         payload = {
-                        "name": "team2",
+                        "name": f"team2-{uuid.uuid4().hex[:6]}",
                         "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
                         "size_gib": 10,
                         "dr": False,
@@ -45,17 +45,11 @@ class TestBlockStorageCRUD:
                         "snapshot_id": None
         }
 
-        # 1. 블록 스토리지 생성
-        response = requests.post(url, headers=headers, json=payload)
-        res_data = response.json()
-        
-        assert response.status_code == 200, f"생성 실패: {res_data}"
-        assert "id" in res_data, "생성 응답에 id가 없습니다"
+        # 1. 블록 스토리지 생성 (resource_factory 사용)
+        created_resource = resource_factory(url, payload)
+        created_id = created_resource["id"]
         
         # 2. 생성된 블록 스토리지 상세 조회 (GET)
-        created_id = res_data["id"]
-        TestBlockStorageCRUD.created_block_storage_id = created_id  # 클래스 변수에 저장
-        
         detail_url = f"{url}/{created_id}"
         detail_response = requests.get(detail_url, headers=headers)
         detail_data = detail_response.json()
@@ -148,7 +142,7 @@ class TestBlockStorageCRUD:
         assert error_detail["ctx"]["error"] == "Expecting value"
 
     def test_BS007_get_fail_non_existent_id(self, api_headers, base_url_block_storage):
-        """BS-006: 존재하지 않는 ID로 블록 스토리지 조회 시 404 에러 검증"""
+        """BS-007: 존재하지 않는 ID로 블록 스토리지 조회 시 404 에러 검증"""
         
         # 1. 존재하지 않는 임의의 ID 설정 (이미지 예시 참고)
         invalid_id = "d3012bbe-11f3-44e6-9cd6-f485753914e"
@@ -169,11 +163,20 @@ class TestBlockStorageCRUD:
 
         print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
 
-    def test_BS008_update_resource_name(self, api_headers, base_url_block_storage):
+    def test_BS008_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-008: 블록 스토리지 이름 수정 검증"""
-        # test_BS003에서 생성된 블록 스토리지 ID 사용
-        assert TestBlockStorageCRUD.created_block_storage_id is not None, "test_BS003이 먼저 실행되어야 합니다."
-        resource_id = TestBlockStorageCRUD.created_block_storage_id
+        import uuid
+        # 테스트용 블록 스토리지 생성
+        payload = {
+            "name": f"team2-{uuid.uuid4().hex[:6]}",
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "size_gib": 10,
+            "dr": False,
+            "image_id": None,
+            "snapshot_id": None
+        }
+        created_resource = resource_factory(base_url_block_storage, payload)
+        resource_id = created_resource["id"]
         
         url = f"{base_url_block_storage}/{resource_id}"
         headers = api_headers
@@ -222,11 +225,20 @@ class TestBlockStorageCRUD:
         assert "JSON decode error" in error_detail["msg"]
         assert "Expecting ',' delimiter" in error_detail["ctx"]["error"]
 
-    def test_BS010_delete_resource_success(self, api_headers, base_url_block_storage):
+    def test_BS010_delete_resource_success(self, resource_factory, api_headers, base_url_block_storage):
         """BS-010: 블록 스토리지 삭제 요청 성공 검증"""
-        # test_BS003에서 생성하고 test_BS008에서 수정한 블록 스토리지 ID 사용
-        assert TestBlockStorageCRUD.created_block_storage_id is not None, "test_BS003이 먼저 실행되어야 합니다."
-        resource_id = TestBlockStorageCRUD.created_block_storage_id
+        import uuid
+        # 테스트용 블록 스토리지 생성
+        payload = {
+            "name": f"team2-{uuid.uuid4().hex[:6]}",
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "size_gib": 10,
+            "dr": False,
+            "image_id": None,
+            "snapshot_id": None
+        }
+        created_resource = resource_factory(base_url_block_storage, payload)
+        resource_id = created_resource["id"]
         
         url = f"{base_url_block_storage}/{resource_id}"
         headers = api_headers
@@ -240,15 +252,29 @@ class TestBlockStorageCRUD:
         assert res_data["id"] == resource_id
         assert res_data["status"] == "deleting"
 
-    def test_BS011_delete_fail_already_deleted(self, api_headers, base_url_block_storage):
+    def test_BS011_delete_fail_already_deleted(self, resource_factory, api_headers, base_url_block_storage):
         """BS-011: 이미 삭제된 ID 삭제 시도 시 409 Conflict 검증"""
-        # test_BS010에서 삭제한 블록 스토리지를 다시 삭제 시도
-        assert TestBlockStorageCRUD.created_block_storage_id is not None, "test_BS010이 먼저 실행되어야 합니다."
-        resource_id = TestBlockStorageCRUD.created_block_storage_id
+        import uuid
+        # 1. 테스트용 블록 스토리지 생성
+        payload = {
+            "name": f"team2-{uuid.uuid4().hex[:6]}",
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "size_gib": 10,
+            "dr": False,
+            "image_id": None,
+            "snapshot_id": None
+        }
+        created_resource = resource_factory(base_url_block_storage, payload)
+        resource_id = created_resource["id"]
         
         url = f"{base_url_block_storage}/{resource_id}"
         headers = api_headers
 
+        # 2. 첫 번째 삭제 요청 (성공해야 함)
+        first_delete = requests.delete(url, headers=headers)
+        assert first_delete.status_code == 200
+
+        # 3. 두 번째 삭제 요청 (409 Conflict 예상)
         response = requests.delete(url, headers=headers)
         res_data = response.json()
 
@@ -258,4 +284,289 @@ class TestBlockStorageCRUD:
         assert "should be queued, assigned, or prepared" in res_data["message"]
         # 삭제 중이거나 이미 삭제된 상태 모두 허용
         status = res_data["detail"]["resource_block_storage"]["status"]
+        assert status in ["deleting", "deleted"], f"예상치 못한 상태: {status}"
+
+class TestSanpshotCRUD:
+    """스냅샷 API 테스트 클래스"""
+
+    def test_BS012_list_exists_look_up(self, api_headers, base_url_block_storage):
+        """BS-012: 데이터가 있는 경우 목록 조회"""
+        headers = api_headers
+        url = f"{base_url_block_storage}/snapshot?skip=0&count=20"
+        
+        response = requests.get(url, headers=headers)
+        res_data = response.json()
+
+        assert response.status_code == 200
+        assert isinstance(res_data, list)
+        assert len(res_data) > 0, "데이터가 존재해야 하지만 빈 리스트가 반환되었습니다."
+        assert "id" in res_data[0]
+        assert "name" in res_data[0]
+
+
+    def test_BS013_list_emptylook_up(self, api_headers, base_url_block_storage):
+        """BS-013: 데이터가 없는 경우 조회"""
+        headers = api_headers
+        url = f"{base_url_block_storage}/snapshot?skip=0&count=20"
+        
+        response = requests.get(url, headers=headers)
+        res_data = response.json()
+
+        assert response.status_code == 200
+        # assert res_data == [], f"데이터가 비어있어야 하지만 {len(res_data)}개의 데이터가 반환되었습니다."
+
+    def test_BS014_create_success(self, resource_factory, api_headers, base_url_block_storage):
+        """BS-014: 스냅샷 생성 성공 및 검증"""
+        url = f"{base_url_block_storage}/snapshot"
+        headers = api_headers
+        payload = {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": "snapshot-878908",
+            "block_storage_id": "e0abb783-493b-432e-bdcc-69ecfb858529",
+        }
+
+        # 1. 스냅샷 생성 (resource_factory 사용)
+        created_resource = resource_factory(url, payload)
+        created_id = created_resource["id"]
+        
+        # 2. 생성된 스냅샷 상세 조회 (GET)
+        detail_url = f"{url}/{created_id}"
+        detail_response = requests.get(detail_url, headers=headers)
+        detail_data = detail_response.json()
+        
+        # 3. 상세 조회 검증
+        assert detail_response.status_code == 200, f"상세 조회 실패: {detail_data}"
+        
+        # 4. 생성 요청 데이터와 실제 생성된 데이터 비교 (스냅샷 필드 기준)
+        assert detail_data["name"] == payload["name"], f"name 불일치: 요청={payload['name']}, 응답={detail_data.get('name')}"
+        assert detail_data["zone_id"] == payload["zone_id"], f"zone_id 불일치: 요청={payload['zone_id']}, 응답={detail_data.get('zone_id')}"
+        assert detail_data["block_storage_id"] == payload["block_storage_id"], f"block_storage_id 불일치: 요청={payload['block_storage_id']}, 응답={detail_data.get('block_storage_id')}"
+        
+        # 5. 스냅샷 상태 확인 (이미지 응답 구조 및 일반적인 상태값 기준)
+        status = detail_data.get("status", "")
+        # 스냅샷 특성에 맞는 유효 상태 목록
+        valid_statuses = ["queued", "creating", "available", "active", "assigned", "prepared"]
+        assert status in valid_statuses, f"예상치 못한 상태: {status} (허용: {valid_statuses})"
+
+    def test_BS015_create_fail_missing_parameters(self, api_headers, base_url_block_storage):
+        """BS-015: 필수 파라미터 일부 누락 시 422 에러 검증"""
+        url = f"{base_url_block_storage}/snapshot"
+        headers = api_headers
+        
+        # 이미지의 예시와 유사하게 size_gib 등을 null로 보내거나 일부 누락한 페이로드
+        # 이미지 우측 하단 JSON 예시를 참고하여 구성
+        payload = {
+                    "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+                    "name": "snapshot-878908",
+                    "block_storage_id": None
+        }
+
+        # 1. 스냅샷 생성 요청 (실패 예상)
+        response = requests.post(url, headers=headers, json=payload)
+        res_data = response.json()
+        
+        # 2. 상태 코드 검증 (이미지 상의 422 확인)
+        assert response.status_code == 422, f"예상치 못한 상태 코드: {response.status_code}"
+        
+        # 3. 에러 메시지 상세 검증 (이미지 상의 JSON 구조와 매칭)
+        assert res_data["code"] == "invalid_parameters"
+        assert "requested parameters are not valid" in res_data["message"]
+        
+        # 4. 세부 에러 내용(detail) 확인
+        # 이미지에는 "uuid_type" 에러와 "UUID input should be a string..." 메시지가 찍혀있음
+        errors = res_data.get("detail", {}).get("errors", [])
+        
+        found_uuid_error = any(
+            error.get("type") == "uuid_type" and 
+            "UUID input should be a string" in error.get("msg", "")
+            for error in errors
+        )
+        
+        assert found_uuid_error, f"상세 에러 내용에 'uuid_type' 관련 메시지가 없습니다: {res_data}"
+        
+        # 추가 검증: 에러가 발생한 위치(loc)가 block_storage_id인지 확인
+        error_loc = errors[0].get("loc", [])
+        assert "block_storage_id" in error_loc, f"에러 위치가 올바르지 않습니다: {error_loc}"
+    
+    def test_BS016_create_fail_invalid_data_type(self, api_headers, base_url_block_storage):
+        """BS-016: 필수 파라미터에 잘못된 데이터 타입 입력 시 에러 검증"""
+        url = f"{base_url_block_storage}/snapshot"
+        headers = api_headers.copy()
+        headers["Content-Type"] = "application/json"
+
+        # 잘못된 UUID 형식(너무 짧음)을 사용하여 uuid_parsing 에러 유도
+        invalid_raw_body = """
+        {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": "snapshot-878908",
+            "block_storage_id": "invalid-uuid-format"
+        }
+        """
+
+        # data 파라미터로 문자열을 직접 전송
+        response = requests.post(url, headers=headers, data=invalid_raw_body)
+        res_data = response.json()
+
+        # 1. 상태 코드 검증
+        assert response.status_code == 422
+        
+        # 2. 공통 응답 구조 검증
+        assert res_data["code"] == "invalid_parameters"
+        assert res_data["message"] == "requested parameters are not valid"
+
+        # 3. 상세 에러(detail) 검증 - Postman 결과와 매칭
+        errors = res_data.get("detail", {}).get("errors", [])
+        assert len(errors) > 0
+        
+        error_detail = errors[0]
+        assert error_detail["type"] == "uuid_parsing"
+        assert "block_storage_id" in error_detail["loc"]
+        # 이미지에 나온 구체적인 에러 메시지 확인
+        assert "Input should be a valid UUID" in error_detail["msg"]
+    
+    def test_BS018_get_fail_non_existent_id(self, api_headers, base_url_block_storage):
+        """BS-018: 존재하지 않는 ID로 스냅샷 조회 시 404 에러 검증"""
+        
+        # 1. 존재하지 않는 임의의 ID 설정 (이미지 예시 참고)
+        invalid_id = "d3012bbe-11f3-44e6-9cd6-f485753914e"
+        url = f"{base_url_block_storage}/snapshot/{invalid_id}"
+        
+        headers = api_headers.copy()
+        headers["Content-Type"] = "application/json"
+
+        # 2. 상세 조회 요청 (GET)
+        response = requests.get(url, headers=headers)
+        
+        # 3. 상태 코드 검증 (404 Not Found)
+        assert response.status_code == 404, f"예상치 못한 상태 코드: {response.status_code}"
+        
+        # 4. 응답 바디 검증
+        res_data = response.json()
+        assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
+
+        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
+    
+    def test_BS019_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
+        """BS-019: 스냅샷 이름 수정 검증"""
+        # 테스트용 스냅샷 생성
+        url = f"{base_url_block_storage}/snapshot"
+        payload = {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": "snapshot-original",
+            "block_storage_id": "e0abb783-493b-432e-bdcc-69ecfb858529",
+        }
+        created_resource = resource_factory(url, payload)
+        resource_id = created_resource["id"]
+        
+        url = f"{base_url_block_storage}/snapshot/{resource_id}"
+        headers = api_headers
+        
+        # 수정할 데이터 (이미지 기반)
+        update_payload = {
+            "name": "test-team22"
+        }
+
+        # PATCH 또는 PUT 요청 (API 명세에 따라 선택, 이미지 흐름상 수정 요청)
+        response = requests.patch(url, headers=headers, json=update_payload)
+        res_data = response.json()
+
+        assert response.status_code == 200
+        assert res_data["id"] == resource_id
+        
+        # 실제로 이름이 변경되었는지 상세 조회를 통해 재확인
+        get_response = requests.get(url, headers=headers)
+        assert get_response.json()["name"] == "test-team22"
+
+    def test_BS020_update_fail_invalid_tag_format(self, api_headers, base_url_block_storage):
+        """BS-020: 올바르지 않은 태그 형식(JSON 문법 오류)으로 수정 시 422 에러 검증"""
+        resource_id = "d3012bbe-11f3-44e6-9cd6-f485753914ee"
+        url = f"{base_url_block_storage}/snapshot/{resource_id}"
+        headers = api_headers.copy()
+        headers["Content-Type"] = "application/json"
+
+        # 이미지 예시: "tags": {}ss, 처럼 문법이 깨진 상태 유도
+        invalid_raw_body = """
+        {
+          "id": "603fc40b-e42c-420b-9d75-332e48d7a965",
+          "tags": {}22
+        }
+        """
+
+        # JSON 문법 오류를 보내기 위해 data= 파라미터 사용
+        response = requests.patch(url, headers=headers, data=invalid_raw_body)
+        res_data = response.json()
+
+        # 1. 상태 코드 검증
+        assert response.status_code == 422
+        
+        # 공통 에러 응답 구조 검증
+        assert res_data["code"] == "invalid_parameters"
+        assert res_data["message"] == "requested parameters are not valid"
+
+        # 상세 에러(detail) 검증
+        errors = res_data.get("detail", {}).get("errors", [])
+        assert len(errors) > 0
+    
+        error_detail = errors[0]
+        # 이미지 결과: "type": "json_invalid"
+        assert error_detail["type"] == "json_invalid"
+        # 이미지 결과: "msg": "JSON decode error"
+        assert "JSON decode error" in error_detail["msg"]
+    
+        # loc 정보 검증 (이미지 결과: ["body", 64])
+        assert "body" in error_detail["loc"]
+    
+    def test_BS021_delete_resource_success(self, resource_factory, api_headers, base_url_block_storage):
+        """BS-021: 블록 스토리지 삭제 요청 성공 검증"""
+        # 테스트용 스냅샷 생성
+        url = f"{base_url_block_storage}/snapshot"
+        payload = {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": "snapshot-to-delete",
+            "block_storage_id": "e0abb783-493b-432e-bdcc-69ecfb858529",
+        }
+        created_resource = resource_factory(url, payload)
+        resource_id = created_resource["id"]
+        
+        url = f"{base_url_block_storage}/snapshot/{resource_id}"
+        headers = api_headers
+
+        # DELETE 요청 전송
+        response = requests.delete(url, headers=headers)
+        res_data = response.json()
+
+        # 응답 검증
+        assert response.status_code == 200
+        assert res_data["id"] == resource_id
+        assert res_data["status"] == "deleting"
+
+    def test_BS022_delete_fail_already_deleted(self, resource_factory, api_headers, base_url_block_storage):
+        """BS-022: 이미 삭제된 ID 삭제 시도 시 409 Conflict 검증"""
+        # 1. 테스트용 스냅샷 생성
+        url = f"{base_url_block_storage}/snapshot"
+        payload = {
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "name": "snapshot-double-delete",
+            "block_storage_id": "e0abb783-493b-432e-bdcc-69ecfb858529",
+        }
+        created_resource = resource_factory(url, payload)
+        resource_id = created_resource["id"]
+        
+        url = f"{base_url_block_storage}/snapshot/{resource_id}"
+        headers = api_headers
+
+        # 2. 첫 번째 삭제 요청 (성공해야 함)
+        first_delete = requests.delete(url, headers=headers)
+        assert first_delete.status_code == 200
+
+        # 3. 두 번째 삭제 요청 (409 Conflict 예상)
+        response = requests.delete(url, headers=headers)
+        res_data = response.json()
+
+        # 409 Conflict 및 상세 에러 메시지 검증
+        assert response.status_code == 409
+        assert res_data["code"] == "unexpected_status"
+        assert "should be queued, assigned, or prepared" in res_data["message"]
+        # 삭제 중이거나 이미 삭제된 상태 모두 허용
+        status = res_data["detail"]["resource_block_storage_snapshot"]["status"]
         assert status in ["deleting", "deleted"], f"예상치 못한 상태: {status}"
