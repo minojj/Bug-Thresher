@@ -1,141 +1,87 @@
-2025-12-29 20:54:56 [   DEBUG] Selenium Manager binary found at: C:\Users\0124e\Documents\GitHub\Bug-Thresher\venv\Lib\site-packages\selenium\webdriver\common\windows\selenium-manager.exe
-2025-12-29 20:54:56 [   DEBUG] Executing process: C:\Users\0124e\Documents\GitHub\Bug-Thresher\venv\Lib\site-packages\selenium\webdriver\common\windows\selenium-manager.exe --browser chrome --debug --language-binding python --output json
-2025-12-29 20:54:57 [   DEBUG] chromedriver not found in PATH
-2025-12-29 20:54:57 [   DEBUG] chrome detected at C:\Program Files\Google\Chrome\Application\chrome.exe
-2025-12-29 20:54:57 [   DEBUG] Running command: wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value
-2025-12-29 20:54:57 [   DEBUG] Output: "\r\r\n\r\r\nVersion=143.0.7499.148\r\r\n\r\r\n\r\r\n\r"
-2025-12-29 20:54:57 [   DEBUG] Detected browser: chrome 143.0.7499.148
-2025-12-29 20:54:57 [   DEBUG] Required driver: chromedriver 143.0.7499.169
-2025-12-29 20:54:57 [   DEBUG] chromedriver 143.0.7499.169 already in the cache
-2025-12-29 20:54:57 [   DEBUG] Driver path: C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe
-2025-12-29 20:54:57 [   DEBUG] Browser path: C:\Program Files\Google\Chrome\Application\chrome.exe
-2025-12-29 20:54:57 [   DEBUG] Started executable: `C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe` in a child process with pid: 25128 using 0 to output -3
-2025-12-29 20:54:57 [   DEBUG] POST http://localhost:9309/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'chrome', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'browserVersion': None, 'goog:chromeOptions': {'extensions': [], 'binary': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'args': ['--headless', '--no-sandbox', '--disable-dev-shm-usage']}}}}
-2025-12-29 20:54:57 [   DEBUG] Starting new HTTP connection (1): localhost:9309
-2025-12-29 20:54:58 [   DEBUG] http://localhost:9309 "POST /session HTTP/1.1" 200 0
-2025-12-29 20:54:58 [   DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"143.0.7499.148","chrome":{"chromedriverVersion":"143.0.7499.169 (164b20aab62509dad21fd46383951aeec084ad1e-refs/branch-heads/7499@{#3399})","userDataDir":"C:\\Users\\0124e\\AppData\\Local\\Temp\\scoped_dir25128_851988651"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:14131"},"goog:processID":32024,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"90b19af02ff78ade182bd395d487c661"}} | headers=HTTPHeaderDict({'Content-Length': '906', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:54:58 [   DEBUG] Finished Request
-2025-12-29 20:54:58 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {'url': 'https://qatrack.elice.io/eci'}
-2025-12-29 20:54:59 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:54:59 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:54:59 [   DEBUG] Finished Request
-2025-12-29 20:54:59 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element {'using': 'css selector', 'value': '[name="loginId"]'}
-2025-12-29 20:54:59 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element HTTP/1.1" 404 0
-2025-12-29 20:54:59 [   DEBUG] Remote response: status=404 | data={"value":{"error":"no such element","message":"no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"[name=\"loginId\"]\"}\n  (Session info: chrome=143.0.7499.148)","stacktrace":"Symbols not available. Dumping unresolved backtrace:\n\t0x7ff6bdbd88e5\n\t0x7ff6bdbd8940\n\t0x7ff6bd9b165d\n\t0x7ff6bda09a33\n\t0x7ff6bda09d3c\n\t0x7ff6bda5df67\n\t0x7ff6bda5ac97\n\t0x7ff6bd9fac29\n\t0x7ff6bd9fba93\n\t0x7ff6bdef0640\n\t0x7ff6bdeeaf80\n\t0x7ff6bdf096e6\n\t0x7ff6bdbf5de4\n\t0x7ff6bdbfed8c\n\t0x7ff6bdbe2004\n\t0x7ff6bdbe21b5\n\t0x7ff6bdbc7ee2\n\t0x7ffd5b6fe8d7\n\t0x7ffd5c3ac53c\n"}} | headers=HTTPHeaderDict({'Content-Length': '611', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:54:59 [   DEBUG] Finished Request
-2025-12-29 20:55:00 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element {'using': 'css selector', 'value': '[name="loginId"]'}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.19"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.19/value {'text': 'qa2team02@elicer.com', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '@', 'e', 'l', 'i', 'c', 'e', 'r', '.', 'c', 'o', 'm']}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.19/value HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element {'using': 'css selector', 'value': '[name="password"]'}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.20"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.20/value {'text': 'qa2team02!!', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '!', '!']}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.20/value HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element {'using': 'css selector', 'value': "button[type='submit']"}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.24"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/execute/sync {'script': '/* isDisplayed */return (function(){return (function(){var g=this||self;\nfunction aa(a){var b=typeof...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.24'}]}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/execute/sync HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.24/enabled {}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.24/enabled HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] POST http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.24/click {}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "POST /session/90b19af02ff78ade182bd395d487c661/element/f.56F51B50D47E80FCEB165AC6CD27A831.d.C7CCC585F74111738A2CFA64E3DBCA06.e.24/click HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:05 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:05 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:05 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:05 [   DEBUG] Finished Request
-2025-12-29 20:55:06 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:06 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:06 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:06 [   DEBUG] Finished Request
-2025-12-29 20:55:06 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:06 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:06 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:06 [   DEBUG] Finished Request
-2025-12-29 20:55:07 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:07 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:07 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:07 [   DEBUG] Finished Request
-2025-12-29 20:55:07 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:07 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:07 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:07 [   DEBUG] Finished Request
-2025-12-29 20:55:08 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:08 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:08 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:08 [   DEBUG] Finished Request
-2025-12-29 20:55:08 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:08 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:08 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:08 [   DEBUG] Finished Request
-2025-12-29 20:55:09 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:09 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:09 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:09 [   DEBUG] Finished Request
-2025-12-29 20:55:09 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:09 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:09 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:09 [   DEBUG] Finished Request
-2025-12-29 20:55:10 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:10 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:10 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:10 [   DEBUG] Finished Request
-2025-12-29 20:55:10 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:10 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:10 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:10 [   DEBUG] Finished Request
-2025-12-29 20:55:11 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:11 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:11 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:11 [   DEBUG] Finished Request
-2025-12-29 20:55:11 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:11 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:11 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:11 [   DEBUG] Finished Request
-2025-12-29 20:55:12 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:12 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:12 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:12 [   DEBUG] Finished Request
-2025-12-29 20:55:12 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:12 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:12 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:12 [   DEBUG] Finished Request
-2025-12-29 20:55:13 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:13 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:13 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:13 [   DEBUG] Finished Request
-2025-12-29 20:55:13 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:13 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:13 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:13 [   DEBUG] Finished Request
-2025-12-29 20:55:14 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:14 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:14 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:14 [   DEBUG] Finished Request
-2025-12-29 20:55:14 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:14 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:14 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:14 [   DEBUG] Finished Request
-2025-12-29 20:55:15 [   DEBUG] GET http://localhost:9309/session/90b19af02ff78ade182bd395d487c661/url {}
-2025-12-29 20:55:15 [   DEBUG] http://localhost:9309 "GET /session/90b19af02ff78ade182bd395d487c661/url HTTP/1.1" 200 0
-2025-12-29 20:55:15 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/oauth/authorize?client_id=b9d60191b973dc39&redirect_uri=https://qatrack.elice.io/eci/auth/elice/callback&state=okpZ-ggDkcAGlOy8kOA4xKkmkl4uwgzI9WwdISnSejhN7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6InBzNjdtbnBEUVo4QThYMjRQR2lkRFEifQ==&scope=read&lang=ko"} | headers=HTTPHeaderDict({'Content-Length': '301', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:15 [   DEBUG] Finished Request
-2025-12-29 20:55:15 [   DEBUG] DELETE http://localhost:9309/session/90b19af02ff78ade182bd395d487c661 {}
-2025-12-29 20:55:15 [   DEBUG] http://localhost:9309 "DELETE /session/90b19af02ff78ade182bd395d487c661 HTTP/1.1" 200 0
-2025-12-29 20:55:15 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-29 20:55:15 [   DEBUG] Finished Request
+2025-12-30 12:23:00 [   DEBUG] Selenium Manager binary found at: C:\Users\0124e\Documents\GitHub\Bug-Thresher\venv\Lib\site-packages\selenium\webdriver\common\windows\selenium-manager.exe
+2025-12-30 12:23:00 [   DEBUG] Executing process: C:\Users\0124e\Documents\GitHub\Bug-Thresher\venv\Lib\site-packages\selenium\webdriver\common\windows\selenium-manager.exe --browser chrome --debug --language-binding python --output json
+2025-12-30 12:23:01 [   DEBUG] chromedriver not found in PATH
+2025-12-30 12:23:01 [   DEBUG] chrome detected at C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-30 12:23:01 [   DEBUG] Running command: wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value
+2025-12-30 12:23:01 [   DEBUG] Output: "\r\r\n\r\r\nVersion=143.0.7499.170\r\r\n\r\r\n\r\r\n\r"
+2025-12-30 12:23:01 [   DEBUG] Detected browser: chrome 143.0.7499.170
+2025-12-30 12:23:01 [   DEBUG] Required driver: chromedriver 143.0.7499.169
+2025-12-30 12:23:01 [   DEBUG] chromedriver 143.0.7499.169 already in the cache
+2025-12-30 12:23:01 [   DEBUG] Driver path: C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe
+2025-12-30 12:23:01 [   DEBUG] Browser path: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-30 12:23:01 [   DEBUG] Started executable: `C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe` in a child process with pid: 10268 using 0 to output -3
+2025-12-30 12:23:01 [   DEBUG] POST http://localhost:3799/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'chrome', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'browserVersion': None, 'goog:chromeOptions': {'extensions': [], 'binary': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'args': ['--headless', '--no-sandbox', '--disable-dev-shm-usage']}}}}
+2025-12-30 12:23:01 [   DEBUG] Starting new HTTP connection (1): localhost:3799
+2025-12-30 12:23:02 [   DEBUG] http://localhost:3799 "POST /session HTTP/1.1" 200 0
+2025-12-30 12:23:02 [   DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"143.0.7499.170","chrome":{"chromedriverVersion":"143.0.7499.169 (164b20aab62509dad21fd46383951aeec084ad1e-refs/branch-heads/7499@{#3399})","userDataDir":"C:\\Users\\0124e\\AppData\\Local\\Temp\\scoped_dir10268_1350434458"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:11831"},"goog:processID":36136,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"777d5fe77a6684a865fc5c72e76e3b9c"}} | headers=HTTPHeaderDict({'Content-Length': '907', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:02 [   DEBUG] Finished Request
+2025-12-30 12:23:02 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/url {'url': 'https://qatrack.elice.io/eci'}
+2025-12-30 12:23:03 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/url HTTP/1.1" 200 0
+2025-12-30 12:23:03 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:03 [   DEBUG] Finished Request
+2025-12-30 12:23:03 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element {'using': 'css selector', 'value': '[name="loginId"]'}
+2025-12-30 12:23:03 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element HTTP/1.1" 404 0
+2025-12-30 12:23:03 [   DEBUG] Remote response: status=404 | data={"value":{"error":"no such element","message":"no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"[name=\"loginId\"]\"}\n  (Session info: chrome=143.0.7499.170)","stacktrace":"Symbols not available. Dumping unresolved backtrace:\n\t0x7ff69ed288e5\n\t0x7ff69ed28940\n\t0x7ff69eb0165d\n\t0x7ff69eb59a33\n\t0x7ff69eb59d3c\n\t0x7ff69ebadf67\n\t0x7ff69ebaac97\n\t0x7ff69eb4ac29\n\t0x7ff69eb4ba93\n\t0x7ff69f040640\n\t0x7ff69f03af80\n\t0x7ff69f0596e6\n\t0x7ff69ed45de4\n\t0x7ff69ed4ed8c\n\t0x7ff69ed32004\n\t0x7ff69ed321b5\n\t0x7ff69ed17ee2\n\t0x7ffd5b6fe8d7\n\t0x7ffd5c3ac53c\n"}} | headers=HTTPHeaderDict({'Content-Length': '611', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:03 [   DEBUG] Finished Request
+2025-12-30 12:23:04 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element {'using': 'css selector', 'value': '[name="loginId"]'}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.17"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.17/value {'text': 'qa2team02@elicer.com', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '@', 'e', 'l', 'i', 'c', 'e', 'r', '.', 'c', 'o', 'm']}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.17/value HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element {'using': 'css selector', 'value': '[name="password"]'}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.18"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.18/value {'text': 'qa2team02!!', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '!', '!']}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.18/value HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element {'using': 'css selector', 'value': "button[type='submit']"}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.22"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/execute/sync {'script': '/* isDisplayed */return (function(){return (function(){var g=this||self;\nfunction aa(a){var b=typeof...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.22'}]}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/execute/sync HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] GET http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.22/enabled {}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "GET /session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.22/enabled HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.22/click {}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/element/f.B8BBC92691099E6BAEB57B7934E69538.d.593969C58E35304800DB9606AEE30F2E.e.22/click HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:05 [   DEBUG] GET http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/url {}
+2025-12-30 12:23:05 [   DEBUG] http://localhost:3799 "GET /session/777d5fe77a6684a865fc5c72e76e3b9c/url HTTP/1.1" 200 0
+2025-12-30 12:23:05 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3Do9sOKJzrOE0lQYKfOsxzInjuGOXSr17Q_MVEFfetvcsd7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Ikx6Zzh3N0dHTC1ZM3lHQXotcDdmamcifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=o9sOKJzrOE0lQYKfOsxzInjuGOXSr17Q_MVEFfetvcsd7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Ikx6Zzh3N0dHTC1ZM3lHQXotcDdmamcifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:05 [   DEBUG] Finished Request
+2025-12-30 12:23:06 [   DEBUG] GET http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/url {}
+2025-12-30 12:23:06 [   DEBUG] http://localhost:3799 "GET /session/777d5fe77a6684a865fc5c72e76e3b9c/url HTTP/1.1" 200 0
+2025-12-30 12:23:06 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3Do9sOKJzrOE0lQYKfOsxzInjuGOXSr17Q_MVEFfetvcsd7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Ikx6Zzh3N0dHTC1ZM3lHQXotcDdmamcifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=o9sOKJzrOE0lQYKfOsxzInjuGOXSr17Q_MVEFfetvcsd7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Ikx6Zzh3N0dHTC1ZM3lHQXotcDdmamcifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:06 [   DEBUG] Finished Request
+2025-12-30 12:23:06 [   DEBUG] GET http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/url {}
+2025-12-30 12:23:06 [   DEBUG] http://localhost:3799 "GET /session/777d5fe77a6684a865fc5c72e76e3b9c/url HTTP/1.1" 200 0
+2025-12-30 12:23:06 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/auth/elice/callback?code=H3kYArJwCkKW&state=o9sOKJzrOE0lQYKfOsxzInjuGOXSr17Q_MVEFfetvcsd7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6Ikx6Zzh3N0dHTC1ZM3lHQXotcDdmamcifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '222', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:06 [   DEBUG] Finished Request
+2025-12-30 12:23:07 [   DEBUG] GET http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/url {}
+2025-12-30 12:23:07 [   DEBUG] http://localhost:3799 "GET /session/777d5fe77a6684a865fc5c72e76e3b9c/url HTTP/1.1" 200 0
+2025-12-30 12:23:07 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci"} | headers=HTTPHeaderDict({'Content-Length': '40', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:07 [   DEBUG] Finished Request
+2025-12-30 12:23:07 [   DEBUG] GET http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/url {}
+2025-12-30 12:23:07 [   DEBUG] http://localhost:3799 "GET /session/777d5fe77a6684a865fc5c72e76e3b9c/url HTTP/1.1" 200 0
+2025-12-30 12:23:07 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/home"} | headers=HTTPHeaderDict({'Content-Length': '45', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:07 [   DEBUG] Finished Request
+2025-12-30 12:23:07 [   DEBUG] POST http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c/execute/sync {'script': "return window.localStorage.getItem('accessToken');", 'args': []}
+2025-12-30 12:23:07 [   DEBUG] http://localhost:3799 "POST /session/777d5fe77a6684a865fc5c72e76e3b9c/execute/sync HTTP/1.1" 200 0
+2025-12-30 12:23:07 [   DEBUG] Remote response: status=200 | data={"value":"uEiI_LkvSCtS2vob2urPG4fTq9uoWWzfqf9eNZez47rs"} | headers=HTTPHeaderDict({'Content-Length': '56', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:07 [   DEBUG] Finished Request
+2025-12-30 12:23:07 [   DEBUG] DELETE http://localhost:3799/session/777d5fe77a6684a865fc5c72e76e3b9c {}
+2025-12-30 12:23:07 [   DEBUG] http://localhost:3799 "DELETE /session/777d5fe77a6684a865fc5c72e76e3b9c HTTP/1.1" 200 0
+2025-12-30 12:23:07 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 12:23:07 [   DEBUG] Finished Request
+2025-12-30 12:23:14 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-30 12:23:14 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/compute/virtual_machine HTTP/1.1" 409 88

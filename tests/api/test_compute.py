@@ -3,6 +3,8 @@ import pytest
 import uuid
 import time
 
+from tests.conftest import base_url_compute
+
 class TestComputeCRUD:
     created_vm_id = None
     deleted_vm_verified = False
@@ -58,20 +60,23 @@ class TestComputeCRUD:
         assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
 
     # VM-003 OS 이미지 지정 생성 (Blocked)
-
+    @pytest.mark.skip(reason="Blocked: VM create API payload/response에 OS image 식별값(image_id/os_image_id 등) 미노출로 선택 OS 적용 여부 판정 불가")
+    def test_VM003_create_vm_with_os_image(self, api_client, api_headers):
+        pass
+    
     # VM-004 초기화 스크립트 포함 VM 생성
     def test_VM004_create_vm_with_init_script(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
-            "name": f"vm-auto-init-{uuid.uuid4().hex[:6]}",
+            "name": f"vm-20251223-545d01-init-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
-            "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
+            "instance_type_id": "830e2041-d477-4058-a65c-386a93ead237",  # M-2
             "username": "test",
             "password": "1qaz2wsx@@",
             "on_init_script": "#!/bin/bash\necho test",
             "always_on": False,
-            "dr": False
+            "dr": False,
         }
 
         r = self._request("POST", url, headers=api_headers, json=payload)
@@ -82,18 +87,18 @@ class TestComputeCRUD:
         assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
 
     # VM-005 DR 옵션 VM 생성
-    def test_VM005_create_vm_with_dr(self, api_headers, base_url_compute):
+    def test_VM005_create_vm_with_dr_true(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
             "name": f"vm-auto-dr-{uuid.uuid4().hex[:6]}",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
-            "instance_type_id": "320909e3-44ce-4018-8b55-7e837cd84a15",
+            "instance_type_id": "830e2041-d477-4058-a65c-386a93ead237",  # M-2
             "username": "test",
             "password": "1qaz2wsx@@",
             "on_init_script": "",
             "always_on": False,
-            "dr": True
+            "dr": True,
         }
 
         r = self._request("POST", url, headers=api_headers, json=payload)
