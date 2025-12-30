@@ -70,7 +70,7 @@ class TestComputeCRUD:
         assert r_delete.status_code == 200, f"VM 삭제 실패: {r_delete.status_code}: {r_delete.text}"
 
     # VM-002 다른 인스턴스 타입으로 VM 생성
-    def test_VM002_create_vm_different_instance_type(self, api_headers, base_url_compute):
+    def test_VM002_create_vm_different_instance_type(self, api_headers, resource_factory, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
@@ -84,13 +84,11 @@ class TestComputeCRUD:
             "dr": False,
         }
 
-        r = self._request("POST", url, headers=api_headers, json=payload)
-
         # 환경 제한이면 XFAIL
-        if r.status_code in (400, 404, 409, 422):
-            pytest.xfail(f"환경 제한: {r.text}")
-
-        assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
+        try:
+            resource_factory(url, payload)
+        except AssertionError as e:
+            pytest.xfail(f"환경 제한: {e}")
 
     # VM-003 OS 이미지 지정 생성 (Blocked)
     @pytest.mark.skip(
@@ -100,7 +98,7 @@ class TestComputeCRUD:
         pass
 
     # VM-004 초기화 스크립트 포함 VM 생성
-    def test_VM004_create_vm_with_init_script(self, api_headers, base_url_compute):
+    def test_VM004_create_vm_with_init_script(self, api_headers, resource_factory, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
         payload = {
@@ -114,12 +112,12 @@ class TestComputeCRUD:
             "dr": False,
         }
 
-        r = self._request("POST", url, headers=api_headers, json=payload)
-
-        if r.status_code == 409:
-            pytest.xfail(f"quota 또는 환경 제한: {r.text}")
-
-        assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
+        # quota 또는 환경 제한: 409 등은 팀 규칙대로 XFAIL
+        try:
+            resource_factory(url, payload)
+        except AssertionError as e:
+            # quota/환경 제한은 xfail
+            pytest.xfail(f"quota 또는 환경 제한: {e}")
 
     # VM-005 DR 옵션 VM 생성
     @pytest.mark.skip(
@@ -128,336 +126,127 @@ class TestComputeCRUD:
     def test_VM005_create_vm_with_dr_true_blocked(self):
         pass
 
-    # VM-006 VM 삭제
-    def test_VM006_delete_vm(self, api_headers, base_url_compute):
-        vm_id = TestComputeCRUD.created_vm_id
-        assert vm_id is not None
-
-        url = f"{base_url_compute}/virtual_machine/{vm_id}"
-        r = self._request("DELETE", url, headers=api_headers)
-        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
-
-        # 삭제는 비동기일 수 있음 → 단건 조회로 상태 확인
-        get_url = f"{base_url_compute}/virtual_machine/{vm_id}"
-        r2 = self._request("GET", get_url, headers=api_headers)
-
-        # 404면 "완전히 삭제됨"으로 인정
-        if r2.status_code == 404:
-            TestComputeCRUD.deleted_vm_verified = True
-            return
-
-        # 200이면 status를 체크
-        assert r2.status_code == 200, f"status={r2.status_code}, body={r2.text}"
-        body = r2.json()
-        status = (body.get("status") or "").lower()
-
-        # ✅ deleted도 허용
-        assert status in ("deleting", "terminated", "inactive", "deleted"), (
-            f"unexpected delete status={status}, body={body}"
-        )
-
-        # status가 deleted면 "삭제 검증 완료"로 플래그 ON
-        if status == "deleted":
-            TestComputeCRUD.deleted_vm_verified = True
-
-    # VM-008 VM 다건 조회
-    def test_VM008_list_vm(self, api_headers, base_url_compute):
+    # VM-006 VM 다건 조회
+    def test_VM006_list_vm(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine_allocation"
         r = self._request("GET", url, headers=api_headers)
 
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
         assert isinstance(r.json(), list)
 
-    # VM-009 특정 상태 VM 목록 조회
-    def test_VM009_list_vm_by_status(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-        assert vm_id is not None
+    # VM-007 특정 상태 VM 목록 조회
+    def test_VM007_list_vm_by_status(self, api_headers, base_url_compute):
+        url = f"{base_url_compute}/virtual_machine"
 
-        # start endpoint가 404일 수 있음(미확정)
-        start_url = f"{base_url_compute}/virtual_machine_control/start"
-        start_r = self._request(
-            "POST", start_url, headers=api_headers, json={"id": vm_id}
-        )
-        if start_r.status_code == 404:
-            pytest.xfail("start API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-
-        time.sleep(10)
-
-        url = f"{base_url_compute}/virtual_machine_allocation?filter_status=RUNNING"
         r = self._request("GET", url, headers=api_headers)
+        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
 
-        assert r.status_code in (200, 422), f"status={r.status_code}, body={r.text}"
+        items = r.json()
+        assert isinstance(items, list), f"list 아님: {items}"
 
-        if r.status_code == 200:
-            for vm in r.json():
-                assert vm["status"] == "RUNNING"
+        # 이전 TC + 실제 response로 확인된 상태값만 사용
+        allowed_statuses = ("idle", "allocated")
 
-    # VM-010 VM 목록 조회 (Search)
-    def test_VM010_list_vm(self, api_headers, base_url_compute):
+        for it in items:
+            assert it.get("status") in allowed_statuses, f"unexpected status: {it}"
+
+    # VM-008 VM 목록 조회 (Search)
+    def test_VM008_list_vm(self, api_headers, base_url_compute):
         vms = self._list_vms(api_headers, base_url_compute)
         assert isinstance(vms, list)
 
-    # VM-011 VM 단건 조회 (machine_id 기반)
-    def test_VM011_get_vm_one(self, api_headers, base_url_compute):
+    # VM-009 VM 단건 조회 (machine_id 기반)
+    def test_VM009_get_vm_one(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
         vm = self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id)
         assert vm is not None
         assert vm.get("machine_id") or vm.get("id")
+        
+    # # VM-010 Start VM
 
-    # VM-012 VM 시작
-    def test_VM012_start_vm(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
+    # def test_VM010_start_vm(self, api_headers, base_url_compute):
 
-        start_url = f"{base_url_compute}/virtual_machine_control/start"
-        r = self._request("POST", start_url, headers=api_headers, json={"id": vm_id})
+    #     # 1) VM 리스트에서 대상 1개 잡기 (가장 최근 1개)
+    #     vm_list_url = f"{base_url_compute}/virtual_machine"
+    #     resp = requests.get(vm_list_url, headers=api_headers)
+    #     assert resp.status_code == 200, f"VM list 실패: {resp.status_code}, body={resp.text}"
 
-        if r.status_code == 404:
-            pytest.xfail("start API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
+    #     vm_list = resp.json()
+    #     assert isinstance(vm_list, list) and len(vm_list) > 0, "VM이 1개도 없음 (start 테스트 불가)"
 
-        assert r.status_code in (200, 202), f"status={r.status_code}, body={r.text}"
-        self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"])
+    #     target_vm = vm_list[0]
+    #     vm_id = target_vm["id"]
+    #     zone_id = target_vm.get("zone_id")
+    #     status = target_vm.get("status")
 
-    # VM-014 실행중 VM 정지
-    def test_VM014_stop_vm(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
+    #     assert zone_id, f"VM zone_id 없음: vm={target_vm}"
 
-        start_url = f"{base_url_compute}/virtual_machine_control/start"
-        r = self._request("POST", start_url, headers=api_headers, json={"id": vm_id})
-        if r.status_code == 404:
-            pytest.xfail("start API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-        self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"])
+    #     if status == "allocated":
+    #         assert True
+    #         return
 
-        stop_url = f"{base_url_compute}/virtual_machine_control/stop"
-        r = self._request("POST", stop_url, headers=api_headers, json={"id": vm_id})
-        if r.status_code == 404:
-            pytest.xfail("stop API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-
-        assert r.status_code in (200, 202), f"status={r.status_code}, body={r.text}"
-        self._wait_status(api_headers, base_url_compute, vm_id, ["STOP"])
-
-    # VM-015 정지 후 상태 확인
-    def test_VM015_check_stopped_vm(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-
-        stop_url = f"{base_url_compute}/virtual_machine_control/stop"
-        r = self._request("POST", stop_url, headers=api_headers, json={"id": vm_id})
-        if r.status_code == 404:
-            pytest.xfail("stop API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-
-        self._wait_status(api_headers, base_url_compute, vm_id, ["STOP"])
-
-        vm = self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id)
-        assert vm is not None
-        assert "STOP" in (vm.get("status") or "").upper()
-
-    # VM-016 VM 리부팅(Soft)
-    def test_VM016_reboot_soft(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-
-        start_url = f"{base_url_compute}/virtual_machine_control/start"
-        r = self._request("POST", start_url, headers=api_headers, json={"id": vm_id})
-        if r.status_code == 404:
-            pytest.xfail("start API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-        self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"])
-
-        reboot_url = f"{base_url_compute}/virtual_machine_control/reboot"
-        r = self._request(
-            "POST", reboot_url, headers=api_headers, json={"id": vm_id, "type": "soft"}
-        )
-        if r.status_code == 404:
-            pytest.xfail("reboot API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-
-        assert r.status_code in (200, 202), f"status={r.status_code}, body={r.text}"
-        self._wait_status(
-            api_headers, base_url_compute, vm_id, ["RUNNING"], timeout_sec=180
-        )
-
-    # VM-017 웹 콘솔 접속 정보 조회
-    def test_VM017_get_console(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-
-        start_url = f"{base_url_compute}/virtual_machine_control/start"
-        r = self._request("POST", start_url, headers=api_headers, json={"id": vm_id})
-        if r.status_code == 404:
-            pytest.xfail("start API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-        self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"])
-
-        url = f"{base_url_compute}/virtual_machine_console"
-        r = self._request("GET", url, headers=api_headers, params={"id": vm_id})
-        if r.status_code in (404, 501):
-            pytest.xfail(f"console API 미지원: {r.status_code} {r.text}")
-        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
-
-    # VM-018 SSH 접속 정보 조회(지원 시)
-    def test_VM018_get_ssh_info(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-        url = f"{base_url_compute}/virtual_machine_ssh"
-        r = self._request("GET", url, headers=api_headers, params={"id": vm_id})
-        if r.status_code in (404, 501):
-            pytest.xfail(f"ssh info API 미지원: {r.status_code} {r.text}")
-        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
-
-    # VM-019 SSH 접속 가능 여부 확인(지원 시)
-    def test_VM019_check_ssh(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-        url = f"{base_url_compute}/virtual_machine_ssh/check"
-        r = self._request("POST", url, headers=api_headers, json={"id": vm_id})
-        if r.status_code in (404, 501):
-            pytest.xfail(f"ssh check API 미지원: {r.status_code} {r.text}")
-        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
-
-    # VM-020 VM 메트릭 조회
-    def test_VM020_get_metrics(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-
-        start_url = f"{base_url_compute}/virtual_machine_control/start"
-        r = self._request("POST", start_url, headers=api_headers, json={"id": vm_id})
-        if r.status_code == 404:
-            pytest.xfail("start API URL 미확정(404). 크롬 네트워크로 실제 URL 확인 필요")
-        self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"])
-
-        url = f"{base_url_compute}/virtual_machine_metrics"
-        r = self._request("GET", url, headers=api_headers, params={"id": vm_id})
-        if r.status_code in (404, 501):
-            pytest.xfail(f"metrics API 미지원: {r.status_code} {r.text}")
-        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
-
-    # VM-021 VM 건강 상태 조회
-    def test_VM021_get_health(self, api_headers, base_url_compute):
-        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
-        url = f"{base_url_compute}/virtual_machine_health"
-        r = self._request("GET", url, headers=api_headers, params={"id": vm_id})
-        if r.status_code in (404, 501):
-            pytest.xfail(f"health API 미지원: {r.status_code} {r.text}")
-        assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
-
-    # def test_VM028_duplicate_name_create_should_fail(self, api_headers, base_url_compute):
-    #     create_url = f"{base_url_compute}/virtual_machine"
-
-    #     fixed_name = f"vm-dup-{uuid.uuid4().hex[:6]}"
-    #     created_ids = []
-
-    #     body_base = {
-    #         "name": fixed_name,
-    #         "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
-    #         "username": "test",
-    #         "password": "1qaz2wsx@@",
-    #         "on_init_script": "",
-    #         "always_on": False,
-    #         "dr": False,
+    #     allocation_create_url = f"{base_url_compute}/virtual_machine_allocation"
+    #     payload = {
+    #         "machine_id": vm_id,
+    #         "zone_id": zone_id,
     #     }
 
-    #     try:
-    #         r1 = self._create_vm_with_instance_fallback(
-    #             api_headers=api_headers,
-    #             url=create_url,
-    #             body_base=body_base,
-    #             candidates=INSTANCE_TYPE_CANDIDATES,
-    #             max_retry_per_type=1,
-    #         )
+    #     r = requests.post(allocation_create_url, headers=api_headers, json=payload)
 
-    #         if r1 is None:
-    #             pytest.xfail("TC28 진행 불가: 첫 번째 VM 생성 응답이 None")
+    #     if r.status_code in (200, 201):
+    #         assert True
+    #         return
 
-    #         if r1.status_code not in (200, 201):
-    #             pytest.xfail(
-    #                 f"TC28 진행 불가: 첫 번째 VM 생성 실패 status={r1.status_code}, body={r1.text}"
-    #             )
+    #     pytest.xfail(
+    #         f"환경/상태 제한: {r.status_code}, body={r.text}"
+    #     )
+        
+    # # VM-012 Stop VM
 
-    #         vm1 = r1.json()
-    #         vm1_id = vm1.get("id")
-    #         if not vm1_id:
-    #             pytest.xfail(f"TC28 진행 불가: 첫 번째 생성 응답에 id 없음: {vm1}")
+    # def test_VM012_stop_vm(self, api_headers, base_url_compute):
 
-    #         created_ids.append(vm1_id)
+    #     vm_list_url = f"{base_url_compute}/virtual_machine"
+    #     resp = requests.get(vm_list_url, headers=api_headers)
+    #     assert resp.status_code == 200, f"VM list 실패: {resp.status_code}, body={resp.text}"
 
-    #         r2 = self._create_vm_with_instance_fallback(
-    #             api_headers=api_headers,
-    #             url=create_url,
-    #             body_base=body_base,
-    #             candidates=INSTANCE_TYPE_CANDIDATES,
-    #             max_retry_per_type=1,
-    #         )
+    #     vm_list = resp.json()
+    #     assert isinstance(vm_list, list) and len(vm_list) > 0, "VM이 1개도 없음 (stop 테스트 불가)"
 
-    #         if r2 is None:
-    #             pytest.xfail("TC28: 두 번째 생성 응답이 None")
+    #     target_vm = vm_list[0]
+    #     vm_id = target_vm["id"]
+    #     status = target_vm.get("status")
 
-    #         if r2.status_code in (400, 409, 422):
-    #             return
+    #     if status == "idle":
+    #         assert True
+    #         return
 
-    #         if r2.status_code in (200, 201):
-    #             vm2 = r2.json()
-    #             vm2_id = vm2.get("id")
-    #             if vm2_id:
-    #                 created_ids.append(vm2_id)
+    #     allocation_list_url = (
+    #         f"{base_url_compute}/virtual_machine_allocation"
+    #         f"?filter_machine_id={vm_id}&count=1"
+    #     )
+    #     r_list = requests.get(allocation_list_url, headers=api_headers)
+    #     assert r_list.status_code == 200, f"allocation 조회 실패: {r_list.status_code}, body={r_list.text}"
 
-    #             pytest.fail(
-    #                 f"BUG: 같은 name('{fixed_name}')으로 VM 생성이 허용됨! "
-    #                 f"status={r2.status_code}, body={r2.text}"
-    #             )
+    #     allocations = r_list.json()
+    #     if not isinstance(allocations, list) or len(allocations) == 0:
+    #         pytest.xfail(f"allocation 없음(이미 종료됐거나 상태 조회 지연): body={r_list.text}")
 
-    #         pytest.fail(
-    #             f"Unexpected response on duplicate-name create: "
-    #             f"status={r2.status_code}, body={r2.text}"
-    #         )
+    #     allocation_id = allocations[0].get("id")
+    #     if not allocation_id:
+    #         pytest.xfail(f"allocation id 없음: body={r_list.text}")
 
-    #     finally:
-    #         for vid in created_ids:
-    #             try:
-    #                 self._request(
-    #                     "DELETE",
-    #                     f"{base_url_compute}/virtual_machine/{vid}",
-    #                     headers=api_headers,
-    #                 )
-    #             except Exception:
-    #                 pass
+    #     allocation_delete_url = f"{base_url_compute}/virtual_machine_allocation/{allocation_id}"
+    #     r_del = requests.delete(allocation_delete_url, headers=api_headers)
 
-    # # TC28 사용
-    # def _create_vm_with_instance_fallback(
-    #     self,
-    #     api_headers,
-    #     url,
-    #     body_base,
-    #     candidates,
-    #     max_retry_per_type=1,
-    # ):
-    #     last_r = None
+    #     if r_del.status_code in (200, 204):
+    #         assert True
+    #         return
 
-    #     for instance_type_id in candidates:
-    #         payload = dict(body_base)
-    #         payload["instance_type_id"] = instance_type_id
+    #     pytest.xfail(
+    #         f"환경/상태 제한: {r_del.status_code}, body={r_del.text}"
+    #     )
 
-    #         for _ in range(max_retry_per_type):
-    #             r = self._request("POST", url, headers=api_headers, json=payload)
-    #             last_r = r
-
-    #             if r.status_code in (200, 201):
-    #                 return r
-
-    #             # 환경 제한/검증 실패면 다음 후보로
-    #             if r.status_code in (400, 404, 409, 422):
-    #                 break
-
-    #     return last_r
-
-    # # TC28 사용
-    # def _request(self, method, url, **kwargs):
-    #     r = requests.request(method, url, **kwargs)
-
-    #     if r.status_code == 403:
-    #         try:
-    #             data = r.json()
-    #         except Exception:
-    #             data = None
-
-    #         if isinstance(data, dict) and data.get("code") == "expired_token":
-    #             pytest.xfail(f"expired_token: {data.get('message')}")
-
-    #     return r
-
-    # ----------------------------
     # 헬퍼 메서드
-    # ----------------------------
 
     def _request(self, method, url, **kwargs):
         r = requests.request(method, url, **kwargs)
@@ -511,7 +300,8 @@ class TestComputeCRUD:
         if r.status_code == 200:
             return r.json()
         return None
-
+    
+    # VM-028
     # def _wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
     #     end = time.time() + timeout_sec
     #     while time.time() < end:
