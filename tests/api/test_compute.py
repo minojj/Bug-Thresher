@@ -108,8 +108,8 @@ class TestComputeCRUD:
 
         assert r.status_code in (200, 201), f"status={r.status_code}, body={r.text}"
 
-    # VM-007 VM 삭제
-    def test_VM007_delete_vm(self, api_headers, base_url_compute):
+    # VM-006 VM 삭제
+    def test_VM006_delete_vm(self, api_headers, base_url_compute):
         vm_id = TestComputeCRUD.created_vm_id
         assert vm_id is not None
 
@@ -141,8 +141,8 @@ class TestComputeCRUD:
             )
 
 
-    # VM-008 삭제 후 단건 조회
-    def test_VM008_get_deleted_vm(self, api_headers, base_url_compute):
+    # VM-007 삭제 후 단건 조회
+    def test_VM007_get_deleted_vm(self, api_headers, base_url_compute):
         vm_id = TestComputeCRUD.created_vm_id
         assert vm_id is not None
 
@@ -157,16 +157,16 @@ class TestComputeCRUD:
         # (예외) VM-007이 xfail/skip으로 안 돌았을 때만 완화
         assert r.status_code in (200, 404), f"status={r.status_code}, body={r.text}"
 
-    # VM-009 VM 다건 조회
-    def test_VM009_list_vm(self, api_headers, base_url_compute):
+    # VM-008 VM 다건 조회
+    def test_VM008_list_vm(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/virtual_machine_allocation"
         r = self._request("GET", url, headers=api_headers)
 
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
         assert isinstance(r.json(), list)
 
-    # VM-010 특정 상태 VM 목록 조회
-    def test_VM010_list_vm_by_status(self, api_headers, base_url_compute):
+    # VM-009 특정 상태 VM 목록 조회
+    def test_VM009_list_vm_by_status(self, api_headers, base_url_compute):
         # TC1에서 만든 VM은 TC7에서 삭제되었을 수 있으니, 여기서는 "사용 가능한 VM"을 확보
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
         assert vm_id is not None
@@ -188,21 +188,21 @@ class TestComputeCRUD:
             for vm in r.json():
                 assert vm["status"] == "RUNNING"
 
-    # VM-011 VM 목록 조회 (Search)
-    def test_VM011_list_vm(self, api_headers, base_url_compute):
+    # VM-010 VM 목록 조회 (Search)
+    def test_VM010_list_vm(self, api_headers, base_url_compute):
         vms = self._list_vms(api_headers, base_url_compute)
         assert isinstance(vms, list)
 
-    # VM-012 VM 단건 조회 (machine_id 기반)
-    def test_VM012_get_vm_one(self, api_headers, base_url_compute):
+    # VM-011 VM 단건 조회 (machine_id 기반)
+    def test_VM011_get_vm_one(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
         vm = self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id)
         assert vm is not None
         # 최소한 id/machine_id 둘 중 하나는 있어야 한다고 보고 체크
         assert vm.get("machine_id") or vm.get("id")
 
-    # VM-013 VM 시작
-    def test_VM013_start_vm(self, api_headers, base_url_compute):
+    # VM-012 VM 시작
+    def test_VM012_start_vm(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         start_url = f"{base_url_compute}/virtual_machine_control/start"
@@ -214,8 +214,8 @@ class TestComputeCRUD:
         assert r.status_code in (200, 202), f"status={r.status_code}, body={r.text}"
         self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"])
 
-    # VM-014 목록에서 VM 상태 확인 (RUNNING/STOP 필터)
-    def test_VM014_check_vm_status_filter(self, api_headers, base_url_compute):
+    # VM-013 목록에서 VM 상태 확인 (RUNNING/STOP 필터)
+    def test_VM013_check_vm_status_filter(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         # 일단 RUNNING 만들어두기
@@ -234,8 +234,8 @@ class TestComputeCRUD:
         assert isinstance(data, list)
         assert len(data) >= 1
 
-    # VM-015 실행중 VM 정지
-    def test_VM015_stop_vm(self, api_headers, base_url_compute):
+    # VM-014 실행중 VM 정지
+    def test_VM014_stop_vm(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         # RUNNING 보장
@@ -253,8 +253,8 @@ class TestComputeCRUD:
         assert r.status_code in (200, 202), f"status={r.status_code}, body={r.text}"
         self._wait_status(api_headers, base_url_compute, vm_id, ["STOP"])
 
-    # VM-016 정지 후 상태 확인
-    def test_VM016_check_stopped_vm(self, api_headers, base_url_compute):
+    # VM-015 정지 후 상태 확인
+    def test_VM015_check_stopped_vm(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         # STOP 보장
@@ -269,8 +269,8 @@ class TestComputeCRUD:
         assert vm is not None
         assert "STOP" in (vm.get("status") or "").upper()
 
-    # VM-017 VM 리부팅(Soft)
-    def test_VM017_reboot_soft(self, api_headers, base_url_compute):
+    # VM-016 VM 리부팅(Soft)
+    def test_VM016_reboot_soft(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         # RUNNING 보장
@@ -288,8 +288,8 @@ class TestComputeCRUD:
         assert r.status_code in (200, 202), f"status={r.status_code}, body={r.text}"
         self._wait_status(api_headers, base_url_compute, vm_id, ["RUNNING"], timeout_sec=180)
 
-    # VM-018 웹 콘솔 접속 정보 조회
-    def test_VM018_get_console(self, api_headers, base_url_compute):
+    # VM-017 웹 콘솔 접속 정보 조회
+    def test_VM017_get_console(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         # RUNNING 권장
@@ -305,8 +305,8 @@ class TestComputeCRUD:
             pytest.xfail(f"console API 미지원: {r.status_code} {r.text}")
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
 
-    # VM-019 SSH 접속 정보 조회(지원 시)
-    def test_VM019_get_ssh_info(self, api_headers, base_url_compute):
+    # VM-018 SSH 접속 정보 조회(지원 시)
+    def test_VM018_get_ssh_info(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
         url = f"{base_url_compute}/virtual_machine_ssh"
         r = self._request("GET", url, headers=api_headers, params={"id": vm_id})
@@ -314,8 +314,8 @@ class TestComputeCRUD:
             pytest.xfail(f"ssh info API 미지원: {r.status_code} {r.text}")
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
 
-    # VM-020 SSH 접속 가능 여부 확인(지원 시)
-    def test_VM020_check_ssh(self, api_headers, base_url_compute):
+    # VM-019 SSH 접속 가능 여부 확인(지원 시)
+    def test_VM019_check_ssh(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
         url = f"{base_url_compute}/virtual_machine_ssh/check"
         r = self._request("POST", url, headers=api_headers, json={"id": vm_id})
@@ -323,8 +323,8 @@ class TestComputeCRUD:
             pytest.xfail(f"ssh check API 미지원: {r.status_code} {r.text}")
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
 
-    # VM-021 VM 메트릭 조회
-    def test_VM021_get_metrics(self, api_headers, base_url_compute):
+    # VM-020 VM 메트릭 조회
+    def test_VM020_get_metrics(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
 
         # RUNNING 권장
@@ -340,8 +340,8 @@ class TestComputeCRUD:
             pytest.xfail(f"metrics API 미지원: {r.status_code} {r.text}")
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
 
-    # VM-022 VM 건강 상태 조회
-    def test_VM022_get_health(self, api_headers, base_url_compute):
+    # VM-021 VM 건강 상태 조회
+    def test_VM021_get_health(self, api_headers, base_url_compute):
         vm_id = self._ensure_vm_id(api_headers, base_url_compute)
         url = f"{base_url_compute}/virtual_machine_health"
         r = self._request("GET", url, headers=api_headers, params={"id": vm_id})
