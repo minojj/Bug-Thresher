@@ -30,7 +30,7 @@ class TestBucketCRUD:
         }
         response = requests.post(base_url_object_storage, headers=api_headers, json=payload)
         # 상태 코드 검증
-        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -46,7 +46,7 @@ class TestBucketCRUD:
         }
         response = requests.post(base_url_object_storage, headers=api_headers, json=payload)
         # 상태 코드 검증
-        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -57,7 +57,7 @@ class TestBucketCRUD:
         url = f"{base_url_object_storage}?count=50"
         response = requests.get(url, headers=api_headers)
         # 상태 코드 검증
-        assert response.status_code == 200, f"⛔ [FAIL] 버킷 목록 조회 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 버킷 목록 조회 실패 - 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_list = response.json()
         assert isinstance(response_list, list)
@@ -70,7 +70,7 @@ class TestBucketCRUD:
         url = f"{base_url_object_storage}?count=50.."
         response = requests.get(url, headers=api_headers)
         # 상태 코드 검증
-        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -83,7 +83,7 @@ class TestBucketCRUD:
 
         url = f"{base_url_object_storage}/{bucket_id}"
         response = requests.get(url, headers=api_headers)
-        assert response.status_code == 200, f"⛔ [FAIL] 버킷 단건 조회 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 버킷 단건 조회 실패 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -104,7 +104,7 @@ class TestBucketCRUD:
         payload = {"name": "team2-01"}
 
         response = requests.patch(url, headers=api_headers, json=payload)
-        assert response.status_code == 200, f"⛔ [FAIL] 버킷 수정 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 버킷 수정 실패 - {response.status_code}: {response.text}"
         response_json = response.json()
         # 응답 바디 검증
         assert isinstance(response_json, dict)
@@ -121,7 +121,7 @@ class TestBucketCRUD:
 
         response = requests.patch(url, headers=api_headers, json=payload)
         # 상태 코드 검증
-        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드 - {response.status_code}: {response.text}"
         response_json = response.json()
         # 응답 바디 검증
         assert isinstance(response_json, dict)
@@ -133,7 +133,7 @@ class TestBucketCRUD:
         url = f"{base_url_object_storage}/{bucket_id}"
 
         response = requests.delete(url, headers=api_headers)
-        assert response.status_code == 200, f"⛔ [FAIL] 버킷 삭제 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 버킷 삭제 실패 - 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -148,7 +148,7 @@ class TestBucketCRUD:
         requests.delete(f"{base_url_object_storage}/{bucket_id}", headers=api_headers)
         response = requests.delete(f"{base_url_object_storage}/{bucket_id}", headers=api_headers)
         # 상태 코드 검증
-        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -182,7 +182,7 @@ class TestUserCRUD:
         }
         response = requests.post(f"{base_url_object_storage}/user", headers=api_headers, json=payload)
         # 상태 코드 검증
-        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -193,7 +193,7 @@ class TestUserCRUD:
         url = f"{base_url_object_storage}/user?count=50"
         response = requests.get(url, headers=api_headers)
         # 상태 코드 검증
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 목록 조회 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 목록 조회 실패 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_list = response.json()
         assert isinstance(response_list, list)
@@ -208,7 +208,7 @@ class TestUserCRUD:
         # 유저 생성시 polling
         api_helpers.wait_for_status(url, api_headers, expected_status="activated", timeout=10)
         response = requests.get(url, headers=api_headers)
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 단건 조회 실패 - 상태 코드: {response.status_code}, 내용: {response.text}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 단건 조회 실패 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -229,7 +229,7 @@ class TestUserCRUD:
         payload = {"name": "team2-01"}
 
         response = requests.patch(url, headers=api_headers, json=payload)
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 수정 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 수정 실패  - {response.status_code}: {response.text}"
         response_json = response.json()
         # 응답 바디 검증
         assert isinstance(response_json, dict)
@@ -245,7 +245,7 @@ class TestUserCRUD:
 
         response = requests.patch(url, headers=api_headers, json=payload)
         # 상태 코드 검증
-        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 422, f"⛔ [FAIL] 422와 다른 상태 코드 - {response.status_code}: {response.text}"
         response_json = response.json()
         # 응답 바디 검증
         assert isinstance(response_json, dict)
@@ -258,7 +258,7 @@ class TestUserCRUD:
 
         response = requests.delete(url, headers=api_headers)
         # 상태 코드 검증
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 삭제 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 삭제 실패 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -277,7 +277,8 @@ class TestUserGrantCRUD:
             "permission": "read_write",
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0"
             }
-        # 사용자 생성시 polling
+        # 버킷/사용자 생성시 polling
+        api_helpers.wait_for_status(f"{base_url_object_storage}/user/{existing_bucket['id']}", api_headers, expected_status="activated",timeout=10)
         api_helpers.wait_for_status(f"{base_url_object_storage}/user/{existing_user['id']}", api_headers, expected_status="activated",timeout=10)
         response = requests.post(f"{base_url_object_storage}/user_grant", headers=api_headers, json=payload)
         assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 생성 실패 - {response.status_code}: {response.text}"
@@ -323,7 +324,7 @@ class TestUserGrantCRUD:
 
         response = requests.post(url, headers=api_headers, json=payload)
         # 상태 코드 검증
-        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
@@ -335,7 +336,7 @@ class TestUserGrantCRUD:
 
         response = requests.get(url, headers=api_headers)
         # 상태 코드 검증
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 목록 조회 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 목록 조회 실패  - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_list = response.json()
         assert isinstance(response_list, list)
@@ -350,7 +351,7 @@ class TestUserGrantCRUD:
         # 사용자 생성시 polling
         api_helpers.wait_for_status(f"{base_url_object_storage}/user/{user_id}", api_headers, expected_status="activated",timeout=10)
         response = requests.get(url, headers=api_headers)
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 단건 조회 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 단건 조회 실패 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, list)
@@ -369,7 +370,7 @@ class TestUserGrantCRUD:
         url = f"{base_url_object_storage}/user_grant?filter_object_storage_id={bucket_id}"
 
         response = requests.get(url, headers=api_headers)
-        assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 목록 조회 실패 - 상태 코드: {response.status_code}"
+        assert response.status_code == 200, f"⛔ [FAIL] 사용자 권한 목록 조회 실패 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_list = response.json()
         assert isinstance(response_list, list)
@@ -448,7 +449,7 @@ class TestUserGrantCRUD:
             "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0"
             }
         response = requests.post(url, headers=api_headers, json=payload)
-        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드: {response.status_code}"
+        assert response.status_code == 409, f"⛔ [FAIL] 409와 다른 상태 코드 - {response.status_code}: {response.text}"
         # 응답 바디 검증
         response_json = response.json()
         assert isinstance(response_json, dict)
