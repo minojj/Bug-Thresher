@@ -163,18 +163,16 @@ class TestNetworkInterfaceCRUD:
         with allure.step("단계 4: NIC에서 머신(또는 상위 리소스) 연결 해제"):
             logger.info(f"🔓 NIC({nic_id}) 해제 시도 (포스트맨 방식 적용)...")
 
-            # 포스트맨에서 성공한 'attached_machine_id'를 null로 설정
             detach_payload = {"attached_machine_id": None}
 
             res = requests.patch(target_nic_url, headers=api_headers, json=detach_payload)
             assert res.status_code == 200, f"⛔ [FAIL] PATCH 요청 실패: {res.text}"
 
-            # 상태 반영 폴링 확인
             is_detached = api_helpers.wait_for_status(
                 url=target_nic_url,
                 headers=api_headers,
                 expected_status=None,
-                status_key="attached_machine_id", # 필드명을 machine_id로 변경
+                status_key="attached_machine_id", 
                 timeout=20
             )
 
@@ -191,7 +189,6 @@ class TestNetworkInterfaceCRUD:
         url = f"{base_url_network}/network_interface"
         payload = self.get_nic_payload()
         
-        # 직접 생성
         response = requests.post(url, headers=api_headers, json=payload)
         assert response.status_code == 200, f"⛔ [FAIL] 생성 실패: {response.text}"
         resource_id = response.json()["id"]
@@ -431,7 +428,6 @@ class TestVirtualNetworkCRUD:
 
         if response.status_code == 200:
             extra_id = response.json().get("id")
-            # teardown을 기다리지 않고 즉시 삭제하거나, 별도의 관리가 필요합니다.
             requests.delete(f"{base_url_network}/virtual_network/{extra_id}", headers=api_headers)
         
         assert response.status_code == 200 # 기존 어설션 유지
@@ -564,7 +560,6 @@ class TestVirtualNetworkCRUD:
         response = requests.delete(url, headers=api_headers)
         
         with allure.step("삭제 차단 및 에러 메시지 검증"):
-            # 서브넷이 존재하므로 409를 기대
             assert response.status_code == 409, (
                 f"⛔ [FAIL] 서브넷이 포함된 VN이 삭제되었습니다. (상태 코드: {response.status_code})"
             )
@@ -730,12 +725,10 @@ class TestPublicIpCRUD:
         nic = resource_factory(f"{base_url_network}/network_interface", nic_payload)
         
         url = f"{base_url_network}/public_ip/{public_ip['id']}"
-        
+
         try:
             with allure.step("연결 및 해제"):
-                # 연결
                 requests.patch(url, headers=api_headers, json={"attached_network_interface_id": nic["id"]})
-                # 해제 (이 부분이 누락되거나 실패하면 Public IP가 남음)
                 detach_res = requests.patch(url, headers=api_headers, json={"attached_network_interface_id": None})
                 assert detach_res.status_code == 200, "해제 요청 자체가 실패함"
 
@@ -744,8 +737,6 @@ class TestPublicIpCRUD:
                 assert not updated_ip.get("attached_network_interface_id"), "⛔ 미해제 상태"
         
         finally:
-            # [핵심] 만약 assert에서 실패하더라도 팩토리가 삭제할 수 있도록 
-            # 한 번 더 명시적으로 연결 해제 시도
             requests.patch(url, headers=api_headers, json={"attached_network_interface_id": None})
 
     @allure.story("만료된 토큰")
@@ -753,5 +744,4 @@ class TestPublicIpCRUD:
     def test_NW50_ERR_access_with_expired_token(self, base_url_network):
         expired_headers = {"Authorization": "Bearer expired_token", "Content-Type": "application/json"}
         response = requests.get(f"{base_url_network}/public_ip", headers=expired_headers)
-        # [수정] 서버가 403을 준다면 403으로 검증
         assert response.status_code in [401, 403], f"⛔ 예상 코드 401/403, 실제: {response.status_code}"
