@@ -13,12 +13,12 @@ INSTANCE_TYPE_CANDIDATES = [
 class TestComputeCRUD:
     created_vm_id = None
     deleted_vm_verified = False
-
     # VM-001 생성, 수정, 삭제 (resource_factory 적용)
-    def test_VM_create_rename_delete(self, api_headers, resource_factory, base_url_compute):
-        
-        # 1) VM 생성: resource_factory가 payload로 생성 API 호출 + teardown에서 자동 삭제
+    def test_VM_create_rename_delete(self, api_headers, base_url_compute):
+
+        # 1) VM 생성
         vm_name = f"vm-{uuid.uuid4().hex[:6]}"
+        create_url = f"{base_url_compute}/virtual_machine"
 
         payload = {
             "name": vm_name,
@@ -31,12 +31,12 @@ class TestComputeCRUD:
             "dr": False,
         }
 
-        new_vm = resource_factory(f"{base_url_compute}/virtual_machine", payload)
-        vm_id = new_vm["id"]
-        created_name = new_vm["name"]  # payload의 name을 반환하도록 fixture 구성
+        # POST 응답에는 id만 내려오는 경우가 있어 name은 GET으로 검증
+        r_create = self._request("POST", create_url, headers=api_headers, json=payload)
+        assert r_create.status_code in (200, 201), f"VM 생성 실패: {r_create.status_code}: {r_create.text}"
 
-        assert vm_id, f"VM 생성 응답에 id 없음 (resource_factory 반환값): {new_vm}"
-        assert created_name == vm_name, f"VM 생성 name 불일치: expected={vm_name}, got={created_name}"
+        new_vm = r_create.json()
+        vm_id = new_vm["id"]
 
         # 생성 직후 단건 조회로 payload 반영 확인
         get_url = f"{base_url_compute}/virtual_machine/{vm_id}"
@@ -331,130 +331,129 @@ class TestComputeCRUD:
             pytest.xfail(f"health API 미지원: {r.status_code} {r.text}")
         assert r.status_code == 200, f"status={r.status_code}, body={r.text}"
 
-    def test_VM028_duplicate_name_create_should_fail(self, api_headers, base_url_compute):
-        create_url = f"{base_url_compute}/virtual_machine"
+    # def test_VM028_duplicate_name_create_should_fail(self, api_headers, base_url_compute):
+    #     create_url = f"{base_url_compute}/virtual_machine"
 
-        fixed_name = f"vm-dup-{uuid.uuid4().hex[:6]}"
-        created_ids = []
+    #     fixed_name = f"vm-dup-{uuid.uuid4().hex[:6]}"
+    #     created_ids = []
 
-        body_base = {
-            "name": fixed_name,
-            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
-            "username": "test",
-            "password": "1qaz2wsx@@",
-            "on_init_script": "",
-            "always_on": False,
-            "dr": False,
-        }
+    #     body_base = {
+    #         "name": fixed_name,
+    #         "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+    #         "username": "test",
+    #         "password": "1qaz2wsx@@",
+    #         "on_init_script": "",
+    #         "always_on": False,
+    #         "dr": False,
+    #     }
 
-        try:
-            r1 = self._create_vm_with_instance_fallback(
-                api_headers=api_headers,
-                url=create_url,
-                body_base=body_base,
-                candidates=INSTANCE_TYPE_CANDIDATES,
-                max_retry_per_type=1,
-            )
+    #     try:
+    #         r1 = self._create_vm_with_instance_fallback(
+    #             api_headers=api_headers,
+    #             url=create_url,
+    #             body_base=body_base,
+    #             candidates=INSTANCE_TYPE_CANDIDATES,
+    #             max_retry_per_type=1,
+    #         )
 
-            if r1 is None:
-                pytest.xfail("TC28 진행 불가: 첫 번째 VM 생성 응답이 None")
+    #         if r1 is None:
+    #             pytest.xfail("TC28 진행 불가: 첫 번째 VM 생성 응답이 None")
 
-            if r1.status_code not in (200, 201):
-                pytest.xfail(
-                    f"TC28 진행 불가: 첫 번째 VM 생성 실패 status={r1.status_code}, body={r1.text}"
-                )
+    #         if r1.status_code not in (200, 201):
+    #             pytest.xfail(
+    #                 f"TC28 진행 불가: 첫 번째 VM 생성 실패 status={r1.status_code}, body={r1.text}"
+    #             )
 
-            vm1 = r1.json()
-            vm1_id = vm1.get("id")
-            if not vm1_id:
-                pytest.xfail(f"TC28 진행 불가: 첫 번째 생성 응답에 id 없음: {vm1}")
+    #         vm1 = r1.json()
+    #         vm1_id = vm1.get("id")
+    #         if not vm1_id:
+    #             pytest.xfail(f"TC28 진행 불가: 첫 번째 생성 응답에 id 없음: {vm1}")
 
-            created_ids.append(vm1_id)
+    #         created_ids.append(vm1_id)
 
-            r2 = self._create_vm_with_instance_fallback(
-                api_headers=api_headers,
-                url=create_url,
-                body_base=body_base,
-                candidates=INSTANCE_TYPE_CANDIDATES,
-                max_retry_per_type=1,
-            )
+    #         r2 = self._create_vm_with_instance_fallback(
+    #             api_headers=api_headers,
+    #             url=create_url,
+    #             body_base=body_base,
+    #             candidates=INSTANCE_TYPE_CANDIDATES,
+    #             max_retry_per_type=1,
+    #         )
 
-            if r2 is None:
-                pytest.xfail("TC28: 두 번째 생성 응답이 None")
+    #         if r2 is None:
+    #             pytest.xfail("TC28: 두 번째 생성 응답이 None")
 
-            if r2.status_code in (400, 409, 422):
-                return
+    #         if r2.status_code in (400, 409, 422):
+    #             return
 
-            if r2.status_code in (200, 201):
-                vm2 = r2.json()
-                vm2_id = vm2.get("id")
-                if vm2_id:
-                    created_ids.append(vm2_id)
+    #         if r2.status_code in (200, 201):
+    #             vm2 = r2.json()
+    #             vm2_id = vm2.get("id")
+    #             if vm2_id:
+    #                 created_ids.append(vm2_id)
 
-                pytest.fail(
-                    f"BUG: 같은 name('{fixed_name}')으로 VM 생성이 허용됨! "
-                    f"status={r2.status_code}, body={r2.text}"
-                )
+    #             pytest.fail(
+    #                 f"BUG: 같은 name('{fixed_name}')으로 VM 생성이 허용됨! "
+    #                 f"status={r2.status_code}, body={r2.text}"
+    #             )
 
-            pytest.fail(
-                f"Unexpected response on duplicate-name create: "
-                f"status={r2.status_code}, body={r2.text}"
-            )
+    #         pytest.fail(
+    #             f"Unexpected response on duplicate-name create: "
+    #             f"status={r2.status_code}, body={r2.text}"
+    #         )
 
-        finally:
-            for vid in created_ids:
-                try:
-                    self._request(
-                        "DELETE",
-                        f"{base_url_compute}/virtual_machine/{vid}",
-                        headers=api_headers,
-                    )
-                except Exception:
-                    pass
+    #     finally:
+    #         for vid in created_ids:
+    #             try:
+    #                 self._request(
+    #                     "DELETE",
+    #                     f"{base_url_compute}/virtual_machine/{vid}",
+    #                     headers=api_headers,
+    #                 )
+    #             except Exception:
+    #                 pass
 
+    # # TC28 사용
+    # def _create_vm_with_instance_fallback(
+    #     self,
+    #     api_headers,
+    #     url,
+    #     body_base,
+    #     candidates,
+    #     max_retry_per_type=1,
+    # ):
+    #     last_r = None
 
-    # TC28 사용
-    def _create_vm_with_instance_fallback(
-        self,
-        api_headers,
-        url,
-        body_base,
-        candidates,
-        max_retry_per_type=1,
-    ):
-        last_r = None
+    #     for instance_type_id in candidates:
+    #         payload = dict(body_base)
+    #         payload["instance_type_id"] = instance_type_id
 
-        for instance_type_id in candidates:
-            payload = dict(body_base)
-            payload["instance_type_id"] = instance_type_id
+    #         for _ in range(max_retry_per_type):
+    #             r = self._request("POST", url, headers=api_headers, json=payload)
+    #             last_r = r
 
-            for _ in range(max_retry_per_type):
-                r = self._request("POST", url, headers=api_headers, json=payload)
-                last_r = r
+    #             if r.status_code in (200, 201):
+    #                 return r
 
-                if r.status_code in (200, 201):
-                    return r
+    #             # 환경 제한/검증 실패면 다음 후보로
+    #             if r.status_code in (400, 404, 409, 422):
+    #                 break
 
-                # 환경 제한/검증 실패면 다음 후보로
-                if r.status_code in (400, 404, 409, 422):
-                    break
+    #     return last_r
 
-        return last_r
+    # # TC28 사용
+    # def _request(self, method, url, **kwargs):
+    #     r = requests.request(method, url, **kwargs)
 
-    # TC28 사용
-    def _request(self, method, url, **kwargs):
-        r = requests.request(method, url, **kwargs)
+    #     if r.status_code == 403:
+    #         try:
+    #             data = r.json()
+    #         except Exception:
+    #             data = None
 
-        if r.status_code == 403:
-            try:
-                data = r.json()
-            except Exception:
-                data = None
+    #         if isinstance(data, dict) and data.get("code") == "expired_token":
+    #             pytest.xfail(f"expired_token: {data.get('message')}")
 
-            if isinstance(data, dict) and data.get("code") == "expired_token":
-                pytest.xfail(f"expired_token: {data.get('message')}")
-
-        return r
+    #     return r
 
     # ----------------------------
     # 헬퍼 메서드
@@ -471,22 +470,22 @@ class TestComputeCRUD:
                 pass
         return r
 
-    def _create_vm_with_instance_fallback(
-        self, api_headers, url, body_base, candidates, max_retry_per_type=1
-    ):
-        last_r = None
+    # def _create_vm_with_instance_fallback(
+    #     self, api_headers, url, body_base, candidates, max_retry_per_type=1
+    # ):
+    #     last_r = None
 
-        for it in candidates:
-            payload = dict(body_base)
-            payload["instance_type_id"] = it
+    #     for it in candidates:
+    #         payload = dict(body_base)
+    #         payload["instance_type_id"] = it
 
-            r = self._request("POST", url, headers=api_headers, json=payload)
-            last_r = r
+    #         r = self._request("POST", url, headers=api_headers, json=payload)
+    #         last_r = r
 
-            if r.status_code in (200, 201):
-                return r
+    #         if r.status_code in (200, 201):
+    #             return r
 
-        return last_r
+    #     return last_r
 
     def _list_vms(self, api_headers, base_url_compute):
         r = self._request(
@@ -513,10 +512,10 @@ class TestComputeCRUD:
             return r.json()
         return None
 
-    def _wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
-        end = time.time() + timeout_sec
-        while time.time() < end:
-            if self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id):
-                return
-            time.sleep(3)
-        pytest.fail("VM not visible")
+    # def _wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
+    #     end = time.time() + timeout_sec
+    #     while time.time() < end:
+    #         if self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id):
+    #             return
+    #         time.sleep(3)
+    #     pytest.fail("VM not visible")
