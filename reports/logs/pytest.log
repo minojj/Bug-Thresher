@@ -1,91 +1,91 @@
-2025-12-30 22:55:25 [   DEBUG] Selenium Manager binary found at: C:\Users\0124e\AppData\Roaming\Python\Python314\site-packages\selenium\webdriver\common\windows\selenium-manager.exe
-2025-12-30 22:55:25 [   DEBUG] Executing process: C:\Users\0124e\AppData\Roaming\Python\Python314\site-packages\selenium\webdriver\common\windows\selenium-manager.exe --browser chrome --debug --language-binding python --output json
-2025-12-30 22:55:26 [   DEBUG] chromedriver not found in PATH
-2025-12-30 22:55:26 [   DEBUG] chrome detected at C:\Program Files\Google\Chrome\Application\chrome.exe
-2025-12-30 22:55:26 [   DEBUG] Running command: wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value
-2025-12-30 22:55:26 [   DEBUG] Output: "\r\r\n\r\r\nVersion=143.0.7499.170\r\r\n\r\r\n\r\r\n\r"
-2025-12-30 22:55:26 [   DEBUG] Detected browser: chrome 143.0.7499.170
-2025-12-30 22:55:26 [   DEBUG] Required driver: chromedriver 143.0.7499.169
-2025-12-30 22:55:26 [   DEBUG] chromedriver 143.0.7499.169 already in the cache
-2025-12-30 22:55:26 [   DEBUG] Driver path: C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe
-2025-12-30 22:55:26 [   DEBUG] Browser path: C:\Program Files\Google\Chrome\Application\chrome.exe
-2025-12-30 22:55:26 [   DEBUG] Started executable: `C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe` in a child process with pid: 27716 using 0 to output -3
-2025-12-30 22:55:26 [   DEBUG] POST http://localhost:7725/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'chrome', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'browserVersion': None, 'goog:chromeOptions': {'extensions': [], 'binary': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'args': ['--headless', '--no-sandbox', '--disable-dev-shm-usage']}}}}
-2025-12-30 22:55:26 [   DEBUG] Starting new HTTP connection (1): localhost:7725
-2025-12-30 22:55:27 [   DEBUG] http://localhost:7725 "POST /session HTTP/1.1" 200 0
-2025-12-30 22:55:27 [   DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"143.0.7499.170","chrome":{"chromedriverVersion":"143.0.7499.169 (164b20aab62509dad21fd46383951aeec084ad1e-refs/branch-heads/7499@{#3399})","userDataDir":"C:\\Users\\0124e\\AppData\\Local\\Temp\\scoped_dir27716_79743128"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:4033"},"goog:processID":12552,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"ed437f945815824ef7eb072f2e0dfd23"}} | headers=HTTPHeaderDict({'Content-Length': '904', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:27 [   DEBUG] Finished Request
-2025-12-30 22:55:27 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/url {'url': 'https://qatrack.elice.io/eci'}
-2025-12-30 22:55:30 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/url HTTP/1.1" 200 0
-2025-12-30 22:55:30 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:30 [   DEBUG] Finished Request
-2025-12-30 22:55:30 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element {'using': 'css selector', 'value': '[name="loginId"]'}
-2025-12-30 22:55:30 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element HTTP/1.1" 404 0
-2025-12-30 22:55:30 [   DEBUG] Remote response: status=404 | data={"value":{"error":"no such element","message":"no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"[name=\"loginId\"]\"}\n  (Session info: chrome=143.0.7499.170)","stacktrace":"Symbols not available. Dumping unresolved backtrace:\n\t0x7ff718e688e5\n\t0x7ff718e68940\n\t0x7ff718c4165d\n\t0x7ff718c99a33\n\t0x7ff718c99d3c\n\t0x7ff718cedf67\n\t0x7ff718ceac97\n\t0x7ff718c8ac29\n\t0x7ff718c8ba93\n\t0x7ff719180640\n\t0x7ff71917af80\n\t0x7ff7191996e6\n\t0x7ff718e85de4\n\t0x7ff718e8ed8c\n\t0x7ff718e72004\n\t0x7ff718e721b5\n\t0x7ff718e57ee2\n\t0x7ffd5b6fe8d7\n\t0x7ffd5c3ac53c\n"}} | headers=HTTPHeaderDict({'Content-Length': '611', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:30 [   DEBUG] Finished Request
-2025-12-30 22:55:31 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element {'using': 'css selector', 'value': '[name="loginId"]'}
-2025-12-30 22:55:31 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element HTTP/1.1" 404 0
-2025-12-30 22:55:31 [   DEBUG] Remote response: status=404 | data={"value":{"error":"no such element","message":"no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"[name=\"loginId\"]\"}\n  (Session info: chrome=143.0.7499.170)","stacktrace":"Symbols not available. Dumping unresolved backtrace:\n\t0x7ff718e688e5\n\t0x7ff718e68940\n\t0x7ff718c4165d\n\t0x7ff718c99a33\n\t0x7ff718c99d3c\n\t0x7ff718cedf67\n\t0x7ff718ceac97\n\t0x7ff718c8ac29\n\t0x7ff718c8ba93\n\t0x7ff719180640\n\t0x7ff71917af80\n\t0x7ff7191996e6\n\t0x7ff718e85de4\n\t0x7ff718e8ed8c\n\t0x7ff718e72004\n\t0x7ff718e721b5\n\t0x7ff718e57ee2\n\t0x7ffd5b6fe8d7\n\t0x7ffd5c3ac53c\n"}} | headers=HTTPHeaderDict({'Content-Length': '611', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:31 [   DEBUG] Finished Request
-2025-12-30 22:55:31 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element {'using': 'css selector', 'value': '[name="loginId"]'}
-2025-12-30 22:55:33 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element HTTP/1.1" 200 0
-2025-12-30 22:55:33 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.17"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:33 [   DEBUG] Finished Request
-2025-12-30 22:55:33 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.17/value {'text': 'qa2team02@elicer.com', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '@', 'e', 'l', 'i', 'c', 'e', 'r', '.', 'c', 'o', 'm']}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.17/value HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element {'using': 'css selector', 'value': '[name="password"]'}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.18"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.18/value {'text': 'qa2team02!!', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '!', '!']}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.18/value HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element {'using': 'css selector', 'value': "button[type='submit']"}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.22"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/execute/sync {'script': '/* isDisplayed */return (function(){return (function(){var g=this||self;\nfunction aa(a){var b=typeof...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.22'}]}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/execute/sync HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] GET http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.22/enabled {}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "GET /session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.22/enabled HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.22/click {}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/element/f.FB7D9646A47412BB8894DD721ADA554F.d.30A778CC881AA8911AA0D66F28E734EF.e.22/click HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:34 [   DEBUG] GET http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/url {}
-2025-12-30 22:55:34 [   DEBUG] http://localhost:7725 "GET /session/ed437f945815824ef7eb072f2e0dfd23/url HTTP/1.1" 200 0
-2025-12-30 22:55:34 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3DoGz-2hGzjnU4zJrjU_w75So7N0ybTmkDqNFCXLgFrHjB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IlVabjlsSjJuaVlyUnVXeC1iVnpEcUEifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=oGz-2hGzjnU4zJrjU_w75So7N0ybTmkDqNFCXLgFrHjB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IlVabjlsSjJuaVlyUnVXeC1iVnpEcUEifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:34 [   DEBUG] Finished Request
-2025-12-30 22:55:35 [   DEBUG] GET http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/url {}
-2025-12-30 22:55:35 [   DEBUG] http://localhost:7725 "GET /session/ed437f945815824ef7eb072f2e0dfd23/url HTTP/1.1" 200 0
-2025-12-30 22:55:35 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3DoGz-2hGzjnU4zJrjU_w75So7N0ybTmkDqNFCXLgFrHjB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IlVabjlsSjJuaVlyUnVXeC1iVnpEcUEifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=oGz-2hGzjnU4zJrjU_w75So7N0ybTmkDqNFCXLgFrHjB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IlVabjlsSjJuaVlyUnVXeC1iVnpEcUEifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:35 [   DEBUG] Finished Request
-2025-12-30 22:55:35 [   DEBUG] GET http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/url {}
-2025-12-30 22:55:35 [   DEBUG] http://localhost:7725 "GET /session/ed437f945815824ef7eb072f2e0dfd23/url HTTP/1.1" 200 0
-2025-12-30 22:55:35 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/auth/elice/callback?code=Wi1qQZYTlbp6&state=oGz-2hGzjnU4zJrjU_w75So7N0ybTmkDqNFCXLgFrHjB7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IlVabjlsSjJuaVlyUnVXeC1iVnpEcUEifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '222', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:35 [   DEBUG] Finished Request
-2025-12-30 22:55:36 [   DEBUG] GET http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/url {}
-2025-12-30 22:55:36 [   DEBUG] http://localhost:7725 "GET /session/ed437f945815824ef7eb072f2e0dfd23/url HTTP/1.1" 200 0
-2025-12-30 22:55:36 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci"} | headers=HTTPHeaderDict({'Content-Length': '40', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:36 [   DEBUG] Finished Request
-2025-12-30 22:55:36 [   DEBUG] GET http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/url {}
-2025-12-30 22:55:37 [   DEBUG] http://localhost:7725 "GET /session/ed437f945815824ef7eb072f2e0dfd23/url HTTP/1.1" 200 0
-2025-12-30 22:55:37 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/home"} | headers=HTTPHeaderDict({'Content-Length': '45', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:37 [   DEBUG] Finished Request
-2025-12-30 22:55:37 [   DEBUG] POST http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23/execute/sync {'script': "return window.localStorage.getItem('accessToken');", 'args': []}
-2025-12-30 22:55:37 [   DEBUG] http://localhost:7725 "POST /session/ed437f945815824ef7eb072f2e0dfd23/execute/sync HTTP/1.1" 200 0
-2025-12-30 22:55:37 [   DEBUG] Remote response: status=200 | data={"value":"uN_vDX_mQ1t3XeMWRMwZyzUU5w5M_ZkDs1Qpt8v8ed90"} | headers=HTTPHeaderDict({'Content-Length': '56', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:37 [   DEBUG] Finished Request
-2025-12-30 22:55:37 [   DEBUG] DELETE http://localhost:7725/session/ed437f945815824ef7eb072f2e0dfd23 {}
-2025-12-30 22:55:37 [   DEBUG] http://localhost:7725 "DELETE /session/ed437f945815824ef7eb072f2e0dfd23 HTTP/1.1" 200 0
-2025-12-30 22:55:37 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
-2025-12-30 22:55:37 [   DEBUG] Finished Request
-2025-12-30 22:55:43 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-2025-12-30 22:55:44 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/compute/virtual_machine HTTP/1.1" 409 200
+2025-12-30 22:58:35 [   DEBUG] Selenium Manager binary found at: C:\Users\0124e\AppData\Roaming\Python\Python314\site-packages\selenium\webdriver\common\windows\selenium-manager.exe
+2025-12-30 22:58:35 [   DEBUG] Executing process: C:\Users\0124e\AppData\Roaming\Python\Python314\site-packages\selenium\webdriver\common\windows\selenium-manager.exe --browser chrome --debug --language-binding python --output json
+2025-12-30 22:58:36 [   DEBUG] chromedriver not found in PATH
+2025-12-30 22:58:36 [   DEBUG] chrome detected at C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-30 22:58:36 [   DEBUG] Running command: wmic datafile where name='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' get Version /value
+2025-12-30 22:58:36 [   DEBUG] Output: "\r\r\n\r\r\nVersion=143.0.7499.170\r\r\n\r\r\n\r\r\n\r"
+2025-12-30 22:58:36 [   DEBUG] Detected browser: chrome 143.0.7499.170
+2025-12-30 22:58:36 [   DEBUG] Required driver: chromedriver 143.0.7499.169
+2025-12-30 22:58:36 [   DEBUG] chromedriver 143.0.7499.169 already in the cache
+2025-12-30 22:58:36 [   DEBUG] Driver path: C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe
+2025-12-30 22:58:36 [   DEBUG] Browser path: C:\Program Files\Google\Chrome\Application\chrome.exe
+2025-12-30 22:58:36 [   DEBUG] Started executable: `C:\Users\0124e\.cache\selenium\chromedriver\win64\143.0.7499.169\chromedriver.exe` in a child process with pid: 17096 using 0 to output -3
+2025-12-30 22:58:36 [   DEBUG] POST http://localhost:6437/session {'capabilities': {'firstMatch': [{}], 'alwaysMatch': {'browserName': 'chrome', 'pageLoadStrategy': <PageLoadStrategy.normal: 'normal'>, 'browserVersion': None, 'goog:chromeOptions': {'extensions': [], 'binary': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'args': ['--headless', '--no-sandbox', '--disable-dev-shm-usage']}}}}
+2025-12-30 22:58:36 [   DEBUG] Starting new HTTP connection (1): localhost:6437
+2025-12-30 22:58:37 [   DEBUG] http://localhost:6437 "POST /session HTTP/1.1" 200 0
+2025-12-30 22:58:37 [   DEBUG] Remote response: status=200 | data={"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"143.0.7499.170","chrome":{"chromedriverVersion":"143.0.7499.169 (164b20aab62509dad21fd46383951aeec084ad1e-refs/branch-heads/7499@{#3399})","userDataDir":"C:\\Users\\0124e\\AppData\\Local\\Temp\\scoped_dir17096_290212698"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:1904"},"goog:processID":28424,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"windows","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"777ea9a276f4712f4afc7453a6b8a211"}} | headers=HTTPHeaderDict({'Content-Length': '905', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:37 [   DEBUG] Finished Request
+2025-12-30 22:58:37 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/url {'url': 'https://qatrack.elice.io/eci'}
+2025-12-30 22:58:38 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/url HTTP/1.1" 200 0
+2025-12-30 22:58:38 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:38 [   DEBUG] Finished Request
+2025-12-30 22:58:38 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element {'using': 'css selector', 'value': '[name="loginId"]'}
+2025-12-30 22:58:38 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element HTTP/1.1" 404 0
+2025-12-30 22:58:38 [   DEBUG] Remote response: status=404 | data={"value":{"error":"no such element","message":"no such element: Unable to locate element: {\"method\":\"css selector\",\"selector\":\"[name=\"loginId\"]\"}\n  (Session info: chrome=143.0.7499.170)","stacktrace":"Symbols not available. Dumping unresolved backtrace:\n\t0x7ff718e688e5\n\t0x7ff718e68940\n\t0x7ff718c4165d\n\t0x7ff718c99a33\n\t0x7ff718c99d3c\n\t0x7ff718cedf67\n\t0x7ff718ceac97\n\t0x7ff718c8ac29\n\t0x7ff718c8ba93\n\t0x7ff719180640\n\t0x7ff71917af80\n\t0x7ff7191996e6\n\t0x7ff718e85de4\n\t0x7ff718e8ed8c\n\t0x7ff718e72004\n\t0x7ff718e721b5\n\t0x7ff718e57ee2\n\t0x7ffd5b6fe8d7\n\t0x7ffd5c3ac53c\n"}} | headers=HTTPHeaderDict({'Content-Length': '611', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:38 [   DEBUG] Finished Request
+2025-12-30 22:58:39 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element {'using': 'css selector', 'value': '[name="loginId"]'}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.17"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.17/value {'text': 'qa2team02@elicer.com', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '@', 'e', 'l', 'i', 'c', 'e', 'r', '.', 'c', 'o', 'm']}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.17/value HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element {'using': 'css selector', 'value': '[name="password"]'}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.18"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.18/value {'text': 'qa2team02!!', 'value': ['q', 'a', '2', 't', 'e', 'a', 'm', '0', '2', '!', '!']}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.18/value HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element {'using': 'css selector', 'value': "button[type='submit']"}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":{"element-6066-11e4-a52e-4f735466cecf":"f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.22"}} | headers=HTTPHeaderDict({'Content-Length': '126', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/execute/sync {'script': '/* isDisplayed */return (function(){return (function(){var g=this||self;\nfunction aa(a){var b=typeof...', 'args': [{'element-6066-11e4-a52e-4f735466cecf': 'f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.22'}]}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/execute/sync HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] GET http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.22/enabled {}
+2025-12-30 22:58:44 [   DEBUG] http://localhost:6437 "GET /session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.22/enabled HTTP/1.1" 200 0
+2025-12-30 22:58:44 [   DEBUG] Remote response: status=200 | data={"value":true} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:44 [   DEBUG] Finished Request
+2025-12-30 22:58:44 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.22/click {}
+2025-12-30 22:58:45 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/element/f.88B656747C7F16F2CA324EA57705F0C8.d.A99915788A18CD8AA7564F954FC6A71E.e.22/click HTTP/1.1" 200 0
+2025-12-30 22:58:45 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:45 [   DEBUG] Finished Request
+2025-12-30 22:58:45 [   DEBUG] GET http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/url {}
+2025-12-30 22:58:45 [   DEBUG] http://localhost:6437 "GET /session/777ea9a276f4712f4afc7453a6b8a211/url HTTP/1.1" 200 0
+2025-12-30 22:58:45 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3DoJfarACWTYcUBG0w_jl03OgvZhxViE9D5x0GSYugoEtR7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IkxtVERXcDhjaENuSEpJTXU1Vjl4YXcifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=oJfarACWTYcUBG0w_jl03OgvZhxViE9D5x0GSYugoEtR7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IkxtVERXcDhjaENuSEpJTXU1Vjl4YXcifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:45 [   DEBUG] Finished Request
+2025-12-30 22:58:45 [   DEBUG] GET http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/url {}
+2025-12-30 22:58:45 [   DEBUG] http://localhost:6437 "GET /session/777ea9a276f4712f4afc7453a6b8a211/url HTTP/1.1" 200 0
+2025-12-30 22:58:45 [   DEBUG] Remote response: status=200 | data={"value":"https://accounts.elice.io/accounts/signin/me?client_id=b9d60191b973dc39&continue_to=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback%3Fstate%3DoJfarACWTYcUBG0w_jl03OgvZhxViE9D5x0GSYugoEtR7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IkxtVERXcDhjaENuSEpJTXU1Vjl4YXcifQ%253D%253D&lang=ko&redirect_uri=https%3A%2F%2Fqatrack.elice.io%2Feci%2Fauth%2Felice%2Fcallback&scope=read&state=oJfarACWTYcUBG0w_jl03OgvZhxViE9D5x0GSYugoEtR7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IkxtVERXcDhjaENuSEpJTXU1Vjl4YXcifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '549', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:45 [   DEBUG] Finished Request
+2025-12-30 22:58:46 [   DEBUG] GET http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/url {}
+2025-12-30 22:58:46 [   DEBUG] http://localhost:6437 "GET /session/777ea9a276f4712f4afc7453a6b8a211/url HTTP/1.1" 200 0
+2025-12-30 22:58:46 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/auth/elice/callback?code=2c6eHw7zEwdP&state=oJfarACWTYcUBG0w_jl03OgvZhxViE9D5x0GSYugoEtR7Im9yZ2FuaXphdGlvbl9pZGVudCI6InFhdHJhY2siLCJub25jZSI6IkxtVERXcDhjaENuSEpJTXU1Vjl4YXcifQ%3D%3D"} | headers=HTTPHeaderDict({'Content-Length': '222', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:46 [   DEBUG] Finished Request
+2025-12-30 22:58:46 [   DEBUG] GET http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/url {}
+2025-12-30 22:58:46 [   DEBUG] http://localhost:6437 "GET /session/777ea9a276f4712f4afc7453a6b8a211/url HTTP/1.1" 200 0
+2025-12-30 22:58:46 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci"} | headers=HTTPHeaderDict({'Content-Length': '40', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:46 [   DEBUG] Finished Request
+2025-12-30 22:58:47 [   DEBUG] GET http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/url {}
+2025-12-30 22:58:47 [   DEBUG] http://localhost:6437 "GET /session/777ea9a276f4712f4afc7453a6b8a211/url HTTP/1.1" 200 0
+2025-12-30 22:58:47 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/home"} | headers=HTTPHeaderDict({'Content-Length': '45', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:47 [   DEBUG] Finished Request
+2025-12-30 22:58:47 [   DEBUG] POST http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211/execute/sync {'script': "return window.localStorage.getItem('accessToken');", 'args': []}
+2025-12-30 22:58:47 [   DEBUG] http://localhost:6437 "POST /session/777ea9a276f4712f4afc7453a6b8a211/execute/sync HTTP/1.1" 200 0
+2025-12-30 22:58:47 [   DEBUG] Remote response: status=200 | data={"value":"uWmXX_SgQsT5aBn2F5R1CvZwTFzBJVXOyliMCdtDXRds"} | headers=HTTPHeaderDict({'Content-Length': '56', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:47 [   DEBUG] Finished Request
+2025-12-30 22:58:47 [   DEBUG] DELETE http://localhost:6437/session/777ea9a276f4712f4afc7453a6b8a211 {}
+2025-12-30 22:58:47 [   DEBUG] http://localhost:6437 "DELETE /session/777ea9a276f4712f4afc7453a6b8a211 HTTP/1.1" 200 0
+2025-12-30 22:58:47 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-30 22:58:47 [   DEBUG] Finished Request
+2025-12-30 22:58:54 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-30 22:58:55 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/compute/virtual_machine HTTP/1.1" 200 45
+2025-12-30 22:58:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-30 22:58:55 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/compute/virtual_machine/b5d472c0-8a52-4b32-be67-86cf36205cc7 HTTP/1.1" 200 45
+2025-12-30 22:58:55 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-30 22:58:55 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/compute/virtual_machine/b5d472c0-8a52-4b32-be67-86cf36205cc7 HTTP/1.1" 200 64
