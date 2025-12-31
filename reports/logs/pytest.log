@@ -76,3 +76,41 @@
 2025-12-31 10:50:26 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci"} | headers=HTTPHeaderDict({'Content-Length': '40', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
 2025-12-31 10:50:26 [   DEBUG] Finished Request
 2025-12-31 10:50:27 [   DEBUG] GET http://localhost:4588/session/987351d14bf810b4494c23db03143270/url {}
+2025-12-31 10:50:27 [   DEBUG] http://localhost:4588 "GET /session/987351d14bf810b4494c23db03143270/url HTTP/1.1" 200 0
+2025-12-31 10:50:27 [   DEBUG] Remote response: status=200 | data={"value":"https://qatrack.elice.io/eci/home"} | headers=HTTPHeaderDict({'Content-Length': '45', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-31 10:50:27 [   DEBUG] Finished Request
+2025-12-31 10:50:27 [   DEBUG] POST http://localhost:4588/session/987351d14bf810b4494c23db03143270/execute/sync {'script': "return window.localStorage.getItem('accessToken');", 'args': []}
+2025-12-31 10:50:27 [   DEBUG] http://localhost:4588 "POST /session/987351d14bf810b4494c23db03143270/execute/sync HTTP/1.1" 200 0
+2025-12-31 10:50:27 [   DEBUG] Remote response: status=200 | data={"value":"utY15ieezHDAwFRgEzIfBdVEQAVKI1gRKwA4sMxhmRgY"} | headers=HTTPHeaderDict({'Content-Length': '56', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-31 10:50:27 [   DEBUG] Finished Request
+2025-12-31 10:50:27 [   DEBUG] DELETE http://localhost:4588/session/987351d14bf810b4494c23db03143270 {}
+2025-12-31 10:50:27 [   DEBUG] http://localhost:4588 "DELETE /session/987351d14bf810b4494c23db03143270 HTTP/1.1" 200 0
+2025-12-31 10:50:27 [   DEBUG] Remote response: status=200 | data={"value":null} | headers=HTTPHeaderDict({'Content-Length': '14', 'Content-Type': 'application/json; charset=utf-8', 'cache-control': 'no-cache'})
+2025-12-31 10:50:27 [   DEBUG] Finished Request
+2025-12-31 10:50:33 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:34 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/compute/virtual_machine HTTP/1.1" 200 45
+2025-12-31 10:50:34 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:34 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine/7f07c404-be35-43ae-be4c-f55730fc3cd4 HTTP/1.1" 200 469
+2025-12-31 10:50:34 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:34 [   DEBUG] https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/compute/virtual_machine/7f07c404-be35-43ae-be4c-f55730fc3cd4 HTTP/1.1" 200 45
+2025-12-31 10:50:34 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:34 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine/7f07c404-be35-43ae-be4c-f55730fc3cd4 HTTP/1.1" 200 499
+2025-12-31 10:50:34 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:34 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/compute/virtual_machine/7f07c404-be35-43ae-be4c-f55730fc3cd4 HTTP/1.1" 200 64
+2025-12-31 10:50:34 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:35 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/compute/virtual_machine HTTP/1.1" 200 45
+2025-12-31 10:50:35 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:35 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/compute/virtual_machine/633b98a1-3d38-4ecc-9857-71c36fae45a5 HTTP/1.1" 200 64
+2025-12-31 10:50:35 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:36 [   DEBUG] https://portal.gov.elice.cloud:443 "POST /api/user/resource/compute/virtual_machine HTTP/1.1" 200 45
+2025-12-31 10:50:36 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:36 [   DEBUG] https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/compute/virtual_machine/c6ff601b-a2fc-41f5-89fd-378c1cd5de34 HTTP/1.1" 200 64
+2025-12-31 10:50:36 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:36 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine_allocation HTTP/1.1" 200 1479
+2025-12-31 10:50:36 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:37 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine HTTP/1.1" 200 1554
+2025-12-31 10:50:37 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:37 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine_allocation HTTP/1.1" 200 1479
+2025-12-31 10:50:37 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+2025-12-31 10:50:37 [   DEBUG] https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine_allocation HTTP/1.1" 200 1479
+2025-12-31 10:50:37 [   DEBUG] Starting new HTTPS connection (1): portal.gov.elice.cloud:443
