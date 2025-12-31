@@ -162,7 +162,76 @@ class TestComputeCRUD:
         vm = self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id)
         assert vm is not None
         assert vm.get("machine_id") or vm.get("id")
-        
+    
+    # 가상 클러스터 생성 (Create)
+    def test_VM028_create_cluster(self, api_headers, base_url_compute):
+
+        create_url = f"{base_url_compute}/virtual_machine"
+
+        vm_name = f"vm-028-fallback-{uuid.uuid4().hex[:6]}"
+        base_payload = {
+            "name": vm_name,
+            "zone_id": "0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0",
+            "username": "test",
+            "password": "1qaz2wsx@@",
+            "on_init_script": "",
+            "always_on": False,
+            "dr": False,
+        }
+
+        created_vm_id = None
+        last_res = None
+        used_instance_type_id = None
+
+        for it in INSTANCE_TYPE_CANDIDATES:
+            payload = dict(base_payload)
+            payload["instance_type_id"] = it
+
+            res = self._request("POST", create_url, headers=api_headers, json=payload)
+            last_res = res
+
+            if res.status_code in (200, 201):
+                body = res.json()
+                created_vm_id = body.get("id")
+                used_instance_type_id = it
+                break
+
+            # 실패하면 다음 후보군으로 넘어감 (쿼터/환경제한/검증 실패 등)
+
+        # 2) 전부 실패면 팀 규칙대로 xfail 처리
+        if not created_vm_id:
+            pytest.xfail(
+                f"환경/쿼터/파라미터 제한으로 VM 생성 실패(후보군 모두 실패): "
+                f"last_status={last_res.status_code if last_res else 'N/A'}, "
+                f"last_body={last_res.text if last_res else 'N/A'}"
+            )
+
+        # 3) 생성 직후 GET 검증
+        try:
+            get_url = f"{base_url_compute}/virtual_machine/{created_vm_id}"
+            r_get = self._request("GET", get_url, headers=api_headers)
+            assert r_get.status_code == 200, (
+                f"⛔ [FAIL] 생성 직후 조회 실패 - {r_get.status_code}: {r_get.text}"
+            )
+
+            vm_one = r_get.json()
+            assert isinstance(vm_one, dict), f"dict 아님: {vm_one}"
+            assert vm_one.get("id") == created_vm_id, f"id 불일치: {vm_one}"
+            assert vm_one.get("name") == vm_name, f"name 불일치: {vm_one}"
+
+            # 참고 정보 출력용
+            assert used_instance_type_id is not None
+
+        finally:
+            # 4) cleanup: 성공했으면 무조건 삭제해서 가비지 남기지 않기
+            delete_url = f"{base_url_compute}/virtual_machine/{created_vm_id}"
+            r_del = self._request("DELETE", delete_url, headers=api_headers)
+
+            # 삭제는 환경에 따라 200/204 둘 다 가능하게(팀 규칙에 맞춰 조정 가능)
+            assert r_del.status_code in (200, 204), (
+                f"⛔ [FAIL] VM cleanup(삭제) 실패 - {r_del.status_code}: {r_del.text}"
+            )
+
     # # VM-010 Start VM
 
     # def test_VM010_start_vm(self, api_headers, base_url_compute):
