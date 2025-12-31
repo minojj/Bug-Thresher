@@ -1,4 +1,5 @@
 # 토큰 로드(Fixture) 및 공통 설정 정의
+import shutil
 import pytest
 import requests
 import os
@@ -10,6 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from src.utils.api_util import wait_for_status  # 수정된 유틸 함수 임포트
+from src.utils.allure_helper import attach_screenshot
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -151,3 +153,35 @@ def existing_user(resource_factory, base_url_object_storage):
         "tags": {}
         }
     return resource_factory(f"{base_url_object_storage}/user", payload)
+
+@pytest.hookimpl
+def pytest_sessionstart(session):
+    """
+    테스트 시작 전 Allure reports 폴더 초기화
+    """
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    allure_reports_dir = os.path.join(base_dir, "reports", "allure")
+
+    print("🧹 삭제할 Allure 폴더:", allure_reports_dir)
+
+    if os.path.exists(allure_reports_dir):
+        shutil.rmtree(allure_reports_dir)
+        print("✔ Allure reports 폴더 삭제 완료!")
+
+    # 삭제 후 새 폴더 생성
+    os.makedirs(allure_reports_dir, exist_ok=True)
+    print("📁 Allure reports 폴더 생성 완료!")
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """테스트 실패 시 자동으로 스크린샷 첨부"""
+    outcome = yield
+    result = outcome.get_result()
+
+    # 테스트 단계가 실패(FAILED)일 때만
+    if result.when == "call" and result.failed:
+        driver = item.funcargs.get("driver")
+        if driver:
+            attach_screenshot(driver, name=item.name)
+
