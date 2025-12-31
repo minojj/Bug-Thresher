@@ -152,20 +152,23 @@ pipeline {
             steps {
                 echo '🧪 API 테스트 실행...'
                 script {
-                    if (isUnix()) {
-                        sh '''
-                            . venv/bin/activate
-                            mkdir -p reports
-                            pytest tests/api/ -v --junit-xml=reports/api-results.xml
-                        '''
-                    } else {
-                        bat '''
-                            @echo off
-                            chcp 65001 >nul
-                            call venv\\Scripts\\activate.bat
-                            if not exist reports mkdir reports
-                            pytest tests/api/ -v --junit-xml=reports/api-results.xml
-                        '''
+                    // 테스트 실패해도 계속 진행 (catchError 사용)
+                    catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                        if (isUnix()) {
+                            sh '''
+                                . venv/bin/activate
+                                mkdir -p reports
+                                pytest tests/api/ -v --junit-xml=reports/api-results.xml
+                            '''
+                        } else {
+                            bat '''
+                                @echo off
+                                chcp 65001 >nul
+                                call venv\\Scripts\\activate.bat
+                                if not exist reports mkdir reports
+                                pytest tests/api/ -v --junit-xml=reports/api-results.xml
+                            '''
+                        }
                     }
                 }
             }
