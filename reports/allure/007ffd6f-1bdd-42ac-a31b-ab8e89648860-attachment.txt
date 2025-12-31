@@ -1,0 +1,1 @@
+2025-12-31 13:24:13.704 | SUCCESS  | test_network:test_NW042_public_ip_patch:665 - ✅ 공인 IP 태그 수정 및 반영 확인 완료: {'env': 'prod', 'test': 'pytest'}

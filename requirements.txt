@@ -14,7 +14,7 @@ webdriver-manager==4.0.2           # 브라우저 드라이버 자동 관리
 
 # Reporting / Quality (optional)
 pytest-cov==6.0.0                  # 코드 커버리지 리포트
-allure-pytest==2.13.5              #테스트 리포팅 (pytest 8.x 호환)
+allure-pytest==2.15.0              #테스트 리포팅
 
 # Logging (optional)
 loguru==0.7.2                      #로깅(선택)

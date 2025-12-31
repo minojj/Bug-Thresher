@@ -63,13 +63,14 @@ def api_headers(auth_token):
 
 # API Base URL Fixtures
 @pytest.fixture(scope="session")
-def base_url_block_compute():
-    """컴퓨트 API Compute URL"""
-    return os.getenv("BASE_URL_BLOCK_COMPUTE", "https://portal.gov.elice.cloud/api/user/resource/compute")
+def base_url_infra():
+    """인프라 API Base URL"""
+    return os.getenv("BASE_URL_INFRA", "https://portal.gov.elice.cloud/api/user")
 
 @pytest.fixture(scope="session")
-def base_url_compute(base_url_block_compute):
-    return base_url_block_compute
+def base_url_compute():
+    """컴퓨트 API Base URL"""
+    return os.getenv("BASE_URL_COMPUTE", "https://portal.gov.elice.cloud/api/user/resource/compute")
 
 @pytest.fixture(scope="session")
 def base_url_block_storage():
@@ -183,4 +184,3 @@ def pytest_runtest_makereport(item, call):
         driver = item.funcargs.get("driver")
         if driver:
             attach_screenshot(driver, name=item.name)
-

@@ -1,0 +1,14 @@
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/object_storage/user HTTP/1.1" 200 45
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/object_storage/user/679a8d4b-a6ce-4cb7-b4e4-294ae9a4443a HTTP/1.1" 200 344
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/object_storage/user/679a8d4b-a6ce-4cb7-b4e4-294ae9a4443a HTTP/1.1" 200 344
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/object_storage/user/679a8d4b-a6ce-4cb7-b4e4-294ae9a4443a HTTP/1.1" 200 344
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/object_storage/user/679a8d4b-a6ce-4cb7-b4e4-294ae9a4443a HTTP/1.1" 200 450
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/object_storage/user/679a8d4b-a6ce-4cb7-b4e4-294ae9a4443a HTTP/1.1" 200 450
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/object_storage/user/679a8d4b-a6ce-4cb7-b4e4-294ae9a4443a HTTP/1.1" 200 65
