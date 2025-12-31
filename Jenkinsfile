@@ -5,6 +5,7 @@ pipeline {
         VENV_PATH = "${WORKSPACE}/venv"
         REPORTS_DIR = "${WORKSPACE}/reports"
         ALLURE_DIR = "${WORKSPACE}/reports/allure"
+        ALLURE_HOME = "${WORKSPACE}/allure"
         // Python UTF-8 출력 강제 설정 (Windows 인코딩 문제 해결)
         PYTHONIOENCODING = 'utf-8'
         PYTHONUTF8 = '1'
@@ -122,6 +123,35 @@ pipeline {
                         '''
                     }
                 }
+                
+                echo '📦 Allure Commandline 설치 확인...'
+                script {
+                    if (isUnix()) {
+                        sh '''
+                            if [ ! -d "allure/bin" ]; then
+                                echo "⬇️ Allure Commandline 다운로드 중..."
+                                curl -L https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.zip -o allure.zip
+                                unzip -q allure.zip
+                                mv allure-2.24.1 allure
+                                rm allure.zip
+                            fi
+                            echo "✅ Allure 설치 완료: $(./allure/bin/allure --version)"
+                        '''
+                    } else {
+                        bat '''
+                            @echo off
+                            if not exist allure\bin\allure.bat (
+                                echo ⬇️ Allure Commandline 다운로드 중...
+                                powershell -Command "Invoke-WebRequest -Uri 'https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.zip' -OutFile 'allure.zip'"
+                                powershell -Command "Expand-Archive -Path 'allure.zip' -DestinationPath '.' -Force"
+                                rename allure-2.24.1 allure
+                                del allure.zip
+                            )
+                            echo ✅ Allure 설치 완료
+                            allure\bin\allure.bat --version
+                        '''
+                    }
+                }
             }
         }
 
@@ -166,7 +196,7 @@ pipeline {
                                 chcp 65001 >nul
                                 call venv\\Scripts\\activate.bat
                                 if not exist reports mkdir reports
-                                pytest tests/api/ -v --junit-xml=reports/api-results.xml
+                                pytest tests/api/ -v --junit-xml=reports/api-results.xml --alluredir=reports/allure
                             '''
                         }
                     }
@@ -216,29 +246,29 @@ pipeline {
         /* --- 6. Allure 리포트 생성 --- */
         stage('Allure 리포트') {
             steps {
-                echo '📋 Allure 리포트 생성...'
+                echo '📋 Allure HTML 리포트 생성...'
                 script {
                     if (isUnix()) {
                         sh '''
-                            . venv/bin/activate
-                            pytest tests/api/ --alluredir=reports/allure
+                            ./allure/bin/allure generate reports/allure -o reports/allure-report --clean
                         '''
                     } else {
                         bat '''
                             @echo off
-                            chcp 65001 >nul
-                            call venv\\Scripts\\activate.bat
-                            pytest tests/api/ --alluredir=reports/allure
+                            allure\\bin\\allure.bat generate reports\\allure -o reports\\allure-report --clean
                         '''
                     }
                 }
             }
             post {
                 always {
-                    allure([
-                        includeProperties: false,
-                        results: [[path: 'reports/allure']],
-                        commandline: 'Allure'
+                    publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'reports/allure-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Allure Report'
                     ])
                 }
             }
