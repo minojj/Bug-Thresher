@@ -1,0 +1,2 @@
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/block_storage/snapshot_scheduler/918269ae-ae9e-407a-8491-f645d54ad3c8 HTTP/1.1" 409 85

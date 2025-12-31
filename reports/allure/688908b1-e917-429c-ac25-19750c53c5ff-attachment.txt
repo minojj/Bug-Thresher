@@ -1,0 +1,3 @@
+2025-12-31 13:39:26.175 | INFO     | test_network:test_NW033_vn_repeated_patch:475 - ✅ 수정 1 성공: 이름이 'repeated-0-545f'(으)로 변경됨
+2025-12-31 13:39:26.401 | INFO     | test_network:test_NW033_vn_repeated_patch:475 - ✅ 수정 2 성공: 이름이 'repeated-1-51cd'(으)로 변경됨
+2025-12-31 13:39:26.640 | INFO     | test_network:test_NW033_vn_repeated_patch:475 - ✅ 수정 3 성공: 이름이 'repeated-2-ec4b'(으)로 변경됨

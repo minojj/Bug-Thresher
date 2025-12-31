@@ -1,0 +1,16 @@
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "POST /api/user/resource/network/public_ip HTTP/1.1" 200 45
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "POST /api/user/resource/network/network_interface HTTP/1.1" 200 45
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/network/public_ip/acbc39a1-22f9-455b-ae5b-62f1f73cdc78 HTTP/1.1" 200 45
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/network/public_ip/acbc39a1-22f9-455b-ae5b-62f1f73cdc78 HTTP/1.1" 200 45
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/network/public_ip/acbc39a1-22f9-455b-ae5b-62f1f73cdc78 HTTP/1.1" 200 437
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/network/public_ip/acbc39a1-22f9-455b-ae5b-62f1f73cdc78 HTTP/1.1" 200 45
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/network/network_interface/e5e5f572-8fc7-48dc-8d81-1f767e81be1c HTTP/1.1" 200 64
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
+[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/network/public_ip/acbc39a1-22f9-455b-ae5b-62f1f73cdc78 HTTP/1.1" 200 64
