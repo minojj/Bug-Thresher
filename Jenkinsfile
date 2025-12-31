@@ -5,6 +5,9 @@ pipeline {
         VENV_PATH = "${WORKSPACE}/venv"
         REPORTS_DIR = "${WORKSPACE}/reports"
         ALLURE_DIR = "${WORKSPACE}/reports/allure"
+        // Python UTF-8 출력 강제 설정 (Windows 인코딩 문제 해결)
+        PYTHONIOENCODING = 'utf-8'
+        PYTHONUTF8 = '1'
     }
 
     stages {
@@ -157,6 +160,8 @@ pipeline {
                         '''
                     } else {
                         bat '''
+                            @echo off
+                            chcp 65001 >nul
                             call venv\\Scripts\\activate.bat
                             if not exist reports mkdir reports
                             pytest tests/api/ -v --junit-xml=reports/api-results.xml
@@ -183,6 +188,8 @@ pipeline {
                         '''
                     } else {
                         bat '''
+                            @echo off
+                            chcp 65001 >nul
                             call venv\\Scripts\\activate.bat
                             pytest tests/api/ --cov=src --cov-report=html:reports/coverage --cov-report=xml:reports/coverage.xml
                         '''
@@ -215,6 +222,8 @@ pipeline {
                         '''
                     } else {
                         bat '''
+                            @echo off
+                            chcp 65001 >nul
                             call venv\\Scripts\\activate.bat
                             pytest tests/api/ --alluredir=reports/allure
                         '''
