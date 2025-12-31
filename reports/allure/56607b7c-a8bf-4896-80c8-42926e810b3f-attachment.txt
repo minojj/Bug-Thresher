@@ -1,8 +1,0 @@
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "POST /api/user/resource/network/subnet HTTP/1.1" 200 45
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "PATCH /api/user/resource/network/subnet/ce81572e-9fa4-4fab-b8ca-8d7c9f14db19 HTTP/1.1" 200 45
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/network/subnet/ce81572e-9fa4-4fab-b8ca-8d7c9f14db19 HTTP/1.1" 200 432
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/network/subnet/ce81572e-9fa4-4fab-b8ca-8d7c9f14db19 HTTP/1.1" 200 64

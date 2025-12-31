@@ -1,1 +1,0 @@
-{"uuid": "3e5f04b4-9618-4670-80ed-5682ca99b1d1", "children": ["52ee6349-21dc-41f6-a2b4-bc04c8eb3ce5"], "befores": [{"name": "resource_factory", "status": "passed", "start": 1767154200643, "stop": 1767154200643}], "afters": [{"name": "resource_factory::0", "status": "passed", "start": 1767154200946, "stop": 1767154201166}], "start": 1767154200643, "stop": 1767154201166}

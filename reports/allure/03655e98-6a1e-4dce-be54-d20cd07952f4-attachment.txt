@@ -1,2 +1,0 @@
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/network/subnet/6b777a67-7965-44d8-9ea6-f1bfb7030f30 HTTP/1.1" 409 73

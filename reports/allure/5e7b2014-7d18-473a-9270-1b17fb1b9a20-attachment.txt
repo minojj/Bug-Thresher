@@ -1,2 +1,0 @@
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/network/virtual_network/bbb0a864-9ea4-46c5-b452-2e27591c3ea8 HTTP/1.1" 409 82

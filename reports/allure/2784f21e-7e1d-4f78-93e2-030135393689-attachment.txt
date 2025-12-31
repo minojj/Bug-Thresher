@@ -1,4 +1,0 @@
-2025-12-31 13:10:54.325 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [activated]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user/0abe99cd-9ca9-42b0-8e39-78a9cdef01df
-2025-12-31 13:11:02.963 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: activated
-2025-12-31 13:11:03.344 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [deleted]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user_grant/f76e3531-8eb6-41ca-9979-afe56ef6210a
-2025-12-31 13:11:06.104 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: deleted

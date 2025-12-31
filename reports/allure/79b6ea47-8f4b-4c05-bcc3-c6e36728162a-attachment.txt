@@ -1,0 +1,13 @@
+2025-12-31 13:25:47.975 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [activated]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user/4c011f48-07c7-46ac-aa0f-3376b186db4d
+2025-12-31 13:25:48.077 | DEBUG    | src.utils.api_util:wait_for_status:47 - ℹ️ 서버 응답 대기 중... (HTTP 409)
+2025-12-31 13:25:49.158 | DEBUG    | src.utils.api_util:wait_for_status:47 - ℹ️ 서버 응답 대기 중... (HTTP 409)
+2025-12-31 13:25:50.727 | DEBUG    | src.utils.api_util:wait_for_status:47 - ℹ️ 서버 응답 대기 중... (HTTP 409)
+2025-12-31 13:25:53.059 | DEBUG    | src.utils.api_util:wait_for_status:47 - ℹ️ 서버 응답 대기 중... (HTTP 409)
+2025-12-31 13:25:56.519 | DEBUG    | src.utils.api_util:wait_for_status:47 - ℹ️ 서버 응답 대기 중... (HTTP 409)
+2025-12-31 13:26:01.520 | ERROR    | src.utils.api_util:wait_for_status:57 - ⛔ 10초 내에 목표 상태(activated)에 도달하지 못했습니다.
+2025-12-31 13:26:01.521 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [activated]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user/3201ee43-cc31-4f50-b737-5e93a9c0fcbf
+2025-12-31 13:26:01.612 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: activated
+2025-12-31 13:26:01.802 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [activated]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user_grant/f314a7b7-1ce3-43b1-a872-f67da1256e36?filter_object_storage_user_id=3201ee43-cc31-4f50-b737-5e93a9c0fcbf&count=50
+2025-12-31 13:26:04.598 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: activated
+2025-12-31 13:26:05.055 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [deleted]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user_grant/f314a7b7-1ce3-43b1-a872-f67da1256e36
+2025-12-31 13:26:10.380 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: deleted

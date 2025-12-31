@@ -1,4 +1,0 @@
-2025-12-31 13:09:52.560 | INFO     | test_network:test_NW034_vn_delete:488 - 🗑️ [NW33] 가상 네트워크 삭제 요청: https://portal.gov.elice.cloud/api/user/resource/network/virtual_network/22ae8bf8-b2c0-417e-ba41-8815556f991c
-2025-12-31 13:09:52.845 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [deleted]: https://portal.gov.elice.cloud/api/user/resource/network/virtual_network/22ae8bf8-b2c0-417e-ba41-8815556f991c
-2025-12-31 13:09:52.955 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: deleted
-2025-12-31 13:09:52.957 | SUCCESS  | test_network:test_NW034_vn_delete:494 - ✅ [NW33] 가상 네트워크 삭제 확인 완료

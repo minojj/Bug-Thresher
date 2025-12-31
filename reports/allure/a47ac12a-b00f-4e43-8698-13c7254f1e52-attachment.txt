@@ -1,9 +1,0 @@
-2025-12-31 13:09:42.109 | INFO     | test_network:test_NW_012_NW007_network_full_cycle:129 - ✅ 가상 네트워크 생성 완료 (ID: 03bb31f8-a38b-4f3e-be4b-e00ea3167106)
-2025-12-31 13:09:42.314 | INFO     | test_network:test_NW_012_NW007_network_full_cycle:142 - ✅ 서브넷 생성 완료 (ID: 01050b9d-bbf1-4f84-ba56-8ee2390108c4)
-2025-12-31 13:09:42.694 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [01050b9d-bbf1-4f84-ba56-8ee2390108c4]: https://portal.gov.elice.cloud/api/user/resource/network/network_interface/d2d893e8-4292-403c-9ac2-b537cebe3e8a
-2025-12-31 13:09:42.798 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: 01050b9d-bbf1-4f84-ba56-8ee2390108c4
-2025-12-31 13:09:42.798 | SUCCESS  | test_network:test_NW_012_NW007_network_full_cycle:164 - ✅ NIC 생성 및 연결 확인 완료
-2025-12-31 13:09:42.799 | INFO     | test_network:test_NW_012_NW007_network_full_cycle:168 - 🔓 NIC(d2d893e8-4292-403c-9ac2-b537cebe3e8a) 해제 시도 (포스트맨 방식 적용)...
-2025-12-31 13:09:42.960 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [None]: https://portal.gov.elice.cloud/api/user/resource/network/network_interface/d2d893e8-4292-403c-9ac2-b537cebe3e8a
-2025-12-31 13:09:43.065 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: None
-2025-12-31 13:09:43.250 | SUCCESS  | test_network:test_NW_012_NW007_network_full_cycle:187 - 🎉 가상 네트워크 생성부터 NIC 해제까지 전체 시나리오 성공!

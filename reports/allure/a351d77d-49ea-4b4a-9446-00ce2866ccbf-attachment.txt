@@ -1,4 +1,0 @@
-2025-12-31 13:09:43.903 | INFO     | test_network:test_NW013_nic_delete:201 - 🗑️ [NW13] NIC 삭제 요청: https://portal.gov.elice.cloud/api/user/resource/network/network_interface/d644fe51-24bf-4c66-9d4b-c45b06b0b363
-2025-12-31 13:09:44.057 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [deleted]: https://portal.gov.elice.cloud/api/user/resource/network/network_interface/d644fe51-24bf-4c66-9d4b-c45b06b0b363
-2025-12-31 13:09:44.170 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: deleted
-2025-12-31 13:09:44.171 | SUCCESS  | test_network:test_NW013_nic_delete:207 - ✅ [NW13] NIC 삭제 확인 완료

@@ -1,2 +1,0 @@
-2025-12-31 13:10:04.609 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [activated]: https://portal.gov.elice.cloud/api/user/resource/storage/object_storage/user/eda35e1d-3677-4cb1-ba0d-2fdd04b4ebcc
-2025-12-31 13:10:09.734 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: activated
