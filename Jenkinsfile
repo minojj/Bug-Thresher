@@ -72,11 +72,46 @@ pipeline {
                                 exit /b 0
                             )
                             
+                            REM 일반적인 Python 설치 경로 확인
+                            echo 🔍 일반 설치 경로에서 Python 검색 중...
+                            
+                            for %%P in (
+                                "C:\\Python312\\python.exe"
+                                "C:\\Python311\\python.exe"
+                                "C:\\Python310\\python.exe"
+                                "C:\\Program Files\\Python312\\python.exe"
+                                "C:\\Program Files\\Python311\\python.exe"
+                                "C:\\Program Files\\Python310\\python.exe"
+                                "%LOCALAPPDATA%\\Programs\\Python\\Python312\\python.exe"
+                                "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe"
+                                "C:\\Users\\JMH\\AppData\\Local\\Programs\\Python\\Python314\\python.exe"
+                            ) do (
+                                if exist %%P (
+                                    echo ✓ Python 발견: %%P
+                                    %%P --version
+                                    %%P -m venv venv
+                                    call venv\\Scripts\\activate.bat
+                                    python -m pip install --upgrade pip
+                                    pip install -r requirements.txt
+                                    exit /b 0
+                                )
+                            )
+                            
+                            echo.
                             echo ❌ Python을 찾을 수 없습니다!
-                            echo 다음 중 하나를 수행하세요:
-                            echo 1. Python 설치: https://www.python.org/downloads/
-                            echo 2. Python을 시스템 PATH에 추가
-                            echo 3. Jenkins에서 Python Tool 설정
+                            echo.
+                            echo 📌 Jenkins 서버에서 다음 작업을 수행하세요:
+                            echo.
+                            echo 1. Python 다운로드 및 설치:
+                            echo    https://www.python.org/downloads/
+                            echo    설치 시 "Add Python to PATH" 옵션 선택!
+                            echo.
+                            echo 2. 또는 winget으로 설치:
+                            echo    winget install Python.Python.3.12
+                            echo.
+                            echo 3. 설치 확인:
+                            echo    python --version
+                            echo.
                             exit /b 1
                         '''
                     }
