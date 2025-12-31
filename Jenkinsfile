@@ -33,58 +33,85 @@ pipeline {
                             @echo off
                             echo 🔍 Python 설치 확인 중...
                             
-                            REM Python Launcher 사용 시도
+                            REM Python Launcher 사용 시도 (가장 안전)
                             where py >nul 2>&1
                             if %ERRORLEVEL% EQU 0 (
                                 echo ✓ Python Launcher 발견
-                                py -3 --version
-                                py -3 -m venv venv
-                                call venv\\Scripts\\activate.bat
-                                python -m pip install --upgrade pip
-                                pip install -r requirements.txt
-                                exit /b 0
+                                py -3 --version 2>nul
+                                if %ERRORLEVEL% EQU 0 (
+                                    py -3 -m venv venv
+                                    if %ERRORLEVEL% EQU 0 (
+                                        call venv\\Scripts\\activate.bat
+                                        python -m pip install --upgrade pip
+                                        pip install -r requirements.txt
+                                        exit /b 0
+                                    )
+                                )
                             )
                             
                             REM python 명령어 사용 시도
                             where python >nul 2>&1
                             if %ERRORLEVEL% EQU 0 (
                                 echo ✓ python 명령어 발견
-                                python --version
-                                python -m venv venv
-                                call venv\\Scripts\\activate.bat
-                                python -m pip install --upgrade pip
-                                pip install -r requirements.txt
-                                exit /b 0
-                            )
-                            
-                            REM 일반적인 Python 설치 경로 확인
-                            echo 🔍 일반 설치 경로에서 Python 검색 중...
-                            
-                            for %%P in (
-                                "C:\\Python314\\python.exe"
-                                "C:\\Python312\\python.exe"
-                                "C:\\Python311\\python.exe"
-                                "C:\\Python310\\python.exe"
-                                "C:\\Program Files\\Python314\\python.exe"
-                                "C:\\Program Files\\Python312\\python.exe"
-                                "C:\\Program Files\\Python311\\python.exe"
-                                "%LOCALAPPDATA%\\Programs\\Python\\Python314\\python.exe"
-                                "%LOCALAPPDATA%\\Programs\\Python\\Python312\\python.exe"
-                                "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe"
-                            ) do (
-                                if exist %%P (
-                                    echo ✓ Python 발견: %%P
-                                    %%P --version
-                                    %%P -m venv venv
-                                    call venv\\Scripts\\activate.bat
-                                    python -m pip install --upgrade pip
-                                    pip install -r requirements.txt
-                                    exit /b 0
+                                python --version 2>nul
+                                if %ERRORLEVEL% EQU 0 (
+                                    python -m venv venv
+                                    if %ERRORLEVEL% EQU 0 (
+                                        call venv\\Scripts\\activate.bat
+                                        python -m pip install --upgrade pip
+                                        pip install -r requirements.txt
+                                        exit /b 0
+                                    )
                                 )
                             )
                             
-                            echo ❌ Python을 찾을 수 없습니다!
-                            echo Jenkins 서버에 Python을 설치하세요: https://www.python.org/downloads/
+                            REM 일반적인 Python 설치 경로 확인 (안정 버전 우선)
+                            echo 🔍 일반 설치 경로에서 Python 검색 중...
+                            
+                            for %%P in (
+                                "%LOCALAPPDATA%\\Programs\\Python\\Python312\\python.exe"
+                                "%LOCALAPPDATA%\\Programs\\Python\\Python311\\python.exe"
+                                "C:\\Python312\\python.exe"
+                                "C:\\Python311\\python.exe"
+                                "C:\\Python310\\python.exe"
+                                "C:\\Program Files\\Python312\\python.exe"
+                                "C:\\Program Files\\Python311\\python.exe"
+                                "C:\\Program Files\\Python310\\python.exe"
+                            ) do (
+                                if exist %%P (
+                                    echo 테스트 중: %%P
+                                    %%P --version >nul 2>&1
+                                    if !ERRORLEVEL! EQU 0 (
+                                        echo ✓ 정상 작동하는 Python 발견: %%P
+                                        %%P -m venv venv
+                                        if !ERRORLEVEL! EQU 0 (
+                                            call venv\\Scripts\\activate.bat
+                                            python -m pip install --upgrade pip
+                                            pip install -r requirements.txt
+                                            exit /b 0
+                                        )
+                                    ) else (
+                                        echo ✗ 손상됨: %%P
+                                    )
+                                )
+                            )
+                            
+                            echo.
+                            echo ❌ 정상 작동하는 Python을 찾을 수 없습니다!
+                            echo.
+                            echo 📌 문제: C:\Python314\python.exe가 손상되어 있습니다.
+                            echo.
+                            echo 해결 방법:
+                            echo 1. 안정적인 Python 3.12 설치:
+                            echo    winget install Python.Python.3.12
+                            echo.
+                            echo 2. 또는 수동 설치:
+                            echo    https://www.python.org/downloads/
+                            echo    "Add Python to PATH" 옵션 선택!
+                            echo.
+                            echo 3. 손상된 Python 3.14 제거 (선택):
+                            echo    C:\Python314 폴더 삭제
+                            echo.
                             exit /b 1
                         '''
                     }
