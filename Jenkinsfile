@@ -5,9 +5,6 @@ pipeline {
         VENV_PATH = "${WORKSPACE}/venv"
         REPORTS_DIR = "${WORKSPACE}/reports"
         ALLURE_DIR = "${WORKSPACE}/reports/allure"
-        // Python UTF-8 출력 강제 설정 (Windows 인코딩 문제 해결)
-        PYTHONIOENCODING = 'utf-8'
-        PYTHONUTF8 = '1'
     }
 
     stages {
@@ -24,46 +21,6 @@ pipeline {
             steps {
                 echo '🛠️ Python 가상환경 설정...'
                 script {
-                    // .env 파일 생성 (Credential이 있으면 사용, 없으면 기본값 사용)
-                    try {
-                        withCredentials([file(credentialsId: 'bug-thresher-env-file', variable: 'ENV_FILE')]) {
-                            if (isUnix()) {
-                                sh 'cp $ENV_FILE .env'
-                            } else {
-                                bat 'copy %ENV_FILE% .env'
-                            }
-                            echo '✓ Jenkins Credential에서 .env 파일을 가져왔습니다'
-                        }
-                    } catch (Exception e) {
-                        echo '⚠️  Jenkins Credential이 없습니다. 기본 .env 파일을 생성합니다.'
-                        if (isUnix()) {
-                            sh '''
-                                cat > .env << 'EOF'
-LOGIN_ID=qa2team02@elicer.com
-PASSWORD=qa2team02!!
-
-# API Base URLs
-BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
-BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
-BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
-EOF
-                            '''
-                        } else {
-                            bat '''
-                                @echo off
-                                (
-                                    echo LOGIN_ID=qa2team02@elicer.com
-                                    echo PASSWORD=qa2team02!!
-                                    echo.
-                                    echo # API Base URLs
-                                    echo BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
-                                    echo BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
-                                    echo BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
-                                ) > .env
-                            '''
-                        }
-                    }
-                    
                     if (isUnix()) {
                         sh '''
                             python3 -m venv venv
@@ -200,8 +157,6 @@ EOF
                         '''
                     } else {
                         bat '''
-                            @echo off
-                            chcp 65001 >nul
                             call venv\\Scripts\\activate.bat
                             if not exist reports mkdir reports
                             pytest tests/api/ -v --junit-xml=reports/api-results.xml
@@ -228,8 +183,6 @@ EOF
                         '''
                     } else {
                         bat '''
-                            @echo off
-                            chcp 65001 >nul
                             call venv\\Scripts\\activate.bat
                             pytest tests/api/ --cov=src --cov-report=html:reports/coverage --cov-report=xml:reports/coverage.xml
                         '''
@@ -262,8 +215,6 @@ EOF
                         '''
                     } else {
                         bat '''
-                            @echo off
-                            chcp 65001 >nul
                             call venv\\Scripts\\activate.bat
                             pytest tests/api/ --alluredir=reports/allure
                         '''
