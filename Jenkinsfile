@@ -24,36 +24,12 @@ pipeline {
             steps {
                 echo '🛠️ Python 가상환경 설정...'
                 script {
-                    // Jenkins Credentials를 사용하여 .env 파일 생성
-                    withCredentials([
-                        string(credentialsId: 'elice-login-id', variable: 'LOGIN_ID'),
-                        string(credentialsId: 'elice-password', variable: 'PASSWORD')
-                    ]) {
+                    // Jenkins Secret File에서 .env 파일 복사
+                    withCredentials([file(credentialsId: 'bug-thresher-env-file', variable: 'ENV_FILE')]) {
                         if (isUnix()) {
-                            sh '''
-                                cat > .env << EOF
-LOGIN_ID=${LOGIN_ID}
-PASSWORD=${PASSWORD}
-
-# API Base URLs
-BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
-BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
-BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
-EOF
-                            '''
+                            sh 'cp $ENV_FILE .env'
                         } else {
-                            bat '''
-                                @echo off
-                                (
-                                    echo LOGIN_ID=%LOGIN_ID%
-                                    echo PASSWORD=%PASSWORD%
-                                    echo.
-                                    echo # API Base URLs
-                                    echo BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
-                                    echo BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
-                                    echo BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
-                                ) > .env
-                            '''
+                            bat 'copy %ENV_FILE% .env'
                         }
                     }
                     
