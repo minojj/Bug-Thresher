@@ -14,8 +14,6 @@ driver.get("https://qatrack.elice.io/eci")
 
 wait = WebDriverWait(driver, 10)
 
-
-
 # .env의 LOGIN_ID 사용
 email_field = wait.until(EC.presence_of_element_located((By.NAME, "loginId")))
 email_field.send_keys(os.getenv("LOGIN_ID"))
@@ -40,5 +38,4 @@ else:
 with open("token.txt", "w") as f:
     f.write(token)
 
-input("\n크롬창을 확인하세요. 종료하려면 Enter 키를 누르세요...")
 driver.quit()
