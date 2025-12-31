@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,8 +12,6 @@ driver = webdriver.Chrome()
 driver.get("https://qatrack.elice.io/eci")
 
 wait = WebDriverWait(driver, 10)
-
-
 
 # .env의 LOGIN_ID 사용
 email_field = wait.until(EC.presence_of_element_located((By.NAME, "loginId")))
@@ -40,5 +37,4 @@ else:
 with open("token.txt", "w") as f:
     f.write(token)
 
-input("\n크롬창을 확인하세요. 종료하려면 Enter 키를 누르세요...")
 driver.quit()

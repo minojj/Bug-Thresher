@@ -8,6 +8,7 @@ INSTANCE_TYPE_CANDIDATES = [
     "320909e3-44ce-4018-8b55-7e837cd84a15",
     "332d9f31-595c-4d0f-aebd-4aaf49c345a5",  # C-16
     "830e2041-d477-4058-a65c-386a93ead237",  # M-2
+    "c0d04e23-c5bb-4625-8906-13dc2644981c"
 ]
 
 class TestComputeCRUD:
@@ -371,11 +372,52 @@ class TestComputeCRUD:
             return r.json()
         return None
     
+    def test_VM020_GET_vm_resource_monitoring(self, api_headers, base_url_compute):
+        """
+        [VM020] VM 리소스 모니터링 대시보드 조회
+        """
+        endpoint = f"{base_url_compute}/virtual_machine"
+
+        params = {
+            "sort_by": "created_desc",
+            "count": 100
+        }
+
+        print(f"\n📡 호출 URL: {endpoint}")
+        response = self._request("GET", endpoint, headers=api_headers, params=params)
+
+        print(f"📊 응답 상태 코드: {response.status_code}")
+
+        assert response.status_code == 200, f"⛔ 조회 실패! (상태 코드: {response.status_code})"
+        
+        print("✅ 대시보드용 VM 리소스 정보 조회 성공")    
+    
     # VM-028
-    # def _wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
-    #     end = time.time() + timeout_sec
-    #     while time.time() < end:
-    #         if self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id):
-    #             return
-    #         time.sleep(3)
-    #     pytest.fail("VM not visible")
+    def _wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
+        end = time.time() + timeout_sec
+        while time.time() < end:
+            if self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id):
+                return
+            time.sleep(3)
+        pytest.fail("VM not visible")
+
+    
+    def test_VM030_ERR_create_cluster_empty_vm_ids(self, api_headers, base_url_compute):
+        url = f"{base_url_compute}/cluster"
+        
+        # 1. vm_ids가 비어있는 Request Body 준비
+        body = {
+            "name": "cluster-invalid",
+            "vm_ids": [] 
+        }
+
+        # 2. HTTP Request 생성 및 전송
+        response = self._request("POST", url, headers=api_headers, json=body)
+
+        # 3. 검증: 404 Not Found 및 에러 메시지 확인
+        assert response.status_code == 404, \
+            f"⛔ [FAIL] 빈 vm_ids 요청 시 404가 아닌 {response.status_code} 반환: {response.text}"
+        
+        # 상세 메시지에 'invalid' 또는 'vm_ids'가 포함되어 있는지 확인
+        assert "invalid" in response.text.lower() or "vm_ids" in response.text.lower(), \
+            f"⛔ [FAIL] 에러 상세 내용이 기대와 다름: {response.text}"
