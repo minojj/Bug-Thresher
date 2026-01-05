@@ -180,6 +180,31 @@ class TestComputeCRUD:
         assert vm is not None
         assert vm.get("machine_id") or vm.get("id")
 
+    def _list_vms(self, api_headers, base_url_compute):
+        r = self._request(
+            "GET",
+            f"{base_url_compute}/virtual_machine_allocation",
+            headers=api_headers,
+        )
+        return r.json()
+
+    def _ensure_vm_id(self, api_headers, base_url_compute):
+        if self.created_vm_id and not self.deleted_vm_verified:
+            return self.created_vm_id
+
+        vms = self._list_vms(api_headers, base_url_compute)
+        return vms[0].get("machine_id") or vms[0].get("id")
+
+    def _get_vm_by_machine_id(self, api_headers, base_url_compute, vm_id):
+        r = self._request(
+            "GET",
+            f"{base_url_compute}/virtual_machine/{vm_id}",
+            headers=api_headers,
+        )
+        if r.status_code == 200:
+            return r.json()
+        return None
+
     # VM-020
     def test_VM020_GET_vm_resource_monitoring(self, api_headers, base_url_compute):
         """
@@ -198,15 +223,23 @@ class TestComputeCRUD:
         print(f"📊 응답 상태 코드: {response.status_code}")
 
         assert response.status_code == 200, f"⛔ 조회 실패! (상태 코드: {response.status_code})"
+
     
     # VM-028
-    def test_wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
+    def test_VM028_wait_vm_visible(self, api_headers, base_url_compute, timeout_sec=60):
+        # 1. 아까 작성하신 메서드를 통해 vm_id를 내부적으로 가져옵니다.
+        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
+        
+        if not vm_id:
+            pytest.fail("테스트에 사용할 VM ID를 찾을 수 없습니다.")
+
         end = time.time() + timeout_sec
         while time.time() < end:
+            # 2. 가져온 vm_id를 사용하여 가시성 확인
             if self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id):
                 return
-            time.sleep(3)
-        pytest.fail("VM not visible")
+        
+        pytest.fail(f"VM {vm_id} not visible after {timeout_sec} seconds")
     
     # VM-030
     @allure.story("예외 케이스")
