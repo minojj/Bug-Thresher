@@ -1,4 +1,0 @@
-
-📡 호출 URL: https://portal.gov.elice.cloud/api/user/resource/compute/virtual_machine
-📊 응답 상태 코드: 200
-✅ 대시보드용 VM 리소스 정보 조회 성공

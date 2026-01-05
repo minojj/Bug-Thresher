@@ -1,4 +1,0 @@
-2025-12-31 13:39:21.336 | INFO     | test_network:test_NW023_subnet_delete:341 - 🗑️ [NW23] 서브넷 삭제 요청: https://portal.gov.elice.cloud/api/user/resource/network/subnet/d6abfc72-532c-4f8e-9798-960c9f6e0e1e
-2025-12-31 13:39:21.617 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [deleted]: https://portal.gov.elice.cloud/api/user/resource/network/subnet/d6abfc72-532c-4f8e-9798-960c9f6e0e1e
-2025-12-31 13:39:21.958 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: deleted
-2025-12-31 13:39:21.958 | SUCCESS  | test_network:test_NW023_subnet_delete:347 - ✅ [NW23] 서브넷 삭제 확인 완료

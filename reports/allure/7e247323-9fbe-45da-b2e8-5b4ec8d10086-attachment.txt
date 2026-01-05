@@ -1,2 +1,0 @@
-2025-12-31 13:39:34.499 | INFO     | src.utils.api_util:wait_for_status:16 - ⏳ 상태 대기 시작 [deleted]: https://portal.gov.elice.cloud/api/user/resource/network/public_ip/9e68c29c-620d-448e-a904-a59140b241bc
-2025-12-31 13:39:34.631 | SUCCESS  | src.utils.api_util:wait_for_status:40 - ✅ 목표 상태 도달: deleted

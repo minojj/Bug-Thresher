@@ -1,1 +1,0 @@
-2025-12-31 13:39:28.662 | INFO     | test_network:test_NW038_public_ip_list:603 - ✅ 조회된 공인 IP 개수: 3개

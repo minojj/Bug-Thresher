@@ -1,1 +1,0 @@
-2025-12-31 13:39:22.902 | SUCCESS  | test_network:test_NW024_ERR_delete_subnet_with_attached_nic:379 - ✅ 검증 성공: 서버가 'interface_found' 코드로 삭제를 정상적으로 차단함
