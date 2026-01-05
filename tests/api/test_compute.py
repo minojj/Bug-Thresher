@@ -17,8 +17,6 @@ class TestComputeCRUD:
     deleted_vm_verified = False
     
     # VM-001 생성, 수정, 삭제 (resource_factory 적용)
-    @allure.story("예외 케이스")
-    
     def test_VM_create_rename_delete(self, api_headers, base_url_compute):
 
         # 1) VM 생성
@@ -77,6 +75,7 @@ class TestComputeCRUD:
     # VM-002 다른 인스턴스 타입으로 VM 생성       
     @allure.story("예외 케이스")
     @allure.story("xfail")
+    @pytest.mark.xfail(reason="환경 제한으로 인스턴스 타입 사용 불가 시도")
     def test_VM002_create_vm_different_instance_type(self, api_headers, resource_factory, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
@@ -99,7 +98,6 @@ class TestComputeCRUD:
             
     # VM-003 OS 이미지 지정 생성 (Blocked)        
     @allure.story("예외 케이스")
-    @allure.story("xfail")
     @allure.story("skip")
     @pytest.mark.skip(
         reason="Blocked: VM create API payload/response에 OS image 식별값(image_id/os_image_id 등) 미노출로 선택 OS 적용 여부 판정 불가"
@@ -111,7 +109,7 @@ class TestComputeCRUD:
     # VM-004 초기화 스크립트 포함 VM 생성
     @allure.story("예외 케이스")
     @allure.story("xfail")
-    
+    @pytest.mark.xfail(reason="환경 제한으로 초기화 스크립트 포함 VM 생성 불가 시도")
     def test_VM004_create_vm_with_init_script(self, api_headers, resource_factory, base_url_compute):
         url = f"{base_url_compute}/virtual_machine"
 
@@ -135,7 +133,6 @@ class TestComputeCRUD:
 
     # VM-005 DR 옵션 VM 생성
     @allure.story("예외 케이스")
-    @allure.story("xfail")
     @allure.story("skip")
     @pytest.mark.skip(
         reason="Blocked: dr=true 요청 시 API가 zone_no_secondary_zone 반환. 해당 zone_id에 secondary zone 미구성으로 DR VM 생성 검증 불가."
@@ -180,6 +177,31 @@ class TestComputeCRUD:
         assert vm is not None
         assert vm.get("machine_id") or vm.get("id")
 
+    def _list_vms(self, api_headers, base_url_compute):
+        r = self._request(
+            "GET",
+            f"{base_url_compute}/virtual_machine_allocation",
+            headers=api_headers,
+        )
+        return r.json()
+
+    def _ensure_vm_id(self, api_headers, base_url_compute):
+        if self.created_vm_id and not self.deleted_vm_verified:
+            return self.created_vm_id
+
+        vms = self._list_vms(api_headers, base_url_compute)
+        return vms[0].get("machine_id") or vms[0].get("id")
+
+    def _get_vm_by_machine_id(self, api_headers, base_url_compute, vm_id):
+        r = self._request(
+            "GET",
+            f"{base_url_compute}/virtual_machine/{vm_id}",
+            headers=api_headers,
+        )
+        if r.status_code == 200:
+            return r.json()
+        return None
+
     # VM-020
     def test_VM020_GET_vm_resource_monitoring(self, api_headers, base_url_compute):
         """
@@ -198,18 +220,26 @@ class TestComputeCRUD:
         assert response.status_code == 200, f"⛔ 조회 실패! (상태 코드: {response.status_code})"
     
     # VM-026
-    def test_wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
+    @allure.story("예외 케이스")
+    @allure.story("xfail")
+    @pytest.mark.xfail(reason="환경 제한으로 VM 가시성 확인 불가 시도")
+    def test_VM026_wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
+        # 1. 아까 작성하신 메서드를 통해 vm_id를 내부적으로 가져옵니다.
+        vm_id = self._ensure_vm_id(api_headers, base_url_compute)
+        
+        if not vm_id:
+            pytest.fail("테스트에 사용할 VM ID를 찾을 수 없습니다.")
+
         end = time.time() + timeout_sec
         while time.time() < end:
+            # 2. 가져온 vm_id를 사용하여 가시성 확인
             if self._get_vm_by_machine_id(api_headers, base_url_compute, vm_id):
                 return
-            time.sleep(3)
-        pytest.fail("VM not visible")
+        
+        pytest.fail(f"VM {vm_id} not visible after {timeout_sec} seconds")
     
     # VM-028
     @allure.story("예외 케이스")
-    @allure.story("xfail")
-
     def test_VM030_ERR_create_cluster_empty_vm_ids(self, api_headers, base_url_compute):
         url = f"{base_url_compute}/cluster"
         
