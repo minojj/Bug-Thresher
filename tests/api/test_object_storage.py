@@ -1,6 +1,7 @@
 import pytest
 import requests
 import uuid
+import allure
 
 
 class TestBucketCRUD:
@@ -19,6 +20,7 @@ class TestBucketCRUD:
         assert new_bucket["id"] is not None
 
 
+    @allure.story("예외 케이스")
         # 동일 이름 버킷 재생성(예외)
     def test_OS002_post_duplicate_bucket(self, api_headers, existing_bucket, base_url_object_storage):
         bucket_name = existing_bucket["name"]
@@ -37,6 +39,7 @@ class TestBucketCRUD:
         assert "already exists" in response_json["message"]
 
 
+    @allure.story("예외 케이스")
         # 요청 바디 값 누락 생성(예외)
     def test_OS003_post_with_missing_body(self, api_headers, base_url_object_storage):
         payload = {
@@ -65,6 +68,7 @@ class TestBucketCRUD:
         assert response_list[0]["id"] is not None
 
 
+    @allure.story("예외 케이스")
         # 잘못된 URL 입력 조회(예외))
     def test_OS005_get_with_wrong_url(self, api_headers, base_url_object_storage):
         url = f"{base_url_object_storage}?count=50.."
@@ -112,6 +116,8 @@ class TestBucketCRUD:
         assert response_json["id"] is not None
 
 
+    @allure.story("예외 케이스")
+    @allure.story("xfail")
         # default 값이 아닌 필드로 수정(예외)
     @pytest.mark.xfail(reason="PATCH 요청에서 잘못된 필드 전달 시 200 OK 반환되는 문제")
     def test_OS008_patch_invalid_field(self, api_headers, existing_bucket, base_url_object_storage):
@@ -141,6 +147,7 @@ class TestBucketCRUD:
         assert response_json["status"] == "deleting"
 
 
+    @allure.story("예외 케이스")
         # 동일 버킷 재삭제(예외)
     def test_OS010_delete_bucket_again(self, api_headers, existing_bucket, base_url_object_storage):
         bucket_id = existing_bucket["id"]
@@ -172,6 +179,7 @@ class TestUserCRUD:
         assert new_user["id"] is not None
 
 
+    @allure.story("예외 케이스")
         # 동일 사용자 재생성(예외)
     def test_OS019_post_duplicate_user(self, api_headers, existing_user, base_url_object_storage):
         user_name = existing_user["name"]
@@ -237,6 +245,8 @@ class TestUserCRUD:
         assert response_json["id"] is not None
 
 
+    @allure.story("예외 케이스")
+    @allure.story("xfail")
     @pytest.mark.xfail(reason="PATCH 요청에서 잘못된 필드 전달 시 200 OK 반환되는 문제")
     def test_OS023_patch_invalid_field(self, api_headers, existing_user, base_url_object_storage):
         user_id = existing_user["id"]
@@ -318,6 +328,7 @@ class TestUserGrantCRUD:
         api_helpers.wait_for_status(url+f"/{delete_json['id']}", api_headers, expected_status="deleted",timeout=10)
 
 
+    @allure.story("예외 케이스")
     def test_OS012_post_duplicate_user_grant(self, api_headers, existing_user_grant, base_url_object_storage, api_helpers):
         url= f"{base_url_object_storage}/user_grant"
         payload = existing_user_grant["payload"]
@@ -440,6 +451,7 @@ class TestUserGrantCRUD:
         api_helpers.wait_for_status(url+f"/{delete_json['id']}", api_headers, expected_status="deleted",timeout=10)
 
 
+    @allure.story("예외 케이스")
     def test_OS030_post_duplicate_object_grant(self, api_headers, existing_user_grant, base_url_object_storage, api_helpers):
         url= f"{base_url_object_storage}/user_grant"
         payload = {
