@@ -193,8 +193,6 @@ class TestBlockStorageCRUD:
         res_data = response.json()
         assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
 
-        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
-
     def test_BS008_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-008: 블록 스토리지 이름 수정 검증"""
         # 테스트용 블록 스토리지 생성
@@ -472,8 +470,6 @@ class TestSanpshotCRUD:
         # 4. 응답 바디 검증
         res_data = response.json()
         assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
-
-        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
     
     def test_BS019_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-019: 스냅샷 이름 수정 검증"""
@@ -774,8 +770,6 @@ class Testsnapshot_schedulerCRUD:
         res_data = response.json()
         assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
 
-        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
-
     def test_BS030_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-030: 스냅샷 스케줄러 이름 수정 검증"""
         
@@ -814,7 +808,6 @@ class Testsnapshot_schedulerCRUD:
         get_data = get_response.json()
         
         assert get_data["name"] == "team2", f"이름이 변경되지 않음: {get_data.get('name')}"
-        print(f"테스트 통과: 리소스 {resource_id}의 이름이 'team2'로 정상 변경되었습니다.")
     
     def test_BS031_update_fail_invalid_tag_format(self, api_headers, base_url_block_storage):
         """BS-031: 올바르지 않은 태그 형식(JSON 문법 오류)으로 수정 시 422 에러 검증"""
