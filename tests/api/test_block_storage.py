@@ -2,6 +2,7 @@ from email import errors
 import requests
 import pytest
 import uuid
+import allure
 
 
 def get_prepared_block_storage_id(api_headers, base_url_block_storage):
@@ -51,8 +52,8 @@ class TestBlockStorageCRUD:
         assert len(res_data) > 0, "데이터가 존재해야 하지만 빈 리스트가 반환되었습니다."
         assert "id" in res_data[0]
         assert "name" in res_data[0]
-
-    @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
+        
+    @allure.story("빈 목록 조회")    @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
     def test_BS002_list_emptylook_up(self, api_headers, base_url_block_storage):
         """BS-002: 데이터가 없는 경우 조회"""
         headers = api_headers
@@ -330,7 +331,7 @@ class TestSanpshotCRUD:
         assert "id" in res_data[0]
         assert "name" in res_data[0]
 
-    @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
+    @allure.story("빈 목록 조회")    @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
     def test_BS013_list_emptylook_up(self, api_headers, base_url_block_storage):
         """BS-013: 데이터가 없는 경우 조회"""
         headers = api_headers
@@ -612,8 +613,9 @@ class Testsnapshot_schedulerCRUD:
         # 빈 리스트도 정상 응답으로 간주
         if len(res_data) > 0:
             assert "id" in res_data[0]
-            assert "name" in res_data[0]
-    @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
+            assert "name" in res_data[0]   
+
+    @allure.story("빈 목록 조회")    @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
     def test_BS024_list_emptylook_up(self, api_headers, base_url_block_storage):
         """BS-024: 데이터가 없는 경우 조회"""
         headers = api_headers
