@@ -1,6 +1,0 @@
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "POST /api/user/resource/storage/object_storage/user HTTP/1.1" 200 45
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/storage/object_storage/user_grant?filter_object_storage_user_id=569b4f06-f643-4243-8311-e26820ca1a0d&count=50 HTTP/1.1" 200 2
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "DELETE /api/user/resource/storage/object_storage/user/569b4f06-f643-4243-8311-e26820ca1a0d HTTP/1.1" 200 65

@@ -1,1 +1,0 @@
-2025-12-31 13:24:11.510 | SUCCESS  | test_network:test_NW037_ERR_delete_vn_with_attached_subnet:577 - ✅ VN 삭제 차단 검증 완료 (에러 코드: subnet_found)

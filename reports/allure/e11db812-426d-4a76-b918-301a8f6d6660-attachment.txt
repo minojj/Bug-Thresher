@@ -1,1 +1,0 @@
-2025-12-31 13:24:12.229 | SUCCESS  | test_network:test_NW041_check_created_public_ip_in_list:617 - ✅ 목록 노출 확인 완료

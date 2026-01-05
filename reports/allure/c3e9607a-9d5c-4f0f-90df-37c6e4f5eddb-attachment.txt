@@ -1,4 +1,0 @@
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine_allocation HTTP/1.1" 200 1479
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:1049 Starting new HTTPS connection (1): portal.gov.elice.cloud:443
-[35mDEBUG   [0m urllib3.connectionpool:connectionpool.py:544 https://portal.gov.elice.cloud:443 "GET /api/user/resource/compute/virtual_machine/2653e178-856c-48c2-b4f6-a161d8fc00d4 HTTP/1.1" 200 543

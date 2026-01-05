@@ -1,1 +1,0 @@
-{'code': 'unexpected_status', 'message': 'the virtual_network has unexpected status (should be active)', 'detail': {'resource_virtual_network': {'status': 'deleted'}}}

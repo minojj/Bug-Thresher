@@ -78,6 +78,9 @@ BASE_URL_COMPUTE=https://portal.gov.elice.cloud/api/user/resource/compute
 BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
 BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
 BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
+
+# Zone ID (선택사항 - 기본값: 0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0)
+ZONE_ID=0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0
 ```
 
 **⚠️ 주의:** `.env` 파일은 민감한 정보를 포함하므로 Git에 커밋하지 마세요!
