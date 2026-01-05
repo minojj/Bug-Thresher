@@ -195,11 +195,9 @@ class TestComputeCRUD:
         print(f"\n📡 호출 URL: {endpoint}")
         response = self._request("GET", endpoint, headers=api_headers, params=params)
 
-        print(f"📊 응답 상태 코드: {response.status_code}")
-
         assert response.status_code == 200, f"⛔ 조회 실패! (상태 코드: {response.status_code})"
     
-    # VM-028
+    # VM-026
     def test_wait_vm_visible(self, api_headers, base_url_compute, vm_id, timeout_sec=60):
         end = time.time() + timeout_sec
         while time.time() < end:
@@ -208,7 +206,7 @@ class TestComputeCRUD:
             time.sleep(3)
         pytest.fail("VM not visible")
     
-    # VM-030
+    # VM-028
     @allure.story("예외 케이스")
     @allure.story("xfail")
 
@@ -240,28 +238,3 @@ class TestComputeCRUD:
             except Exception:
                 pass
         return r
-
-    def _list_vms(self, api_headers, base_url_compute):
-        r = self._request(
-            "GET",
-            f"{base_url_compute}/virtual_machine_allocation",
-            headers=api_headers,
-        )
-        return r.json()
-
-    def _ensure_vm_id(self, api_headers, base_url_compute):
-        if self.created_vm_id and not self.deleted_vm_verified:
-            return self.created_vm_id
-
-        vms = self._list_vms(api_headers, base_url_compute)
-        return vms[0].get("machine_id") or vms[0].get("id")
-
-    def _get_vm_by_machine_id(self, api_headers, base_url_compute, vm_id):
-        r = self._request(
-            "GET",
-            f"{base_url_compute}/virtual_machine/{vm_id}",
-            headers=api_headers,
-        )
-        if r.status_code == 200:
-            return r.json()
-        return None

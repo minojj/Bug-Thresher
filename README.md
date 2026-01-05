@@ -1,7 +1,7 @@
 # Bug-Thresher
 
 ## 📋 프로젝트 개요
-Bug-Thresher는 Elice Cloud Infrastructure(ECI) 플랫폼의 API 및 E2E 테스트 자동화 프레임워크입니다.  
+Bug-Thresher는 Elice Cloud Infrastructure(ECI) 플랫폼의 API 테스트 자동화 프레임워크입니다.  
 블록 스토리지, 네트워크, 오브젝트 스토리지 등의 API 테스트와 UI 자동화 테스트를 지원합니다.
 
 ## 🎯 테스트 제품
@@ -78,9 +78,6 @@ BASE_URL_COMPUTE=https://portal.gov.elice.cloud/api/user/resource/compute
 BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
 BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
 BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
-
-# Zone ID (선택사항 - 기본값: 0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0)
-ZONE_ID=0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0
 ```
 
 **⚠️ 주의:** `.env` 파일은 민감한 정보를 포함하므로 Git에 커밋하지 마세요!
@@ -94,6 +91,12 @@ pytest
 
 ### 특정 테스트 파일 실행
 ```bash
+# 인프라 테스트
+pytest tests/api/test_infra.py
+
+# 컴퓨트 테스트
+pytest tests/api/test_compute.py
+
 # 블록 스토리지 테스트
 pytest tests/api/test_block_storage.py
 
@@ -126,11 +129,6 @@ pytest -vv  # 더 상세한 출력
 
 ## 📊 리포트 생성
 
-### HTML 리포트 생성
-```bash
-pytest --html=reports/report.html --self-contained-html
-```
-
 ### Allure 리포트 생성
 ```bash
 # 테스트 실행 및 결과 저장
@@ -158,35 +156,35 @@ Bug-Thresher/
 ├── README.md                     # 프로젝트 문서
 ├── token.txt                     # 토큰 저장 파일
 ├── Jenkinsfile                   # CI/CD 파이프라인
-├── Aggregate Report.jmx          # JMeter 리포트 설정
-├── Blockstorage_blockstorage.jmx # 블록 스토리지 JMeter 테스트
-├── HTTP Request Defaults.jmx     # JMeter HTTP 기본 설정
+├── jmeter.log                    # JMeter 로그 파일
 │
 ├── src/                          # 소스 코드
 │   ├── api/                      # API 클라이언트
+│   │   ├── __init__.py
 │   │   ├── auth_api.py           # 인증 API
 │   │   └── instance_api.py       # 인스턴스 API
 │   ├── config/                   # 설정 파일
 │   │   └── config.ini            # 애플리케이션 설정
 │   ├── pages/                    # Page Object Model (POM)
+│   │   ├── __init__.py
 │   │   └── login_page.py         # 로그인 페이지 객체
 │   └── utils/                    # 유틸리티
+│       ├── __init__.py
 │       ├── api_util.py           # API 유틸리티 함수
 │       └── allure_helper.py      # Allure 리포트 헬퍼
 │
 ├── tests/                        # 테스트 코드
 │   ├── conftest.py               # pytest fixtures (토큰, URL 등)
-│   ├── api/                      # API 테스트
-│   │   ├── test_block_storage.py # 블록 스토리지 CRUD 테스트
-│   │   ├── test_compute.py       # 컴퓨트 테스트
-│   │   ├── test_infra.py         # 인프라 테스트
-│   │   ├── test_network.py       # 네트워크 테스트
-│   │   └── test_object_storage.py# 오브젝트 스토리지 테스트
-│   └── e2e/                      # End-to-End 테스트
-│       └── test_smoke_login.py   # 로그인 스모크 테스트
+│   └── api/                      # API 테스트
+│       ├── test_block_storage.py # 블록 스토리지 CRUD 테스트
+│       ├── test_compute.py       # 컴퓨트 테스트
+│       ├── test_infra.py         # 인프라 테스트
+│       ├── test_network.py       # 네트워크 테스트
+│       └── test_object_storage.py# 오브젝트 스토리지 테스트
+│
+├── allure-results/               # Allure 테스트 결과 (자동 생성)
 │
 ├── reports/                      # 테스트 리포트 (자동 생성)
-│   ├── allure/                   # Allure 리포트 데이터
 │   ├── logs/                     # 로그 파일
 │   └── screenshots/              # 스크린샷 (테스트 실패 시)
 │
@@ -194,8 +192,20 @@ Bug-Thresher/
 │   ├── eci_load_test.jmx         # JMeter 성능 테스트
 │   └── data/                     # 테스트 데이터
 │
-└── scripts/                      # 유틸리티 스크립트
-    └── get_token.py              # 토큰 발급 스크립트
+├── auth_setup/                   # 인증 설정
+│   ├── .gitignore
+│   ├── api_test.py               # API 테스트 스크립트
+│   ├── get_token_auto.py         # 자동 토큰 발급
+│   └── requirements.txt          # 인증 관련 의존성
+│
+├── scripts/                      # 유틸리티 스크립트
+│   └── get_token.py              # 토큰 발급 스크립트
+│
+└── VM조회/                       # VM 조회 성능 테스트 결과
+    ├── Summary/
+    │   └── Compute_VM List_Summary.jtl
+    └── View/
+        └── Compute_VM List_View.jtl
 ```
 
 ## 🔑 주요 기능
