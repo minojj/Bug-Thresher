@@ -2,6 +2,7 @@ from email import errors
 import requests
 import pytest
 import uuid
+import allure
 
 
 def get_prepared_block_storage_id(api_headers, base_url_block_storage):
@@ -51,7 +52,8 @@ class TestBlockStorageCRUD:
         assert len(res_data) > 0, "데이터가 존재해야 하지만 빈 리스트가 반환되었습니다."
         assert "id" in res_data[0]
         assert "name" in res_data[0]
-
+        
+    @allure.story("빈 목록 조회")    
     @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
     def test_BS002_list_emptylook_up(self, api_headers, base_url_block_storage):
         """BS-002: 데이터가 없는 경우 조회"""
@@ -193,8 +195,6 @@ class TestBlockStorageCRUD:
         res_data = response.json()
         assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
 
-        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
-
     def test_BS008_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-008: 블록 스토리지 이름 수정 검증"""
         # 테스트용 블록 스토리지 생성
@@ -332,6 +332,7 @@ class TestSanpshotCRUD:
         assert "id" in res_data[0]
         assert "name" in res_data[0]
 
+    @allure.story("빈 목록 조회")    
     @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
     def test_BS013_list_emptylook_up(self, api_headers, base_url_block_storage):
         """BS-013: 데이터가 없는 경우 조회"""
@@ -472,8 +473,6 @@ class TestSanpshotCRUD:
         # 4. 응답 바디 검증
         res_data = response.json()
         assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
-
-        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
     
     def test_BS019_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-019: 스냅샷 이름 수정 검증"""
@@ -616,7 +615,9 @@ class Testsnapshot_schedulerCRUD:
         # 빈 리스트도 정상 응답으로 간주
         if len(res_data) > 0:
             assert "id" in res_data[0]
-            assert "name" in res_data[0]
+            assert "name" in res_data[0]   
+
+    @allure.story("빈 목록 조회")    
     @pytest.mark.xfail(reason="실제 환경에서는 목록을 비워둘 수 없음")
     def test_BS024_list_emptylook_up(self, api_headers, base_url_block_storage):
         """BS-024: 데이터가 없는 경우 조회"""
@@ -774,8 +775,6 @@ class Testsnapshot_schedulerCRUD:
         res_data = response.json()
         assert res_data["detail"] == "Not Found", f"에러 메시지 불일치: {res_data.get('detail')}"
 
-        print(f"테스트 통과: 존재하지 않는 ID({invalid_id}) 조회 시 404 및 'Not Found' 확인")
-
     def test_BS030_update_resource_name(self, resource_factory, api_headers, base_url_block_storage):
         """BS-030: 스냅샷 스케줄러 이름 수정 검증"""
         
@@ -814,7 +813,6 @@ class Testsnapshot_schedulerCRUD:
         get_data = get_response.json()
         
         assert get_data["name"] == "team2", f"이름이 변경되지 않음: {get_data.get('name')}"
-        print(f"테스트 통과: 리소스 {resource_id}의 이름이 'team2'로 정상 변경되었습니다.")
     
     def test_BS031_update_fail_invalid_tag_format(self, api_headers, base_url_block_storage):
         """BS-031: 올바르지 않은 태그 형식(JSON 문법 오류)으로 수정 시 422 에러 검증"""

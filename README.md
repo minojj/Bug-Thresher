@@ -36,11 +36,6 @@ cd Bug-Thresher
 ```
 
 ### 2. 가상환경 설정
-**가상환경을 사용해야 하는 이유:**
-- 프로젝트별 의존성 격리
-- 시스템 Python 환경과의 충돌 방지
-- 버전 관리 용이
-- 팀원 간 동일한 개발 환경 보장
 
 #### Windows (PowerShell)
 ```powershell
@@ -78,9 +73,14 @@ LOGIN_ID=your_email@example.com
 PASSWORD=your_password
 
 # API Base URLs
+BASE_URL_INFRA=https://portal.gov.elice.cloud/api/user
+BASE_URL_COMPUTE=https://portal.gov.elice.cloud/api/user/resource/compute
 BASE_URL_BLOCK_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/block_storage
 BASE_URL_NETWORK=https://portal.gov.elice.cloud/api/user/resource/network
 BASE_URL_OBJECT_STORAGE=https://portal.gov.elice.cloud/api/user/resource/storage/object_storage
+
+# Zone ID (선택사항 - 기본값: 0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0)
+ZONE_ID=0a89d6fa-8588-4994-a6d6-a7c3dc5d5ad0
 ```
 
 **⚠️ 주의:** `.env` 파일은 민감한 정보를 포함하므로 Git에 커밋하지 마세요!
@@ -152,10 +152,15 @@ pytest --cov=src --cov-report=html
 ```
 Bug-Thresher/
 ├── .env                          # 환경 변수 (Git 제외)
+├── .gitignore                    # Git 제외 파일 목록
 ├── requirements.txt              # Python 의존성
 ├── pytest.ini                    # pytest 설정
 ├── README.md                     # 프로젝트 문서
+├── token.txt                     # 토큰 저장 파일
 ├── Jenkinsfile                   # CI/CD 파이프라인
+├── Aggregate Report.jmx          # JMeter 리포트 설정
+├── Blockstorage_blockstorage.jmx # 블록 스토리지 JMeter 테스트
+├── HTTP Request Defaults.jmx     # JMeter HTTP 기본 설정
 │
 ├── src/                          # 소스 코드
 │   ├── api/                      # API 클라이언트
@@ -166,18 +171,22 @@ Bug-Thresher/
 │   ├── pages/                    # Page Object Model (POM)
 │   │   └── login_page.py         # 로그인 페이지 객체
 │   └── utils/                    # 유틸리티
-│       └── file_reader.py        # 파일 읽기 유틸
+│       ├── api_util.py           # API 유틸리티 함수
+│       └── allure_helper.py      # Allure 리포트 헬퍼
 │
 ├── tests/                        # 테스트 코드
 │   ├── conftest.py               # pytest fixtures (토큰, URL 등)
 │   ├── api/                      # API 테스트
 │   │   ├── test_block_storage.py # 블록 스토리지 CRUD 테스트
+│   │   ├── test_compute.py       # 컴퓨트 테스트
+│   │   ├── test_infra.py         # 인프라 테스트
 │   │   ├── test_network.py       # 네트워크 테스트
 │   │   └── test_object_storage.py# 오브젝트 스토리지 테스트
 │   └── e2e/                      # End-to-End 테스트
 │       └── test_smoke_login.py   # 로그인 스모크 테스트
 │
 ├── reports/                      # 테스트 리포트 (자동 생성)
+│   ├── allure/                   # Allure 리포트 데이터
 │   ├── logs/                     # 로그 파일
 │   └── screenshots/              # 스크린샷 (테스트 실패 시)
 │
@@ -218,27 +227,3 @@ def test_BS001_list_exists_look_up(self, api_headers, base_url_block_storage):
     assert response.status_code == 200
     assert isinstance(response.json(), list)
 ```
-
-### E2E 테스트 예시
-```python
-def test_login_success(self):
-    """로그인 성공 테스트"""
-    driver.get("https://qatrack.elice.io/eci")
-    # 테스트 로직...
-```
-
-## 🤝 기여 방법
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 라이센스
-This project is licensed under the MIT License.
-
-## 👥 팀
-QA Team 02 - Elice Cloud Infrastructure Testing
-
-## 📞 문의
-문제가 발생하거나 질문이 있으시면 Issue를 등록해주세요.
